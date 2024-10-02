@@ -1,3 +1,4 @@
+import 'package:easy_chat/controllers/chat_scroll_controller.dart';
 import 'package:easy_chat/models/base_message.dart';
 import 'package:easy_chat/models/base_user.dart';
 import 'package:mobx/mobx.dart';
@@ -7,7 +8,11 @@ part 'easy_chat_store.g.dart';
 class EasyChatStore = EasyChatStoreBase with _$EasyChatStore;
 
 abstract class EasyChatStoreBase with Store {
-  EasyChatStoreBase() {
+  final ChatScrollController chatScrollController;
+
+  EasyChatStoreBase(
+    this.chatScrollController,
+  ) {
     setup();
   }
 

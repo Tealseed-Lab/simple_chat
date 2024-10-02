@@ -47,6 +47,7 @@ class _EasyChatViewState extends State<EasyChatView> {
   Widget _buildMessageList(BuildContext context) {
     return Observer(
       builder: (context) => ListView.separated(
+        controller: widget.controller.chatScrollController.controller,
         padding: context.layoutTheme.chatViewPadding,
         separatorBuilder: (context, index) => const SizedBox(height: 16),
         itemCount: widget.controller.store.messages.length,
