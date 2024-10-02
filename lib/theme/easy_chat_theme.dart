@@ -53,11 +53,13 @@ class EasyChatColorThemeData {
   static EasyChatColorThemeData get dark => EasyChatColorThemeData();
 
   final Color backgroundColor;
+  final Color inputBoxColor;
   final Color myMessageColor;
   final Color otherMessageColor;
   final Color primary;
   EasyChatColorThemeData({
     this.backgroundColor = const Color(0xFFF5F5F5),
+    this.inputBoxColor = Colors.white,
     this.myMessageColor = const Color(0xFFE5E5EA),
     this.otherMessageColor = Colors.white,
     this.primary = const Color(0xFFF86526),

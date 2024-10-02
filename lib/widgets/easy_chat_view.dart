@@ -1,5 +1,6 @@
 import 'package:easy_chat/controllers/easy_chat_controller.dart';
 import 'package:easy_chat/theme/easy_chat_theme.dart';
+import 'package:easy_chat/widgets/input/input_box.dart';
 import 'package:easy_chat/widgets/messages/unsupport_message_item.dart';
 import 'package:easy_chat/widgets/users/user_avatar.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,12 @@ class _EasyChatViewState extends State<EasyChatView> {
       child: Builder(
         builder: (context) => Container(
           color: context.coloredTheme.backgroundColor,
-          child: _buildMessageList(context),
+          child: Column(
+            children: [
+              Expanded(child: _buildMessageList(context)),
+              InputBox(onSend: (text) {}),
+            ],
+          ),
         ),
       ),
     );
