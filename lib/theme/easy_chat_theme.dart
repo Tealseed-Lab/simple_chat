@@ -6,6 +6,11 @@ extension ThemedContextExtension on BuildContext {
     final chatTheme = EasyChatTheme.of(this);
     return brightness == Brightness.light ? chatTheme.light : chatTheme.dark;
   }
+
+  EasyChatLayoutThemeData get layoutTheme {
+    final chatTheme = EasyChatTheme.of(this);
+    return chatTheme.layout;
+  }
 }
 
 class EasyChatTheme extends InheritedWidget {
@@ -36,9 +41,11 @@ class EasyChatThemeData {
   EasyChatThemeData({
     required this.light,
     required this.dark,
+    this.layout = const EasyChatLayoutThemeData(),
   });
   EasyChatColorThemeData light;
   EasyChatColorThemeData dark;
+  EasyChatLayoutThemeData layout;
 }
 
 class EasyChatColorThemeData {
@@ -46,8 +53,14 @@ class EasyChatColorThemeData {
   static EasyChatColorThemeData get dark => EasyChatColorThemeData();
 
   final Color backgroundColor;
+  final Color myMessageColor;
+  final Color otherMessageColor;
+  final Color primary;
   EasyChatColorThemeData({
-    this.backgroundColor = Colors.white,
+    this.backgroundColor = const Color(0xFFF5F5F5),
+    this.myMessageColor = const Color(0xFFE5E5EA),
+    this.otherMessageColor = Colors.white,
+    this.primary = const Color(0xFFF86526),
   });
 
   EasyChatColorThemeData copyWith({
@@ -57,4 +70,15 @@ class EasyChatColorThemeData {
       backgroundColor: backgroundColor ?? this.backgroundColor,
     );
   }
+}
+
+class EasyChatLayoutThemeData {
+  const EasyChatLayoutThemeData({
+    this.chatViewPadding = const EdgeInsets.all(16),
+    this.userAvatarSize = 36,
+    this.avatarAndMessageSpacing = 8,
+  });
+  final EdgeInsets chatViewPadding;
+  final double userAvatarSize;
+  final double avatarAndMessageSpacing;
 }
