@@ -1,10 +1,17 @@
-import 'package:easy_chat/models/user.dart';
 import 'package:easy_chat/theme/easy_chat_theme.dart';
+import 'package:easy_chat/widgets/input/send_msg_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+class InputBoxOutput {
+  final String? message;
+  InputBoxOutput({
+    required this.message,
+  });
+}
+
 class InputBox extends StatefulWidget {
-  final Function(String) onSend;
+  final Function(InputBoxOutput output) onSend;
 
   const InputBox({
     super.key,
@@ -18,13 +25,46 @@ class InputBox extends StatefulWidget {
 class _InputBoxState extends State<InputBox> {
   final TextEditingController _controller = TextEditingController();
 
+  final textFieldStyle = const TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    height: 1.5,
+  );
+  final textFieldHorizontalPadding = 16.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     const inputBoxHeight = 40.0;
+    const inputBoxHorizontalMargin = 16.0;
+
+    const cameraIconWidth = 24.0;
+    const cameraIconRightPadding = 16.0;
+    const albumIconWidth = 24.0;
+    const albumIconRightPadding = 16.0;
+    const sendMsgBtnWidth = 32.0;
+    const sendMsgBtnRightPadding = 4.0;
+    const buttonBoxWidth = cameraIconWidth +
+        albumIconWidth +
+        sendMsgBtnWidth +
+        cameraIconRightPadding +
+        albumIconRightPadding +
+        sendMsgBtnRightPadding;
+    final textFieldMinWidth = MediaQuery.of(context).size.width -
+        inputBoxHorizontalMargin * 2 -
+        textFieldHorizontalPadding * 2 -
+        buttonBoxWidth;
     return Container(
       padding: EdgeInsets.only(
-        left: 16.0,
-        right: 16.0,
+        left: inputBoxHorizontalMargin,
+        right: inputBoxHorizontalMargin,
         top: 8.0,
         bottom: 8.0 + MediaQuery.of(context).padding.bottom,
       ),
@@ -38,78 +78,126 @@ class _InputBoxState extends State<InputBox> {
         ),
       ),
       child: Container(
-        height: inputBoxHeight,
         decoration: BoxDecoration(
           color: const Color(0xFFF5F5F5),
           borderRadius: BorderRadius.circular(inputBoxHeight / 2),
         ),
         alignment: Alignment.center,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _controller,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  height: 1.5,
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Type a message...',
-                  hintStyle: TextStyle(
-                    color: const Color(0xFF3C3C3C).withOpacity(0.3),
-                    fontSize: 16,
-                    height: 1.5,
+        child: LayoutBuilder(
+          builder: (context, outerConstraint) {
+            List<Widget> wrapChildren = [
+              IntrinsicWidth(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: textFieldMinWidth,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  isDense: true,
-                ),
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: GestureDetector(
-                onTap: () {},
-                child: SvgPicture.asset(
-                  'assets/svg/input/camera.svg',
-                  package: 'easy_chat',
-                  width: 24,
-                  height: 24,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: GestureDetector(
-                onTap: () {},
-                child: SvgPicture.asset(
-                  'assets/svg/input/album.svg',
-                  package: 'easy_chat',
-                  width: 24,
-                  height: 24,
+                  child: TextField(
+                    controller: _controller,
+                    style: textFieldStyle,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Type a message...',
+                      hintStyle: textFieldStyle.copyWith(
+                        color: const Color(0xFF3C3C3C).withOpacity(0.3),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: textFieldHorizontalPadding,
+                        vertical: 8,
+                      ),
+                      isDense: true,
+                    ),
+                    maxLines: 4,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: GestureDetector(
-                onTap: () {},
-                child: SvgPicture.asset(
-                  'assets/svg/input/send.svg',
-                  package: 'easy_chat',
-                  width: 32,
-                  height: 32,
-                ),
+            ];
+            final textFieldWidth = _calculateTextFieldWidth(context);
+            bool isAloneInRow = textFieldWidth > textFieldMinWidth;
+            final buttonBox = Container(
+              width: buttonBoxWidth,
+              height: inputBoxHeight,
+              alignment: Alignment.center,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: cameraIconRightPadding),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: SvgPicture.asset(
+                        'assets/svg/input/camera.svg',
+                        package: 'easy_chat',
+                        width: cameraIconWidth,
+                        height: cameraIconWidth,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: albumIconRightPadding),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: SvgPicture.asset(
+                        'assets/svg/input/album.svg',
+                        package: 'easy_chat',
+                        width: albumIconWidth,
+                        height: albumIconWidth,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: sendMsgBtnRightPadding),
+                    child: SendMsgBtn(
+                      size: sendMsgBtnWidth,
+                      onTap: () {
+                        _controller.clear();
+                        widget.onSend(
+                          InputBoxOutput(
+                            message: _controller.text,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            );
+            if (isAloneInRow) {
+              wrapChildren.add(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [buttonBox],
+                ),
+              );
+            } else {
+              wrapChildren.add(buttonBox);
+            }
+            return SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                children: wrapChildren,
+              ),
+            );
+          },
         ),
       ),
     );
+  }
+
+  double _calculateTextFieldWidth(BuildContext context) {
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: _controller.text,
+        style: textFieldStyle,
+      ),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout(minWidth: 0, maxWidth: double.infinity);
+
+    return textPainter.size.width + textFieldHorizontalPadding * 2; // Add padding to account for margins
   }
 
   @override

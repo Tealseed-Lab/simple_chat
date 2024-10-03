@@ -1,4 +1,5 @@
 import 'package:easy_chat/controllers/chat_scroll_controller.dart';
+import 'package:easy_chat/controllers/easy_chat_action_handler.dart';
 import 'package:easy_chat/controllers/view_factory.dart';
 import 'package:easy_chat/easy_chat.dart';
 import 'package:easy_chat/widgets/messages/text_message_item.dart';
@@ -8,8 +9,11 @@ class EasyChatController {
   late final EasyChatStore store;
   final chatScrollController = ChatScrollController();
   final viewFactory = ViewFactory();
+  final EasyChatActionHandler? actionHandler;
 
-  EasyChatController() {
+  EasyChatController({
+    this.actionHandler,
+  }) {
     store = EasyChatStore(
       chatScrollController,
     );
