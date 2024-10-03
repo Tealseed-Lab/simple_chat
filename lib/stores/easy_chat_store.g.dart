@@ -67,32 +67,36 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
       AsyncAction('EasyChatStoreBase.addMessage', context: context);
 
   @override
-  Future<void> addMessage(ModelBaseMessage message) {
-    return _$addMessageAsyncAction.run(() => super.addMessage(message));
+  Future<void> addMessage(
+      {required ModelBaseMessage message, bool isInitial = false}) {
+    return _$addMessageAsyncAction
+        .run(() => super.addMessage(message: message, isInitial: isInitial));
   }
 
   late final _$addMessagesAsyncAction =
       AsyncAction('EasyChatStoreBase.addMessages', context: context);
 
   @override
-  Future<void> addMessages(List<ModelBaseMessage> messages) {
-    return _$addMessagesAsyncAction.run(() => super.addMessages(messages));
+  Future<void> addMessages(
+      {required List<ModelBaseMessage> messages, bool isInitial = false}) {
+    return _$addMessagesAsyncAction
+        .run(() => super.addMessages(messages: messages, isInitial: isInitial));
   }
 
   late final _$addUserAsyncAction =
       AsyncAction('EasyChatStoreBase.addUser', context: context);
 
   @override
-  Future<void> addUser(ModelBaseUser user) {
-    return _$addUserAsyncAction.run(() => super.addUser(user));
+  Future<void> addUser({required ModelBaseUser user}) {
+    return _$addUserAsyncAction.run(() => super.addUser(user: user));
   }
 
   late final _$addUsersAsyncAction =
       AsyncAction('EasyChatStoreBase.addUsers', context: context);
 
   @override
-  Future<void> addUsers(List<ModelBaseUser> users) {
-    return _$addUsersAsyncAction.run(() => super.addUsers(users));
+  Future<void> addUsers({required List<ModelBaseUser> users}) {
+    return _$addUsersAsyncAction.run(() => super.addUsers(users: users));
   }
 
   @override

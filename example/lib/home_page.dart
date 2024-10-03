@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> injectUsers() async {
-    await controller.store.addUsers([
+    await controller.store.addUsers(users: [
       ModelUser(
         id: '1',
         name: 'Lawrence',
@@ -44,19 +44,19 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> injectMessages() async {
     final random = Random();
-    for (var i = 0; i < 10; i++) {
-      await Future.delayed(const Duration(seconds: 1));
+    for (var i = 0; i < 100; i++) {
+      await Future.delayed(const Duration(milliseconds: 1000));
       final userId = random.nextBool() ? '1' : '2';
       final textLength = random.nextInt(50) + 10; // Random length between 10 and 59
-      await controller.store.addMessages([
-        ModelTextMessage(
+      await controller.store.addMessage(
+        message: ModelTextMessage(
           id: '$i',
           text: generateRandomText(textLength),
           userId: userId,
           sequence: i,
           displayDatetime: DateTime.now(),
         ),
-      ]);
+      );
     }
   }
 

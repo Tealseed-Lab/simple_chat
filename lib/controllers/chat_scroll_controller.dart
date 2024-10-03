@@ -19,28 +19,35 @@ class ChatScrollController with WidgetsBindingObserver {
     final bottomInset = WidgetsBinding.instance.platformDispatcher.views.first.viewInsets.bottom;
     // when keyboard is shown, jump to bottom
     if (bottomInset > 0) {
-      _jumpToBottom();
+      jumpToBottom();
     }
   }
 
   // public
 
-  // private
-  void _scrollToBottom() {
+  bool isAtBottom() {
+    if (!controller.hasClients) return false;
+    final position = controller.position;
+    return position.pixels >= position.maxScrollExtent - 1 || position.viewportDimension >= position.maxScrollExtent;
+  }
+
+  void scrollToBottom() {
     if (controller.hasClients) {
       controller.animateTo(
         controller.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 150),
         curve: Curves.easeOut,
       );
     }
   }
 
-  void _jumpToBottom() {
+  void jumpToBottom() {
     if (controller.hasClients) {
       controller.jumpTo(
         controller.position.maxScrollExtent,
       );
     }
   }
+
+  // private
 }
