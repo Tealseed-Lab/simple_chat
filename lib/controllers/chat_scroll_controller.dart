@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class ChatScrollController with WidgetsBindingObserver {
   final controller = ScrollController();
+  final int animationDurationInMilliseconds;
 
-  ChatScrollController() {
+  ChatScrollController({
+    this.animationDurationInMilliseconds = 150,
+  }) {
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -31,11 +34,27 @@ class ChatScrollController with WidgetsBindingObserver {
     return position.pixels >= position.maxScrollExtent - 1 || position.viewportDimension >= position.maxScrollExtent;
   }
 
+  bool isAtTop() {
+    if (!controller.hasClients) return false;
+    final position = controller.position;
+    return position.pixels <= 1;
+  }
+
   void scrollToBottom() {
     if (controller.hasClients) {
       controller.animateTo(
         controller.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 150),
+        duration: Duration(milliseconds: animationDurationInMilliseconds),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  void scrollToTop() {
+    if (controller.hasClients) {
+      controller.animateTo(
+        0,
+        duration: Duration(milliseconds: animationDurationInMilliseconds),
         curve: Curves.easeOut,
       );
     }
@@ -46,6 +65,12 @@ class ChatScrollController with WidgetsBindingObserver {
       controller.jumpTo(
         controller.position.maxScrollExtent,
       );
+    }
+  }
+
+  void jumpToTop() {
+    if (controller.hasClients) {
+      controller.jumpTo(0);
     }
   }
 

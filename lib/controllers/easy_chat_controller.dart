@@ -25,4 +25,8 @@ class EasyChatController {
       ),
     );
   }
+
+  void scrollToBottom() {
+    chatScrollController.scrollToBottom();
+  }
 }

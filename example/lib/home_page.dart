@@ -20,9 +20,13 @@ class _HomePageState extends State<HomePage> {
     setupTests();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Future<void> setupTests() async {
     await injectUsers();
-    await injectMessages();
   }
 
   Future<void> injectUsers() async {
@@ -42,13 +46,16 @@ class _HomePageState extends State<HomePage> {
     ]);
   }
 
-  Future<void> injectMessages() async {
+  Future<void> injectMessages({required bool withDelay}) async {
     final random = Random();
     for (var i = 0; i < 100; i++) {
-      await Future.delayed(const Duration(milliseconds: 1000));
+      if (withDelay) {
+        await Future.delayed(const Duration(milliseconds: 1000));
+      }
       final userId = random.nextBool() ? '1' : '2';
       final textLength = random.nextInt(50) + 10; // Random length between 10 and 59
       await controller.store.addMessage(
+        isInitial: !withDelay,
         message: ModelTextMessage(
           id: '$i',
           text: generateRandomText(textLength),
@@ -72,6 +79,57 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert),
+            onSelected: (value) {
+              switch (value) {
+                case 'scroll_top':
+                  controller.chatScrollController.scrollToTop();
+                  break;
+                case 'scroll_bottom':
+                  controller.chatScrollController.scrollToBottom();
+                  break;
+                case 'inject_messages':
+                  injectMessages(withDelay: false);
+                  break;
+                case 'inject_messages_delay':
+                  injectMessages(withDelay: true);
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'scroll_top',
+                child: ListTile(
+                  leading: Icon(Icons.arrow_upward),
+                  title: Text('Scroll to Top'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'scroll_bottom',
+                child: ListTile(
+                  leading: Icon(Icons.arrow_downward),
+                  title: Text('Scroll to Bottom'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'inject_messages',
+                child: ListTile(
+                  leading: Icon(Icons.message),
+                  title: Text('Inject Messages'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'inject_messages_delay',
+                child: ListTile(
+                  leading: Icon(Icons.auto_awesome),
+                  title: Text('Inject Messages with Delay'),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: EasyChatView(
         controller: controller,

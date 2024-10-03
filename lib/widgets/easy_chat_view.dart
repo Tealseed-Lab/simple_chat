@@ -24,6 +24,18 @@ class EasyChatView extends StatefulWidget {
 
 class _EasyChatViewState extends State<EasyChatView> {
   @override
+  void initState() {
+    super.initState();
+    widget.controller.chatScrollController.controller.addListener(() {
+      _dismissKeyboard();
+    });
+  }
+
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return EasyChatTheme(
       data: EasyChatThemeData(
@@ -35,7 +47,12 @@ class _EasyChatViewState extends State<EasyChatView> {
           color: context.coloredTheme.backgroundColor,
           child: Column(
             children: [
-              Expanded(child: _buildMessageList(context)),
+              Expanded(
+                child: GestureDetector(
+                  onTap: _dismissKeyboard,
+                  child: _buildMessageList(context),
+                ),
+              ),
               InputBox(onSend: (text) {}),
             ],
           ),
@@ -49,6 +66,7 @@ class _EasyChatViewState extends State<EasyChatView> {
       builder: (context) => ListView.separated(
         controller: widget.controller.chatScrollController.controller,
         padding: context.layoutTheme.chatViewPadding,
+        cacheExtent: 1000,
         separatorBuilder: (context, index) {
           final currentMessage = widget.controller.store.messages[index];
           final nextMessage =
