@@ -18,6 +18,7 @@ class TextMessageItem extends StatelessWidget {
       isCurrentUser: isMessageFromCurrentUser,
       child: Text(
         textMessage.text,
+        maxLines: null,
         style: const TextStyle(
           color: Colors.black,
           fontSize: 16,

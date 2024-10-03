@@ -1,5 +1,6 @@
 import 'package:easy_chat/easy_chat.dart';
 import 'package:flutter/material.dart';
+import 'dart:math'; // Added import for Random
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -42,18 +43,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> injectMessages() async {
+    final random = Random();
     for (var i = 0; i < 10; i++) {
       await Future.delayed(const Duration(seconds: 1));
+      final userId = random.nextBool() ? '1' : '2';
+      final textLength = random.nextInt(50) + 10; // Random length between 10 and 59
       await controller.store.addMessages([
         ModelTextMessage(
           id: '$i',
-          text: 'Hello, how are you? $i',
-          userId: i % 2 == 0 ? '1' : '2',
+          text: generateRandomText(textLength),
+          userId: userId,
           sequence: i,
           displayDatetime: DateTime.now(),
         ),
       ]);
     }
+  }
+
+  String generateRandomText(int length) {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789 ';
+    final random = Random();
+    return String.fromCharCodes(Iterable.generate(length, (_) => chars.codeUnitAt(random.nextInt(chars.length))));
   }
 
   @override

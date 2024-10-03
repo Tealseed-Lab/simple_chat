@@ -49,13 +49,22 @@ class _EasyChatViewState extends State<EasyChatView> {
       builder: (context) => ListView.separated(
         controller: widget.controller.chatScrollController.controller,
         padding: context.layoutTheme.chatViewPadding,
-        separatorBuilder: (context, index) => const SizedBox(height: 16),
+        separatorBuilder: (context, index) {
+          final currentMessage = widget.controller.store.messages[index];
+          final nextMessage =
+              index + 1 < widget.controller.store.messages.length ? widget.controller.store.messages[index + 1] : null;
+          final isSameUser = nextMessage != null && currentMessage.userId == nextMessage.userId;
+          return SizedBox(height: isSameUser ? 4 : 16);
+        },
         itemCount: widget.controller.store.messages.length,
         itemBuilder: (context, index) {
           return Observer(
             builder: (context) {
               final message = widget.controller.store.messages[index];
+              final previousMessage = index > 0 ? widget.controller.store.messages[index - 1] : null;
               final isMessageFromCurrentUser = widget.controller.store.isMessageFromCurrentUser(message);
+              final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
+
               final builder = widget.controller.viewFactory.buildFor(
                 context,
                 message: message,
@@ -63,13 +72,20 @@ class _EasyChatViewState extends State<EasyChatView> {
               );
               final messageItem = builder ?? UnsupportMessageItem(isCurrentUser: isMessageFromCurrentUser);
               final user = widget.controller.store.users[message.userId];
-              final userAvatar = UserAvatar(user: user);
+              final userAvatar =
+                  isSameUser ? SizedBox(width: context.layoutTheme.userAvatarSize) : UserAvatar(user: user);
+
+              // Wrap messageItem with Flexible widget
+              final flexibleMessageItem = Flexible(
+                child: messageItem,
+              );
+
               if (isMessageFromCurrentUser) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    messageItem,
+                    flexibleMessageItem,
                     const SizedBox(width: 8),
                     userAvatar,
                   ],
@@ -81,7 +97,7 @@ class _EasyChatViewState extends State<EasyChatView> {
                   children: [
                     userAvatar,
                     const SizedBox(width: 8),
-                    messageItem,
+                    flexibleMessageItem,
                   ],
                 );
               }
