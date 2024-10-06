@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 class InputBoxImageItem extends StatelessWidget {
   final XFile imageFile;
   final double size;
+  final bool disabled;
   final void Function(XFile) onTap;
   final void Function(XFile) onRemove;
   const InputBoxImageItem({
@@ -14,6 +15,7 @@ class InputBoxImageItem extends StatelessWidget {
     this.size = 60,
     required this.onTap,
     required this.onRemove,
+    this.disabled = false,
   });
 
   @override
@@ -33,26 +35,27 @@ class InputBoxImageItem extends StatelessWidget {
                 width: size,
                 height: size,
               ),
-              Positioned(
-                top: 3,
-                right: 3,
-                child: GestureDetector(
-                  onTap: () => onRemove(imageFile),
-                  child: Container(
-                    width: 18,
-                    height: 18,
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 12,
+              if (!disabled)
+                Positioned(
+                  top: 3,
+                  right: 3,
+                  child: GestureDetector(
+                    onTap: () => onRemove(imageFile),
+                    child: Container(
+                      width: 18,
+                      height: 18,
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 12,
+                      ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),

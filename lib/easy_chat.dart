@@ -8,3 +8,4 @@ export 'models/base_message.dart';
 export 'models/base_user.dart';
 export 'models/text_message.dart';
 export 'models/user.dart';
+export 'controllers/easy_chat_action_handler.dart';

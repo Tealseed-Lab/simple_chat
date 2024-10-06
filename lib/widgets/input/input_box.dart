@@ -1,28 +1,33 @@
-import 'package:easy_chat/theme/easy_chat_theme.dart';
+import 'package:easy_chat/easy_chat.dart';
 import 'package:easy_chat/widgets/input/input_box_image_item.dart';
 import 'package:easy_chat/widgets/input/input_box_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 
 class InputBox extends StatelessWidget {
-  final TextEditingController controller;
-  final List<XFile> imageFiles;
+  final EasyChatController controller;
+  final TextEditingController textEditingController;
   final Function() onSend;
   final Function() onCameraTap;
   final Function() onAlbumTap;
   final Function(XFile) onImageTap;
   final Function(XFile) onImageRemove;
 
-  const InputBox({
+  late final EasyChatStore store;
+
+  InputBox({
     super.key,
     required this.controller,
-    required this.imageFiles,
+    required this.textEditingController,
     required this.onSend,
     required this.onCameraTap,
     required this.onAlbumTap,
     required this.onImageTap,
     required this.onImageRemove,
-  });
+  }) {
+    store = controller.store;
+  }
 
   final inputBoxHorizontalMargin = 16.0;
 
@@ -49,31 +54,39 @@ class InputBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           InputBoxTextField(
-            inputBoxHorizontalMargin: inputBoxHorizontalMargin,
             controller: controller,
-            imageFiles: imageFiles,
+            inputBoxHorizontalMargin: inputBoxHorizontalMargin,
+            textEditingController: textEditingController,
             onSend: onSend,
             onCameraTap: onCameraTap,
             onAlbumTap: onAlbumTap,
           ),
-          if (imageFiles.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Wrap(
-                clipBehavior: Clip.none,
-                spacing: 8.0,
-                runSpacing: 8.0,
-                alignment: WrapAlignment.start,
-                children: [
-                  for (var imageFile in imageFiles)
-                    InputBoxImageItem(
-                      imageFile: imageFile,
-                      onTap: onImageTap,
-                      onRemove: onImageRemove,
-                    ),
-                ],
-              ),
-            ),
+          Observer(
+            builder: (context) {
+              final imageFiles = store.imageFiles;
+              if (imageFiles.isNotEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Wrap(
+                    clipBehavior: Clip.none,
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    alignment: WrapAlignment.start,
+                    children: [
+                      for (var imageFile in imageFiles)
+                        InputBoxImageItem(
+                          imageFile: imageFile,
+                          onTap: onImageTap,
+                          onRemove: onImageRemove,
+                          disabled: store.isSending,
+                        ),
+                    ],
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ],
       ),
     );

@@ -81,6 +81,24 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
     });
   }
 
+  late final _$_isSendingAtom =
+      Atom(name: 'EasyChatStoreBase._isSending', context: context);
+
+  bool get isSending {
+    _$_isSendingAtom.reportRead();
+    return super._isSending;
+  }
+
+  @override
+  bool get _isSending => isSending;
+
+  @override
+  set _isSending(bool value) {
+    _$_isSendingAtom.reportWrite(value, super._isSending, () {
+      super._isSending = value;
+    });
+  }
+
   late final _$addMessageAsyncAction =
       AsyncAction('EasyChatStoreBase.addMessage', context: context);
 

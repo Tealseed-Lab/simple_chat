@@ -13,7 +13,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = EasyChatController();
+  final controller = EasyChatController(
+    actionHandler: EasyChatActionHandler(
+      onSendMessage: (output) async {
+        await Future.delayed(const Duration(seconds: 1));
+      },
+    ),
+  );
   @override
   void initState() {
     super.initState();

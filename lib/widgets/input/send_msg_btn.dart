@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SendMsgBtn extends StatelessWidget {
-  final bool isLoading;
+  final bool isSending;
   final bool isDisabled;
   final void Function()? onTap;
   final double size;
@@ -11,15 +11,20 @@ class SendMsgBtn extends StatelessWidget {
     super.key,
     this.onTap,
     this.isDisabled = false,
-    this.isLoading = false,
+    this.isSending = false,
     this.size = 32,
   });
   @override
   Widget build(BuildContext context) {
     Widget view;
-    if (isLoading) {
-      view = CircularProgressIndicator(
-        color: context.coloredTheme.primary,
+    if (isSending) {
+      view = Container(
+        width: size,
+        height: size,
+        padding: const EdgeInsets.all(4),
+        child: CircularProgressIndicator(
+          color: context.coloredTheme.primary,
+        ),
       );
     } else if (isDisabled) {
       view = SvgPicture.asset(

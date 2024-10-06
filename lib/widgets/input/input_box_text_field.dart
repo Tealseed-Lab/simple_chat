@@ -1,23 +1,23 @@
-import 'package:easy_chat/theme/easy_chat_theme.dart';
+import 'package:easy_chat/easy_chat.dart';
 import 'package:easy_chat/widgets/input/send_msg_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 
 class InputBoxTextField extends StatefulWidget {
   final double inputBoxHorizontalMargin;
 
-  final TextEditingController controller;
-  final List<XFile> imageFiles;
+  final EasyChatController controller;
+  final TextEditingController textEditingController;
   final Function() onSend;
   final Function() onCameraTap;
   final Function() onAlbumTap;
 
   const InputBoxTextField({
-    this.inputBoxHorizontalMargin = 16.0,
     super.key,
+    this.inputBoxHorizontalMargin = 16.0,
     required this.controller,
-    required this.imageFiles,
+    required this.textEditingController,
     required this.onSend,
     required this.onCameraTap,
     required this.onAlbumTap,
@@ -28,6 +28,7 @@ class InputBoxTextField extends StatefulWidget {
 }
 
 class _InputBoxTextFieldState extends State<InputBoxTextField> {
+  late final store = widget.controller.store;
   final textFieldStyle = const TextStyle(
     color: Colors.black,
     fontSize: 16,
@@ -39,7 +40,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(() {
+    widget.textEditingController.addListener(() {
       setState(() {});
     });
   }
@@ -74,27 +75,30 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                 constraints: BoxConstraints(
                   minWidth: textFieldMinWidth,
                 ),
-                child: TextField(
-                  cursorWidth: cursorWidth,
-                  cursorColor: context.coloredTheme.primary,
-                  controller: widget.controller,
-                  style: textFieldStyle,
-                  textAlign: TextAlign.left,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Type a message...',
-                    hintStyle: textFieldStyle.copyWith(
-                      color: const Color(0xFF3C3C3C).withOpacity(0.3),
+                child: Observer(
+                  builder: (context) => TextField(
+                    cursorWidth: cursorWidth,
+                    cursorColor: context.coloredTheme.primary,
+                    controller: widget.textEditingController,
+                    style: textFieldStyle,
+                    textAlign: TextAlign.left,
+                    enabled: !store.isSending,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Type a message...',
+                      hintStyle: textFieldStyle.copyWith(
+                        color: const Color(0xFF3C3C3C).withOpacity(0.3),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: textFieldHorizontalPadding,
+                        vertical: 8,
+                      ),
+                      isDense: true,
                     ),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: textFieldHorizontalPadding,
-                      vertical: 8,
-                    ),
-                    isDense: true,
+                    maxLines: 4,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
                   ),
-                  maxLines: 4,
-                  minLines: 1,
-                  keyboardType: TextInputType.multiline,
                 ),
               ),
             ),
@@ -113,13 +117,22 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                   padding: const EdgeInsets.only(right: cameraIconRightPadding),
                   child: GestureDetector(
                     onTap: () {
+                      if (store.isSending) {
+                        return;
+                      }
                       widget.onCameraTap.call();
                     },
-                    child: SvgPicture.asset(
-                      'assets/svg/input/camera.svg',
-                      package: 'easy_chat',
-                      width: cameraIconWidth,
-                      height: cameraIconWidth,
+                    child: Observer(
+                      builder: (context) => SvgPicture.asset(
+                        'assets/svg/input/camera.svg',
+                        package: 'easy_chat',
+                        width: cameraIconWidth,
+                        height: cameraIconWidth,
+                        colorFilter: ColorFilter.mode(
+                          store.isSending ? Colors.black.withOpacity(0.3) : Colors.black,
+                          BlendMode.srcIn,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -127,23 +140,38 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                   padding: const EdgeInsets.only(right: albumIconRightPadding),
                   child: GestureDetector(
                     onTap: () {
+                      if (store.isSending) {
+                        return;
+                      }
                       widget.onAlbumTap.call();
                     },
-                    child: SvgPicture.asset(
-                      'assets/svg/input/album.svg',
-                      package: 'easy_chat',
-                      width: albumIconWidth,
-                      height: albumIconWidth,
+                    child: Observer(
+                      builder: (context) => SvgPicture.asset(
+                        'assets/svg/input/album.svg',
+                        package: 'easy_chat',
+                        width: albumIconWidth,
+                        height: albumIconWidth,
+                        colorFilter: ColorFilter.mode(
+                          store.isSending ? Colors.black.withOpacity(0.3) : Colors.black,
+                          BlendMode.srcIn,
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: sendMsgBtnRightPadding),
-                  child: SendMsgBtn(
-                    size: sendMsgBtnWidth,
-                    onTap: () {
-                      widget.onSend.call();
-                    },
+                  child: Observer(
+                    builder: (context) => SendMsgBtn(
+                      size: sendMsgBtnWidth,
+                      isSending: store.isSending,
+                      onTap: () {
+                        if (store.isSending) {
+                          return;
+                        }
+                        widget.onSend.call();
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -173,7 +201,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
   }
 
   double _calculateTextFieldWidth(BuildContext context) {
-    final text = widget.controller.text;
+    final text = widget.textEditingController.text;
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,

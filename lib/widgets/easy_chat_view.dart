@@ -55,30 +55,31 @@ class _EasyChatViewState extends State<EasyChatView> {
                   child: _buildMessageList(context),
                 ),
               ),
-              Observer(
-                builder: (context) {
-                  final imageFiles = store.imageFiles;
-                  return InputBox(
-                    imageFiles: imageFiles,
-                    controller: store.textEditingController,
-                    onSend: () {},
-                    onCameraTap: () {
-                      if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
-                        return;
-                      }
-                      store.pickImage(source: ImageSource.camera);
-                    },
-                    onAlbumTap: () {
-                      if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
-                        return;
-                      }
-                      store.pickImage(source: ImageSource.gallery);
-                    },
-                    onImageTap: (imageFile) {},
-                    onImageRemove: (imageFile) {
-                      store.removeImage(image: imageFile);
+              InputBox(
+                controller: widget.controller,
+                textEditingController: store.textEditingController,
+                onSend: () {
+                  store.sendMessage(
+                    onSend: (output) async {
+                      await widget.controller.actionHandler?.onSendMessage?.call(output);
                     },
                   );
+                },
+                onCameraTap: () {
+                  if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                    return;
+                  }
+                  store.pickImage(source: ImageSource.camera);
+                },
+                onAlbumTap: () {
+                  if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                    return;
+                  }
+                  store.pickImage(source: ImageSource.gallery);
+                },
+                onImageTap: (imageFile) {},
+                onImageRemove: (imageFile) {
+                  store.removeImage(image: imageFile);
                 },
               ),
             ],
