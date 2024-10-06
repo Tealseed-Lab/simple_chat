@@ -95,7 +95,6 @@ class _InputBoxState extends State<InputBox> {
                     style: textFieldStyle,
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
-                      filled: true,
                       border: InputBorder.none,
                       hintText: 'Type a message...',
                       hintStyle: textFieldStyle.copyWith(
@@ -114,7 +113,7 @@ class _InputBoxState extends State<InputBox> {
                 ),
               ),
             ];
-            final textFieldWidth = _calculateTextFieldWidth(context);
+            final textFieldWidth = _calculateTextFieldWidth(context) + 8;
             bool isAloneInRow = textFieldWidth > textFieldMinWidth;
             final buttonBox = Container(
               width: buttonBoxWidth,
@@ -167,10 +166,9 @@ class _InputBoxState extends State<InputBox> {
             );
             if (isAloneInRow) {
               wrapChildren.add(
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [buttonBox],
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: buttonBox,
                 ),
               );
             } else {
