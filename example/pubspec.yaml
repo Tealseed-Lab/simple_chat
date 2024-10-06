@@ -40,6 +40,8 @@ dependencies:
   flutter_mobx: ^2.2.1+1
   json_annotation: ^4.9.0
   flutter_svg: ^2.0.7
+  image_picker: ^1.1.2
+  
   easy_chat:
     path: ../
 
