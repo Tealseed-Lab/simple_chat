@@ -63,6 +63,24 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
     });
   }
 
+  late final _$_imageFilesAtom =
+      Atom(name: 'EasyChatStoreBase._imageFiles', context: context);
+
+  ObservableList<XFile> get imageFiles {
+    _$_imageFilesAtom.reportRead();
+    return super._imageFiles;
+  }
+
+  @override
+  ObservableList<XFile> get _imageFiles => imageFiles;
+
+  @override
+  set _imageFiles(ObservableList<XFile> value) {
+    _$_imageFilesAtom.reportWrite(value, super._imageFiles, () {
+      super._imageFiles = value;
+    });
+  }
+
   late final _$addMessageAsyncAction =
       AsyncAction('EasyChatStoreBase.addMessage', context: context);
 
@@ -97,6 +115,22 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   @override
   Future<void> addUsers({required List<ModelBaseUser> users}) {
     return _$addUsersAsyncAction.run(() => super.addUsers(users: users));
+  }
+
+  late final _$pickImageAsyncAction =
+      AsyncAction('EasyChatStoreBase.pickImage', context: context);
+
+  @override
+  Future<void> pickImage({required ImageSource source}) {
+    return _$pickImageAsyncAction.run(() => super.pickImage(source: source));
+  }
+
+  late final _$removeImageAsyncAction =
+      AsyncAction('EasyChatStoreBase.removeImage', context: context);
+
+  @override
+  Future<void> removeImage({required XFile image}) {
+    return _$removeImageAsyncAction.run(() => super.removeImage(image: image));
   }
 
   @override

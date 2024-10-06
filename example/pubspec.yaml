@@ -36,12 +36,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   
-  mobx: ^2.3.3+2
-  flutter_mobx: ^2.2.1+1
-  json_annotation: ^4.9.0
-  flutter_svg: ^2.0.7
-  image_picker: ^1.1.2
-  
   easy_chat:
     path: ../
 

@@ -5,15 +5,24 @@ import 'package:easy_chat/easy_chat.dart';
 import 'package:easy_chat/widgets/messages/text_message_item.dart';
 import 'package:flutter/material.dart';
 
+class EasyChatConfig {
+  final int imageMaxCount;
+  EasyChatConfig({
+    this.imageMaxCount = 9,
+  });
+}
+
 class EasyChatController {
   late final EasyChatStore store;
   final chatScrollController = ChatScrollController();
   final viewFactory = ViewFactory();
   final EasyChatActionHandler? actionHandler;
-
+  late final EasyChatConfig config;
   EasyChatController({
     this.actionHandler,
+    EasyChatConfig? config,
   }) {
+    this.config = config ?? EasyChatConfig();
     store = EasyChatStore(
       chatScrollController,
     );

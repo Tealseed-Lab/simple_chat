@@ -126,7 +126,7 @@ packages:
     source: hosted
     version: "3.0.2"
   flutter_mobx:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_mobx
       sha256: "859fbf452fa9c2519d2700b125dd7fb14c508bbdd7fb65e26ca8ff6c92280e2e"
@@ -142,7 +142,7 @@ packages:
     source: hosted
     version: "2.0.23"
   flutter_svg:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_svg
       sha256: "7b4ca6cf3304575fe9c8ec64813c8d02ee41d2afe60bcfe0678bcb5375d596a2"
@@ -176,7 +176,7 @@ packages:
     source: hosted
     version: "4.0.2"
   image_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image_picker
       sha256: "021834d9c0c3de46bf0fe40341fa07168407f694d9b2bb18d532dc1261867f7a"
@@ -240,7 +240,7 @@ packages:
     source: hosted
     version: "0.2.1+1"
   json_annotation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: json_annotation
       sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
@@ -312,7 +312,7 @@ packages:
     source: hosted
     version: "1.0.6"
   mobx:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: mobx
       sha256: "63920b27b32ad1910adfe767ab1750e4c212e8923232a1f891597b362074ea5e"

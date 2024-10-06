@@ -5,6 +5,7 @@ import 'package:easy_chat/widgets/messages/unsupport_message_item.dart';
 import 'package:easy_chat/widgets/users/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EasyChatView extends StatefulWidget {
   final EasyChatThemeData theme;
@@ -23,6 +24,7 @@ class EasyChatView extends StatefulWidget {
 }
 
 class _EasyChatViewState extends State<EasyChatView> {
+  late final store = widget.controller.store;
   @override
   void initState() {
     super.initState();
@@ -53,7 +55,32 @@ class _EasyChatViewState extends State<EasyChatView> {
                   child: _buildMessageList(context),
                 ),
               ),
-              InputBox(onSend: (text) {}),
+              Observer(
+                builder: (context) {
+                  final imageFiles = store.imageFiles;
+                  return InputBox(
+                    imageFiles: imageFiles,
+                    controller: store.textEditingController,
+                    onSend: () {},
+                    onCameraTap: () {
+                      if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                        return;
+                      }
+                      store.pickImage(source: ImageSource.camera);
+                    },
+                    onAlbumTap: () {
+                      if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                        return;
+                      }
+                      store.pickImage(source: ImageSource.gallery);
+                    },
+                    onImageTap: (imageFile) {},
+                    onImageRemove: (imageFile) {
+                      store.removeImage(image: imageFile);
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -68,19 +95,18 @@ class _EasyChatViewState extends State<EasyChatView> {
         padding: context.layoutTheme.chatViewPadding,
         cacheExtent: 1000,
         separatorBuilder: (context, index) {
-          final currentMessage = widget.controller.store.messages[index];
-          final nextMessage =
-              index + 1 < widget.controller.store.messages.length ? widget.controller.store.messages[index + 1] : null;
+          final currentMessage = store.messages[index];
+          final nextMessage = index + 1 < store.messages.length ? store.messages[index + 1] : null;
           final isSameUser = nextMessage != null && currentMessage.userId == nextMessage.userId;
           return SizedBox(height: isSameUser ? 4 : 16);
         },
-        itemCount: widget.controller.store.messages.length,
+        itemCount: store.messages.length,
         itemBuilder: (context, index) {
           return Observer(
             builder: (context) {
-              final message = widget.controller.store.messages[index];
-              final previousMessage = index > 0 ? widget.controller.store.messages[index - 1] : null;
-              final isMessageFromCurrentUser = widget.controller.store.isMessageFromCurrentUser(message);
+              final message = store.messages[index];
+              final previousMessage = index > 0 ? store.messages[index - 1] : null;
+              final isMessageFromCurrentUser = store.isMessageFromCurrentUser(message);
               final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
 
               final builder = widget.controller.viewFactory.buildFor(
@@ -89,7 +115,7 @@ class _EasyChatViewState extends State<EasyChatView> {
                 isMessageFromCurrentUser: isMessageFromCurrentUser,
               );
               final messageItem = builder ?? UnsupportMessageItem(isCurrentUser: isMessageFromCurrentUser);
-              final user = widget.controller.store.users[message.userId];
+              final user = store.users[message.userId];
               final userAvatar =
                   isSameUser ? SizedBox(width: context.layoutTheme.userAvatarSize) : UserAvatar(user: user);
 
