@@ -30,7 +30,8 @@ class _InputBoxState extends State<InputBox> {
     fontSize: 16,
     height: 1.5,
   );
-  final textFieldHorizontalPadding = 16.0;
+  final textFieldHorizontalPadding = 0.0;
+  final cursorWidth = 0.0;
 
   @override
   void initState() {
@@ -44,7 +45,6 @@ class _InputBoxState extends State<InputBox> {
   Widget build(BuildContext context) {
     const inputBoxHeight = 40.0;
     const inputBoxHorizontalMargin = 16.0;
-
     const cameraIconWidth = 24.0;
     const cameraIconRightPadding = 16.0;
     const albumIconWidth = 24.0;
@@ -57,10 +57,7 @@ class _InputBoxState extends State<InputBox> {
         cameraIconRightPadding +
         albumIconRightPadding +
         sendMsgBtnRightPadding;
-    final textFieldMinWidth = MediaQuery.of(context).size.width -
-        inputBoxHorizontalMargin * 2 -
-        textFieldHorizontalPadding * 2 -
-        buttonBoxWidth;
+    final textFieldMinWidth = MediaQuery.of(context).size.width - inputBoxHorizontalMargin * 2 - buttonBoxWidth;
     return Container(
       padding: EdgeInsets.only(
         left: inputBoxHorizontalMargin,
@@ -92,9 +89,13 @@ class _InputBoxState extends State<InputBox> {
                     minWidth: textFieldMinWidth,
                   ),
                   child: TextField(
+                    cursorWidth: cursorWidth,
+                    cursorColor: context.coloredTheme.primary,
                     controller: _controller,
                     style: textFieldStyle,
+                    textAlign: TextAlign.left,
                     decoration: InputDecoration(
+                      filled: true,
                       border: InputBorder.none,
                       hintText: 'Type a message...',
                       hintStyle: textFieldStyle.copyWith(
@@ -178,6 +179,8 @@ class _InputBoxState extends State<InputBox> {
             return SizedBox(
               width: double.infinity,
               child: Wrap(
+                spacing: 0,
+                runSpacing: 0,
                 children: wrapChildren,
               ),
             );
@@ -188,13 +191,16 @@ class _InputBoxState extends State<InputBox> {
   }
 
   double _calculateTextFieldWidth(BuildContext context) {
+    final text = _controller.text;
     final textPainter = TextPainter(
       text: TextSpan(
-        text: _controller.text,
-        style: textFieldStyle,
+        text: text,
+        style: DefaultTextStyle.of(context).style.merge(textFieldStyle),
       ),
       maxLines: 1,
+      textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.of(context).textScaler,
     )..layout(minWidth: 0, maxWidth: double.infinity);
 
     return textPainter.size.width + textFieldHorizontalPadding * 2; // Add padding to account for margins
