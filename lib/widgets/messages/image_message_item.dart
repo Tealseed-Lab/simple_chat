@@ -28,16 +28,7 @@ class ImageMessageItem extends StatelessWidget {
     return MessageBubble(
       padding: EdgeInsets.zero,
       isCurrentUser: isMessageFromCurrentUser,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width - 120,
-          maxHeight: 200,
-        ),
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: child,
-        ),
-      ),
+      child: child,
     );
   }
 }
