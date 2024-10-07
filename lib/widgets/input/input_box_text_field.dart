@@ -77,30 +77,28 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                 constraints: BoxConstraints(
                   minWidth: textFieldMinWidth,
                 ),
-                child: Observer(
-                  builder: (context) => TextField(
-                    cursorWidth: cursorWidth,
-                    cursorColor: context.coloredTheme.primary,
-                    controller: widget.textEditingController,
-                    style: textFieldStyle,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Type a message...',
-                      hintStyle: textFieldStyle.copyWith(
-                        color: const Color(0xFF3C3C3C).withOpacity(0.3),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: textFieldHorizontalPadding,
-                        vertical: 8,
-                      ),
-                      isDense: true,
+                child: TextField(
+                  cursorWidth: cursorWidth,
+                  cursorColor: context.coloredTheme.primary,
+                  controller: widget.textEditingController,
+                  style: textFieldStyle,
+                  textAlign: TextAlign.left,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Type a message...',
+                    hintStyle: textFieldStyle.copyWith(
+                      color: const Color(0xFF3C3C3C).withOpacity(0.3),
                     ),
-                    focusNode: widget.focusNode,
-                    maxLines: 4,
-                    minLines: 1,
-                    keyboardType: TextInputType.multiline,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: textFieldHorizontalPadding,
+                      vertical: 8,
+                    ),
+                    isDense: true,
                   ),
+                  focusNode: widget.focusNode,
+                  maxLines: 4,
+                  minLines: 1,
+                  keyboardType: TextInputType.multiline,
                 ),
               ),
             ),
@@ -167,6 +165,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     builder: (context) => SendMsgBtn(
                       size: sendMsgBtnWidth,
                       isSending: store.isSending,
+                      isDisabled: widget.textEditingController.text.isEmpty,
                       onTap: () {
                         if (store.isSending) {
                           return;

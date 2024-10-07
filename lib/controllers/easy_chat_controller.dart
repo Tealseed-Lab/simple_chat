@@ -1,6 +1,7 @@
 import 'package:easy_chat/controllers/chat_scroll_controller.dart';
 import 'package:easy_chat/controllers/view_factory.dart';
 import 'package:easy_chat/easy_chat.dart';
+import 'package:easy_chat/widgets/messages/image_message_item.dart';
 import 'package:easy_chat/widgets/messages/text_message_item.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,17 @@ class EasyChatController {
           TextMessageItem(
         isMessageFromCurrentUser: isMessageFromCurrentUser,
         textMessage: message,
+      ),
+    );
+    viewFactory.register<ModelImageMessage>(
+      (
+        BuildContext context, {
+        required bool isMessageFromCurrentUser,
+        required ModelImageMessage message,
+      }) =>
+          ImageMessageItem(
+        isMessageFromCurrentUser: isMessageFromCurrentUser,
+        imageMessage: message,
       ),
     );
   }

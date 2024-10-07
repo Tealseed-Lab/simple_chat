@@ -33,9 +33,6 @@ class _EasyChatViewState extends State<EasyChatView> {
   @override
   void initState() {
     super.initState();
-    widget.controller.chatScrollController.controller.addListener(() {
-      _dismissKeyboard();
-    });
   }
 
   void _dismissKeyboard() {
@@ -67,18 +64,21 @@ class _EasyChatViewState extends State<EasyChatView> {
                 onSend: () {
                   store.sendMessage(
                     onSend: (output) async {
-                      await widget.controller.actionHandler?.onSendMessage?.call(output);
+                      await widget.controller.actionHandler?.onSendMessage
+                          ?.call(output);
                     },
                   );
                 },
                 onCameraTap: () {
-                  if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                  if (store.imageFiles.length >=
+                      widget.controller.config.imageMaxCount) {
                     return;
                   }
                   store.pickImage(source: ImageSource.camera);
                 },
                 onAlbumTap: () {
-                  if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                  if (store.imageFiles.length >=
+                      widget.controller.config.imageMaxCount) {
                     return;
                   }
                   store.pickImage(source: ImageSource.gallery);
@@ -103,8 +103,11 @@ class _EasyChatViewState extends State<EasyChatView> {
         cacheExtent: 1000,
         separatorBuilder: (context, index) {
           final currentMessage = store.messages[index];
-          final nextMessage = index + 1 < store.messages.length ? store.messages[index + 1] : null;
-          final isSameUser = nextMessage != null && currentMessage.userId == nextMessage.userId;
+          final nextMessage = index + 1 < store.messages.length
+              ? store.messages[index + 1]
+              : null;
+          final isSameUser = nextMessage != null &&
+              currentMessage.userId == nextMessage.userId;
           return SizedBox(height: isSameUser ? 4 : 16);
         },
         itemCount: store.messages.length,
@@ -112,19 +115,24 @@ class _EasyChatViewState extends State<EasyChatView> {
           return Observer(
             builder: (context) {
               final message = store.messages[index];
-              final previousMessage = index > 0 ? store.messages[index - 1] : null;
-              final isMessageFromCurrentUser = store.isMessageFromCurrentUser(message);
-              final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
+              final previousMessage =
+                  index > 0 ? store.messages[index - 1] : null;
+              final isMessageFromCurrentUser =
+                  store.isMessageFromCurrentUser(message);
+              final isSameUser = previousMessage != null &&
+                  message.userId == previousMessage.userId;
 
               final builder = widget.controller.viewFactory.buildFor(
                 context,
                 message: message,
                 isMessageFromCurrentUser: isMessageFromCurrentUser,
               );
-              final messageItem = builder ?? UnsupportMessageItem(isCurrentUser: isMessageFromCurrentUser);
+              final messageItem = builder ??
+                  UnsupportMessageItem(isCurrentUser: isMessageFromCurrentUser);
               final user = store.users[message.userId];
-              final userAvatar =
-                  isSameUser ? SizedBox(width: context.layoutTheme.userAvatarSize) : UserAvatar(user: user);
+              final userAvatar = isSameUser
+                  ? SizedBox(width: context.layoutTheme.userAvatarSize)
+                  : UserAvatar(user: user);
 
               // Wrap messageItem with Flexible widget
               final flexibleMessageItem = Flexible(

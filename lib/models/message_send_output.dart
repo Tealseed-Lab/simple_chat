@@ -1,10 +1,10 @@
 import 'package:image_picker/image_picker.dart';
 
-class MessageSendOutput {
+class EasyMessageSendOutput {
   final String message;
   final List<XFile> imageFiles;
 
-  MessageSendOutput({
+  EasyMessageSendOutput({
     required this.message,
     required this.imageFiles,
   });

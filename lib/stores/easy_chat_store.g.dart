@@ -135,6 +135,16 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
     return _$addUsersAsyncAction.run(() => super.addUsers(users: users));
   }
 
+  late final _$sendMessageAsyncAction =
+      AsyncAction('EasyChatStoreBase.sendMessage', context: context);
+
+  @override
+  Future<void> sendMessage(
+      {required dynamic Function(EasyMessageSendOutput) onSend}) {
+    return _$sendMessageAsyncAction
+        .run(() => super.sendMessage(onSend: onSend));
+  }
+
   late final _$pickImageAsyncAction =
       AsyncAction('EasyChatStoreBase.pickImage', context: context);
 

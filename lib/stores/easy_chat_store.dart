@@ -100,9 +100,9 @@ abstract class EasyChatStoreBase with Store {
   }
 
   @action
-  Future<void> sendMessage({required Function(MessageSendOutput output) onSend}) async {
+  Future<void> sendMessage({required Function(EasyMessageSendOutput output) onSend}) async {
     _isSending = true;
-    final output = MessageSendOutput(
+    final output = EasyMessageSendOutput(
       message: textEditingController.text,
       imageFiles: _imageFiles.toList(),
     );

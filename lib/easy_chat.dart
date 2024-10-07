@@ -7,5 +7,7 @@ export 'controllers/easy_chat_controller.dart';
 export 'models/base_message.dart';
 export 'models/base_user.dart';
 export 'models/text_message.dart';
+export 'models/image_message.dart';
 export 'models/user.dart';
+export 'models/message_send_output.dart';
 export 'controllers/easy_chat_action_handler.dart';
