@@ -8,13 +8,18 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EasyChatView extends StatefulWidget {
-  final EasyChatThemeData theme;
+  late final EasyChatThemeData theme;
   late final EasyChatController controller;
   EasyChatView({
     super.key,
-    required this.theme,
+    EasyChatThemeData? theme,
     EasyChatController? controller,
   }) {
+    this.theme = theme ??
+        EasyChatThemeData(
+          light: EasyChatColorThemeData(),
+          dark: EasyChatColorThemeData(),
+        );
     this.controller = controller ?? EasyChatController();
   }
   @override
