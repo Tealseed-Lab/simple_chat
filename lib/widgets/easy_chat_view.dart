@@ -58,6 +58,7 @@ class _EasyChatViewState extends State<EasyChatView> {
               InputBox(
                 controller: widget.controller,
                 textEditingController: store.textEditingController,
+                focusNode: store.focusNode,
                 onSend: () {
                   store.sendMessage(
                     onSend: (output) async {

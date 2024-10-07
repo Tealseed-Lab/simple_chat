@@ -9,6 +9,7 @@ class InputBoxTextField extends StatefulWidget {
 
   final EasyChatController controller;
   final TextEditingController textEditingController;
+  final FocusNode focusNode;
   final Function() onSend;
   final Function() onCameraTap;
   final Function() onAlbumTap;
@@ -18,6 +19,7 @@ class InputBoxTextField extends StatefulWidget {
     this.inputBoxHorizontalMargin = 16.0,
     required this.controller,
     required this.textEditingController,
+    required this.focusNode,
     required this.onSend,
     required this.onCameraTap,
     required this.onAlbumTap,
@@ -82,7 +84,6 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     controller: widget.textEditingController,
                     style: textFieldStyle,
                     textAlign: TextAlign.left,
-                    enabled: !store.isSending,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Type a message...',
@@ -95,6 +96,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                       ),
                       isDense: true,
                     ),
+                    focusNode: widget.focusNode,
                     maxLines: 4,
                     minLines: 1,
                     keyboardType: TextInputType.multiline,

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:easy_chat/controllers/chat_scroll_controller.dart';
 import 'package:easy_chat/models/base_message.dart';
 import 'package:easy_chat/models/base_user.dart';
@@ -16,6 +14,7 @@ class EasyChatStore = EasyChatStoreBase with _$EasyChatStore;
 abstract class EasyChatStoreBase with Store {
   final ChatScrollController chatScrollController;
   final TextEditingController textEditingController = TextEditingController();
+  final FocusNode focusNode = FocusNode();
 
   EasyChatStoreBase(
     this.chatScrollController,

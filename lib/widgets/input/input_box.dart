@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 class InputBox extends StatelessWidget {
   final EasyChatController controller;
   final TextEditingController textEditingController;
+  final FocusNode focusNode;
   final Function() onSend;
   final Function() onCameraTap;
   final Function() onAlbumTap;
@@ -20,6 +21,7 @@ class InputBox extends StatelessWidget {
     super.key,
     required this.controller,
     required this.textEditingController,
+    required this.focusNode,
     required this.onSend,
     required this.onCameraTap,
     required this.onAlbumTap,
@@ -57,6 +59,7 @@ class InputBox extends StatelessWidget {
             controller: controller,
             inputBoxHorizontalMargin: inputBoxHorizontalMargin,
             textEditingController: textEditingController,
+            focusNode: focusNode,
             onSend: onSend,
             onCameraTap: onCameraTap,
             onAlbumTap: onAlbumTap,
