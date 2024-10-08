@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class ChatScrollController with WidgetsBindingObserver {
   final controller = ScrollController();
@@ -16,61 +17,86 @@ class ChatScrollController with WidgetsBindingObserver {
 
   // WidgetsBindingObserver
 
+  double _previousBottomInset = 0;
+
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    final bottomInset = WidgetsBinding.instance.platformDispatcher.views.first.viewInsets.bottom;
-    // when keyboard is shown, jump to bottom
-    if (bottomInset > 0) {
+    final bottomInset = WidgetsBinding
+        .instance.platformDispatcher.views.first.viewInsets.bottom;
+    // Only jump to bottom when keyboard is shown (bottomInset increases)
+    if (bottomInset > _previousBottomInset) {
       jumpToBottom();
     }
+    _previousBottomInset = bottomInset;
   }
 
   // public
 
-  bool isAtBottom() {
+  bool isAtTop() {
     if (!controller.hasClients) return false;
     final position = controller.position;
-    return position.pixels >= position.maxScrollExtent - 1 || position.viewportDimension >= position.maxScrollExtent;
+    return position.pixels >= position.maxScrollExtent - 1 ||
+        position.viewportDimension >= position.maxScrollExtent;
   }
 
-  bool isAtTop() {
+  bool isAtBottom() {
     if (!controller.hasClients) return false;
     final position = controller.position;
     return position.pixels <= 1;
   }
 
-  void scrollToBottom() {
+  Future<void> scrollToTop() async {
     if (controller.hasClients) {
-      controller.animateTo(
-        controller.position.maxScrollExtent,
-        duration: Duration(milliseconds: animationDurationInMilliseconds),
-        curve: Curves.easeOut,
-      );
+      Logger().i(
+          '[easy-chat-scroll-controller] scrollToBottom check offset: ${controller.offset}, maxScrollExtent: ${controller.position.maxScrollExtent}');
+      while (controller.offset + 1 < controller.position.maxScrollExtent) {
+        Logger().i(
+            '[easy-chat-scroll-controller] scrollToBottom offset: ${controller.offset}, maxScrollExtent: ${controller.position.maxScrollExtent}');
+        controller.animateTo(
+          controller.position.maxScrollExtent,
+          duration: Duration(milliseconds: animationDurationInMilliseconds),
+          curve: Curves.easeOut,
+        );
+        await Future.delayed(
+          Duration(milliseconds: animationDurationInMilliseconds),
+        );
+      }
     }
   }
 
-  void scrollToTop() {
+  Future<void> scrollToBottom() async {
     if (controller.hasClients) {
-      controller.animateTo(
-        0,
-        duration: Duration(milliseconds: animationDurationInMilliseconds),
-        curve: Curves.easeOut,
-      );
+      if (controller.offset > 0) {
+        await controller.animateTo(
+          0,
+          duration: Duration(milliseconds: animationDurationInMilliseconds),
+          curve: Curves.easeOut,
+        );
+      }
     }
   }
 
-  void jumpToBottom() {
+  Future<void> jumpToTop() async {
     if (controller.hasClients) {
-      controller.jumpTo(
-        controller.position.maxScrollExtent,
-      );
+      while (controller.offset + 1 < controller.position.maxScrollExtent) {
+        Logger().i(
+            '[easy-chat-scroll-controller] jumpToBottom offset: ${controller.offset}, maxScrollExtent: ${controller.position.maxScrollExtent}');
+        controller.jumpTo(
+          controller.position.maxScrollExtent,
+        );
+        await Future.delayed(
+          Duration(milliseconds: animationDurationInMilliseconds),
+        );
+      }
     }
   }
 
-  void jumpToTop() {
+  Future<void> jumpToBottom() async {
     if (controller.hasClients) {
-      controller.jumpTo(0);
+      if (controller.offset > 0) {
+        controller.jumpTo(0);
+      }
     }
   }
 

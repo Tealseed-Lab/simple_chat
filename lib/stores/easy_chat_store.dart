@@ -55,12 +55,12 @@ abstract class EasyChatStoreBase with Store {
     bool isInitial = false,
   }) async {
     final isAtBottom = chatScrollController.isAtBottom();
-    _messages.add(message);
+    _messages.insert(0, message);
     if (!isInitial && isAtBottom) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         chatScrollController.scrollToBottom();
       });
-    }
+    } else if (!isAtBottom) {}
   }
 
   @action
@@ -69,12 +69,12 @@ abstract class EasyChatStoreBase with Store {
     bool isInitial = false,
   }) async {
     final isAtBottom = chatScrollController.isAtBottom();
-    _messages.addAll(messages);
+    _messages.insertAll(0, messages.reversed);
     if (!isInitial && isAtBottom) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         chatScrollController.scrollToBottom();
       });
-    }
+    } else if (!isAtBottom) {}
   }
 
   @action
