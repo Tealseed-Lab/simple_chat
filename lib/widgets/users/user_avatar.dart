@@ -6,9 +6,11 @@ class UserAvatar extends StatelessWidget {
   const UserAvatar({
     super.key,
     required this.user,
+    this.onTap,
   });
 
   final ModelBaseUser? user;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,12 @@ class UserAvatar extends StatelessWidget {
       );
     }
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(context.layoutTheme.userAvatarSize / 2),
-      child: child,
+    return GestureDetector(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(context.layoutTheme.userAvatarSize / 2),
+        child: child,
+      ),
     );
   }
 }

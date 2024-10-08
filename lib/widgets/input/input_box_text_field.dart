@@ -82,10 +82,11 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                   cursorColor: context.coloredTheme.primary,
                   controller: widget.textEditingController,
                   style: textFieldStyle,
+                  autofocus: false,
                   textAlign: TextAlign.left,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Type a message...',
+                    hintText: widget.controller.config.inputBoxHintText,
                     hintStyle: textFieldStyle.copyWith(
                       color: const Color(0xFF3C3C3C).withOpacity(0.3),
                     ),
@@ -115,21 +116,23 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: cameraIconRightPadding),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (store.isSending) {
-                        return;
-                      }
-                      widget.onCameraTap.call();
-                    },
-                    child: Observer(
-                      builder: (context) => SvgPicture.asset(
+                  child: Observer(
+                    builder: (context) => GestureDetector(
+                      onTap: () {
+                        if (store.isSending || store.reachImageSelectionLimit) {
+                          return;
+                        }
+                        widget.onCameraTap.call();
+                      },
+                      child: SvgPicture.asset(
                         'assets/svg/input/camera.svg',
                         package: 'easy_chat',
                         width: cameraIconWidth,
                         height: cameraIconWidth,
                         colorFilter: ColorFilter.mode(
-                          store.isSending ? Colors.black.withOpacity(0.3) : Colors.black,
+                          store.isSending || store.reachImageSelectionLimit
+                              ? Colors.black.withOpacity(0.3)
+                              : Colors.black,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -138,21 +141,23 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: albumIconRightPadding),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (store.isSending) {
-                        return;
-                      }
-                      widget.onAlbumTap.call();
-                    },
-                    child: Observer(
-                      builder: (context) => SvgPicture.asset(
+                  child: Observer(
+                    builder: (context) => GestureDetector(
+                      onTap: () {
+                        if (store.isSending || store.reachImageSelectionLimit) {
+                          return;
+                        }
+                        widget.onAlbumTap.call();
+                      },
+                      child: SvgPicture.asset(
                         'assets/svg/input/album.svg',
                         package: 'easy_chat',
                         width: albumIconWidth,
                         height: albumIconWidth,
                         colorFilter: ColorFilter.mode(
-                          store.isSending ? Colors.black.withOpacity(0.3) : Colors.black,
+                          store.isSending || store.reachImageSelectionLimit
+                              ? Colors.black.withOpacity(0.3)
+                              : Colors.black,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -165,7 +170,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     builder: (context) => SendMsgBtn(
                       size: sendMsgBtnWidth,
                       isSending: store.isSending,
-                      isDisabled: widget.textEditingController.text.isEmpty,
+                      isDisabled:
+                          widget.textEditingController.text.isEmpty && widget.controller.store.imageFiles.isEmpty,
                       onTap: () {
                         if (store.isSending) {
                           return;

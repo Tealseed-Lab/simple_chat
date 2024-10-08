@@ -46,7 +46,7 @@ class _EasyChatViewState extends State<EasyChatView> {
   }
 
   void _dismissKeyboard() {
-    FocusScope.of(context).unfocus();
+    store.focusNode.unfocus();
   }
 
   @override
@@ -90,7 +90,9 @@ class _EasyChatViewState extends State<EasyChatView> {
                   }
                   store.pickImage(source: ImageSource.gallery);
                 },
-                onImageTap: (imageFile) {},
+                onImageTap: (imageFile) {
+                  widget.controller.actionHandler?.onImageThumbnailTap?.call(imageFile);
+                },
                 onImageRemove: (imageFile) {
                   store.removeImage(image: imageFile);
                 },
@@ -135,13 +137,22 @@ class _EasyChatViewState extends State<EasyChatView> {
                 );
                 final messageItem = builder ?? UnsupportMessageItem(isCurrentUser: isMessageFromCurrentUser);
                 final user = store.users[message.userId];
-                final userAvatar =
-                    isSameUser ? SizedBox(width: context.layoutTheme.userAvatarSize) : UserAvatar(user: user);
+                final userAvatar = isSameUser
+                    ? SizedBox(width: context.layoutTheme.userAvatarSize)
+                    : UserAvatar(
+                        user: user,
+                        onTap: () {
+                          widget.controller.actionHandler?.onUserAvatarTap?.call(user);
+                        },
+                      );
                 const avatarMessageSpacing = 8.0;
 
                 // Wrap messageItem with Flexible widget
                 final flexibleMessageItem = Flexible(
-                  child: messageItem,
+                  child: GestureDetector(
+                    onTap: () => widget.controller.actionHandler?.onMessageTap?.call(message),
+                    child: messageItem,
+                  ),
                 );
 
                 if (isMessageFromCurrentUser) {

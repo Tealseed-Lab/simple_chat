@@ -42,7 +42,10 @@ class SendMsgBtn extends StatelessWidget {
       );
     }
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        if (isDisabled) return;
+        onTap?.call();
+      },
       child: view,
     );
   }

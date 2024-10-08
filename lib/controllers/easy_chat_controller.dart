@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 
 class EasyChatConfig {
   final int imageMaxCount;
+  final String? inputBoxHintText;
   EasyChatConfig({
     this.imageMaxCount = 9,
+    this.inputBoxHintText,
   });
 }
 
@@ -25,6 +27,7 @@ class EasyChatController {
     this.config = config ?? EasyChatConfig();
     store = EasyChatStore(
       chatScrollController,
+      this.config,
     );
     viewFactory.register<ModelTextMessage>(
       (
