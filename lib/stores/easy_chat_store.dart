@@ -78,6 +78,27 @@ abstract class EasyChatStoreBase with Store {
   }
 
   @action
+  Future<void> removeMessage({
+    required ModelBaseMessage message,
+  }) async {
+    _messages.remove(message);
+  }
+
+  @action
+  Future<void> removeMessageById({
+    required String messageId,
+  }) async {
+    _messages.removeWhere((message) => message.id == messageId);
+  }
+
+  @action
+  Future<void> removeMessages({
+    required List<ModelBaseMessage> messages,
+  }) async {
+    _messages.removeWhere((message) => messages.contains(message));
+  }
+
+  @action
   Future<void> addUser({
     required ModelBaseUser user,
   }) async {

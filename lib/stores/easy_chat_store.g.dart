@@ -119,6 +119,33 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
         .run(() => super.addMessages(messages: messages, isInitial: isInitial));
   }
 
+  late final _$removeMessageAsyncAction =
+      AsyncAction('EasyChatStoreBase.removeMessage', context: context);
+
+  @override
+  Future<void> removeMessage({required ModelBaseMessage message}) {
+    return _$removeMessageAsyncAction
+        .run(() => super.removeMessage(message: message));
+  }
+
+  late final _$removeMessageByIdAsyncAction =
+      AsyncAction('EasyChatStoreBase.removeMessageById', context: context);
+
+  @override
+  Future<void> removeMessageById({required String messageId}) {
+    return _$removeMessageByIdAsyncAction
+        .run(() => super.removeMessageById(messageId: messageId));
+  }
+
+  late final _$removeMessagesAsyncAction =
+      AsyncAction('EasyChatStoreBase.removeMessages', context: context);
+
+  @override
+  Future<void> removeMessages({required List<ModelBaseMessage> messages}) {
+    return _$removeMessagesAsyncAction
+        .run(() => super.removeMessages(messages: messages));
+  }
+
   late final _$addUserAsyncAction =
       AsyncAction('EasyChatStoreBase.addUser', context: context);
 
