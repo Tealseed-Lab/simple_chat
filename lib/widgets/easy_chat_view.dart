@@ -124,7 +124,7 @@ class _EasyChatViewState extends State<EasyChatView> {
             return Observer(
               builder: (context) {
                 final message = store.messages[index];
-                final previousMessage = index > 0 ? store.messages[index - 1] : null;
+                final previousMessage = index + 1 < store.messages.length ? store.messages[index + 1] : null;
                 final isMessageFromCurrentUser = store.isMessageFromCurrentUser(message);
                 final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
 
