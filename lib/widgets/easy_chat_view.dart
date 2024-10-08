@@ -117,9 +117,9 @@ class _EasyChatViewState extends State<EasyChatView> {
           cacheExtent: 1000,
           separatorBuilder: (context, index) {
             final currentMessage = store.messages[index];
-            final nextMessage = index + 1 < store.messages.length ? store.messages[index + 1] : null;
-            final isSameUser = nextMessage != null && currentMessage.userId == nextMessage.userId;
-            return SizedBox(height: isSameUser ? 4 : 16);
+            final previousMessage = index + 1 < store.messages.length ? store.messages[index + 1] : null;
+            final isSameUser = previousMessage != null && currentMessage.userId == previousMessage.userId;
+            return SizedBox(height: isSameUser && !currentMessage.forceNewBlock ? 4 : 16);
           },
           itemCount: store.messages.length,
           itemBuilder: (context, index) {
@@ -137,7 +137,7 @@ class _EasyChatViewState extends State<EasyChatView> {
                 );
                 final messageItem = builder ?? UnsupportMessageItem(isCurrentUser: isMessageFromCurrentUser);
                 final user = store.users[message.userId];
-                final userAvatar = isSameUser
+                final userAvatar = isSameUser && !message.forceNewBlock
                     ? SizedBox(width: context.layoutTheme.userAvatarSize)
                     : UserAvatar(
                         user: user,
