@@ -35,6 +35,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
     color: Colors.black,
     fontSize: 16,
     height: 1.5,
+    fontWeight: FontWeight.w400,
   );
   final textFieldHorizontalPadding = 16.0;
   final cursorWidth = 2.0;
@@ -62,7 +63,9 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
         cameraIconRightPadding +
         albumIconRightPadding +
         sendMsgBtnRightPadding;
-    final textFieldMinWidth = MediaQuery.of(context).size.width - widget.inputBoxHorizontalMargin * 2 - buttonBoxWidth;
+    final textFieldMinWidth = MediaQuery.of(context).size.width -
+        widget.inputBoxHorizontalMargin * 2 -
+        buttonBoxWidth;
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFFF5F5F5),
@@ -170,8 +173,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     builder: (context) => SendMsgBtn(
                       size: sendMsgBtnWidth,
                       isSending: store.isSending,
-                      isDisabled:
-                          widget.textEditingController.text.isEmpty && widget.controller.store.imageFiles.isEmpty,
+                      isDisabled: widget.textEditingController.text.isEmpty &&
+                          widget.controller.store.imageFiles.isEmpty,
                       onTap: () {
                         if (store.isSending) {
                           return;
@@ -220,6 +223,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
       textScaler: MediaQuery.of(context).textScaler,
     )..layout(minWidth: 0, maxWidth: double.infinity);
 
-    return textPainter.size.width + textFieldHorizontalPadding * 2 + cursorWidth;
+    return textPainter.size.width +
+        textFieldHorizontalPadding * 2 +
+        cursorWidth;
   }
 }
