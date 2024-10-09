@@ -82,12 +82,13 @@ class _EasyChatViewState extends State<EasyChatView> {
                     },
                   );
                 },
-                onCameraTap: () {
+                onCameraTap: () async {
                   if (store.imageFiles.length >=
                       widget.controller.config.imageMaxCount) {
                     return;
                   }
-                  store.pickImage(source: ImageSource.camera);
+                  await store.pickImage(source: ImageSource.camera);
+                  store.focusNode.requestFocus();
                 },
                 onAlbumTap: () async {
                   if (store.imageFiles.length >=
