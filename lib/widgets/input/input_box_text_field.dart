@@ -211,7 +211,10 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
   }
 
   double _calculateTextFieldWidth(BuildContext context) {
-    final text = widget.textEditingController.text;
+    final text = widget.textEditingController.text.length >
+            (widget.controller.config.inputBoxHintText?.length ?? 0)
+        ? widget.textEditingController.text
+        : widget.controller.config.inputBoxHintText;
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,

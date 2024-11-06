@@ -35,17 +35,6 @@ class _EasyChatViewState extends State<EasyChatView> {
   @override
   void initState() {
     super.initState();
-    widget.controller.chatScrollController.controller
-        .addListener(_scrollListener);
-  }
-
-  void _scrollListener() {
-    // check if it's a user initiated scroll
-    if (widget.controller.chatScrollController.controller.position
-            .userScrollDirection !=
-        ScrollDirection.idle) {
-      _dismissKeyboard();
-    }
   }
 
   void _dismissKeyboard() {
@@ -122,6 +111,7 @@ class _EasyChatViewState extends State<EasyChatView> {
         child: ListView.separated(
           reverse: true,
           shrinkWrap: true,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           controller: widget.controller.chatScrollController.controller,
           padding: context.layoutTheme.chatViewPadding,
           cacheExtent: 1000,
