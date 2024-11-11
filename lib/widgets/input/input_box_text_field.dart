@@ -3,6 +3,7 @@ import 'package:easy_chat/widgets/input/send_msg_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
+import 'dart:math';
 
 class InputBoxTextField extends StatefulWidget {
   final double inputBoxHorizontalMargin;
@@ -31,6 +32,7 @@ class InputBoxTextField extends StatefulWidget {
 
 class _InputBoxTextFieldState extends State<InputBoxTextField> {
   late final store = widget.controller.store;
+  final textFieldKey = GlobalKey();
   final textFieldStyle = const TextStyle(
     color: Colors.black,
     fontSize: 16,
@@ -74,13 +76,17 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
       alignment: Alignment.center,
       child: LayoutBuilder(
         builder: (context, outerConstraint) {
+          final textFieldWidth = _calculateTextFieldWidth(context);
+          bool isAloneInRow = textFieldWidth > textFieldMinWidth;
           List<Widget> wrapChildren = [
             IntrinsicWidth(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minWidth: textFieldMinWidth,
+                  maxWidth: isAloneInRow ? double.infinity : textFieldMinWidth,
                 ),
                 child: TextField(
+                  key: textFieldKey,
                   cursorWidth: cursorWidth,
                   cursorColor: context.coloredTheme.primary,
                   controller: widget.textEditingController,
@@ -100,15 +106,13 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     isDense: true,
                   ),
                   focusNode: widget.focusNode,
-                  maxLines: 4,
+                  maxLines: isAloneInRow ? 4 : 1,
                   minLines: 1,
                   keyboardType: TextInputType.multiline,
                 ),
               ),
             ),
           ];
-          final textFieldWidth = _calculateTextFieldWidth(context) + 8;
-          bool isAloneInRow = textFieldWidth > textFieldMinWidth;
           final buttonBox = Container(
             width: buttonBoxWidth,
             height: inputBoxHeight,
@@ -187,23 +191,22 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
               ],
             ),
           );
-          if (isAloneInRow) {
-            wrapChildren.add(
-              Align(
-                alignment: Alignment.bottomRight,
-                child: buttonBox,
-              ),
-            );
-          } else {
-            wrapChildren.add(buttonBox);
-          }
+          wrapChildren.add(
+            Align(
+              alignment: Alignment.centerRight,
+              child: buttonBox,
+            ),
+          );
           return SizedBox(
             width: double.infinity,
-            child: Wrap(
-              spacing: 0,
-              runSpacing: 0,
-              children: wrapChildren,
-            ),
+            child: isAloneInRow
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: wrapChildren,
+                  )
+                : Row(
+                    children: wrapChildren,
+                  ),
           );
         },
       ),
@@ -211,10 +214,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
   }
 
   double _calculateTextFieldWidth(BuildContext context) {
-    final text = widget.textEditingController.text.length >
-            (widget.controller.config.inputBoxHintText?.length ?? 0)
-        ? widget.textEditingController.text
-        : widget.controller.config.inputBoxHintText;
+    final text = widget.textEditingController.text;
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,
@@ -226,7 +226,19 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
       textScaler: MediaQuery.of(context).textScaler,
     )..layout(minWidth: 0, maxWidth: double.infinity);
 
-    return textPainter.size.width +
+    final hintText = widget.controller.config.inputBoxHintText;
+    final hintTextPainter = TextPainter(
+      text: TextSpan(
+        text: hintText,
+        style: DefaultTextStyle.of(context).style.merge(textFieldStyle),
+      ),
+      maxLines: 1,
+      textAlign: TextAlign.left,
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.of(context).textScaler,
+    )..layout(minWidth: 0, maxWidth: double.infinity);
+
+    return max(textPainter.size.width, hintTextPainter.size.width) +
         textFieldHorizontalPadding * 2 +
         cursorWidth;
   }
