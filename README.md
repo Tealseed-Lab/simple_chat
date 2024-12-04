@@ -11,8 +11,11 @@ Supports customised Message Cell, message grouping, image preview and more.
 - iOS
 - Android
 
+## Screenshots
+| <img src="https://github.com/user-attachments/assets/8b581597-650f-4e01-b667-187e86d28ed4" width="300" /> | <img src="https://github.com/user-attachments/assets/829a92e1-83af-4fa7-b280-a81fa761a97f" width="300" /> |
+|-------------------------|-------------------------|
+
 ## Basics
-![20241204145907_rec_](https://github.com/user-attachments/assets/8b581597-650f-4e01-b667-187e86d28ed4)
 
 ### Initialise Controller & View
 
