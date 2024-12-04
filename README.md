@@ -12,7 +12,7 @@ Supports customised Message Cell, message grouping, image preview and more.
 - Android
 
 ## Screenshots
-| <img src="https://github.com/user-attachments/assets/8b581597-650f-4e01-b667-187e86d28ed4" width="300" /> | <img src="https://github.com/user-attachments/assets/829a92e1-83af-4fa7-b280-a81fa761a97f" width="300" /> |
+| <img src="https://github.com/user-attachments/assets/8b581597-650f-4e01-b667-187e86d28ed4" width="300" /> | <img src="https://github.com/user-attachments/assets/829a92e1-83af-4fa7-b280-a81fa761a97f" width="300" /> 
 |-------------------------|-------------------------|
 
 ## Basics
@@ -86,8 +86,28 @@ await controller.store.addMessage(
 );
 ```
 
-## Customisation
+### Loading Indicator
+#### Blocking and show loading indicator
+| <img src="https://github.com/user-attachments/assets/988c1c04-7db6-4cbb-a910-61a295ea208d" width="300" /> |
+|-------------------------|
+```dart
+final controller = ChatController(
+    config: ChatConfig(
+        loadingIndicatorType: LoadingIndicatorType.sendBtnLoading,
+    ),
+);
+```
 
+#### Non-blocking and show reply generator
+| <img src="https://github.com/user-attachments/assets/6f0da2f7-da79-45c1-957a-798800236d24" width="300" /> |
+|-------------------------|
+```dart
+await controller.store.showReplyGeneratingIndicator();
+await Future.delayed(const Duration(seconds: 3));
+await controller.store.hideReplyGeneratingIndicator();
+```
+
+## Customisation
 ### Add your custom message cell UI
 
 #### Define your custom message model
