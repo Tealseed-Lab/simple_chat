@@ -2,7 +2,7 @@
 
 A simple UI solution for quick integration of IM chat.
 
-Suuports customised Message Cell, message grouping, image preview and more.
+Supports customised Message Cell, message grouping, image preview and more.
 
 [<image src="https://i0.wp.com/tealseed.com/wp-content/uploads/2024/08/header.png?resize=2048%2C683&ssl=1" />](https://tealseed.com)
 
@@ -11,13 +11,20 @@ Suuports customised Message Cell, message grouping, image preview and more.
 - iOS
 - Android
 
-## Example Usage
+## Basics
+
+### Initialise Controller & View
+
+`EasyChatActionHandler` is used to handle events like sending message, user avatar tapping, image preview thumbntail tapping, etc.
+`EasyChatConfig` is optional, you can customise the input box hint text, image max count, etc.
 
 ```dart
-
 final controller = EasyChatController(
+    config: EasyChatConfig(
+      inputBoxHintText: 'Type a message...',
+    ),
     actionHandler: EasyChatActionHandler(
-        onSendMessage: (output) async {},
+      onSendMessage: (output) {},
     ),
 );
 
@@ -28,4 +35,133 @@ EasyChatView(
         light: coloredThemeData,
     ),
 )
+```
+
+### Config Users
+
+Users configured with `id`, `name`, `avatarUrl` and `isCurrentUser` flag.
+- `id` is used to identify the user and later display messages under the corresponding user avatar.
+- `name` is used to display in the chat UI.
+- `avatarUrl` is used to display the user avatar.
+- `isCurrentUser` is used to identify if the user is the current user.
+
+```dart
+await controller.store.addUsers(users: [
+    ModelUser(
+        id: '1',
+        name: 'Lawrence',
+        avatarUrl: 'https://example.com/avatar/1.png',
+        isCurrentUser: true,
+    ),
+    ModelUser(
+        id: '2',
+        name: 'Ciel',
+        avatarUrl: 'https://example.com/avatar/2.png',
+        isCurrentUser: false,
+    ),
+]);
+```
+
+### Add messages
+
+- `isInitial` is used to identify if the message is historial message and determine if the message is shown with animation or not.
+- `userId` is used to identify the user who sent the message.
+- `sequence` is used to determine the order of the message.
+- `displayDatetime` is used to determine the display datetime of the message.
+
+```dart
+await controller.store.addMessage(
+    isInitial: !withDelay,
+    message: ModelTextMessage(
+        id: '$i',
+        text: 'Hello, how are you?',
+        userId: '1',
+        sequence: i,
+        displayDatetime: DateTime.now(),
+    ),
+);
+```
+
+## Customisation
+
+### Add your custom message cell UI
+
+#### Define your custom message model
+
+Normally if one user send multiple messages without interruption, they will be grouped together in one message cell.
+If you want to group them in different message cells, you can set `forceNewBlock` to `true`.
+
+```dart
+class CustomMessage extends ModelBaseMessage {
+  @override
+  final String id;
+
+  @override
+  final String userId;
+
+  @override
+  final int sequence;
+
+  @override
+  final DateTime displayDatetime;
+
+  @override
+  final bool forceNewBlock;
+
+  final String data;
+
+  ModelOptionMessage({
+    required this.id,
+    required this.userId,
+    required this.sequence,
+    required this.displayDatetime,
+    required this.forceNewBlock,
+    required this.data,
+  });
+}
+
+```
+
+#### Define your custom message cell UI
+
+You can use `MessageBubble` to wrap your custom message cell UI.
+
+```dart
+
+class CustomMessageCell extends StatelessWidget {
+  final ModelLoadingIndicatorMessage message;
+  final bool isMessageFromCurrentUser;
+  CustomMessageCell({
+    super.key,
+    required this.message,
+    required this.isMessageFromCurrentUser,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MessageBubble(
+      isCurrentUser: isMessageFromCurrentUser,
+      padding: const EdgeInsets.all(12),
+      ...
+    );
+  }
+}
+
+```
+
+#### Register your custom message cell UI with custom message model
+
+After registeration, whenever a message with the custom message model is added, the registered UI will be used to display the message.
+
+```dart
+controller.viewFactory.register<CustomMessage>(
+    (BuildContext context, {
+    required CustomMessage message,
+    required bool isMessageFromCurrentUser,
+}) =>
+    CustomMessageCell(
+        message: message,
+        isMessageFromCurrentUser: isMessageFromCurrentUser,
+    ),
+);
 ```
