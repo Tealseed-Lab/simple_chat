@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tealseed_chat/tealseed_chat.dart';
-import 'package:tealseed_chat/theme/chat_theme.dart';
 import 'package:tealseed_chat/widgets/input/input_box_image_item.dart';
 import 'package:tealseed_chat/widgets/input/input_box_text_field.dart';
 

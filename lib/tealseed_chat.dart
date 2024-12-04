@@ -11,3 +11,5 @@ export 'models/user.dart';
 export 'stores/chat_store.dart';
 export 'theme/chat_theme.dart';
 export 'widgets/chat_view.dart';
+
+const kTealseedChatPackage = 'tealseed_chat';

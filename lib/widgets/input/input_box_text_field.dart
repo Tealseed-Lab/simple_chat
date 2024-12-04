@@ -132,7 +132,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                       },
                       child: SvgPicture.asset(
                         'assets/svg/input/camera.svg',
-                        package: 'tealseed_chat',
+                        package: kTealseedChatPackage,
                         width: cameraIconWidth,
                         height: cameraIconWidth,
                         colorFilter: ColorFilter.mode(
@@ -157,7 +157,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                       },
                       child: SvgPicture.asset(
                         'assets/svg/input/album.svg',
-                        package: 'tealseed_chat',
+                        package: kTealseedChatPackage,
                         width: albumIconWidth,
                         height: albumIconWidth,
                         colorFilter: ColorFilter.mode(

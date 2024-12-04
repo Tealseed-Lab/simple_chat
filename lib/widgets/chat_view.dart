@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tealseed_chat/controllers/chat_controller.dart';
+import 'package:tealseed_chat/models/loading_indicator_message.dart';
 import 'package:tealseed_chat/theme/chat_theme.dart';
 import 'package:tealseed_chat/widgets/input/input_box.dart';
 import 'package:tealseed_chat/widgets/messages/unsupport_message_item.dart';
@@ -120,6 +121,7 @@ class _ChatViewState extends State<ChatView> {
             return Observer(
               builder: (context) {
                 final message = store.messages[index];
+                final hideUserAvatar = message is ModelLoadingIndicatorMessage;
                 final previousMessage = index + 1 < store.messages.length ? store.messages[index + 1] : null;
                 final isMessageFromCurrentUser = store.isMessageFromCurrentUser(message);
                 final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
@@ -156,8 +158,11 @@ class _ChatViewState extends State<ChatView> {
                     children: [
                       SizedBox(width: avatarMessageSpacing + context.layoutTheme.userAvatarSize),
                       flexibleMessageItem,
-                      const SizedBox(width: avatarMessageSpacing),
-                      userAvatar,
+                      if (!hideUserAvatar)
+                        Padding(
+                          padding: const EdgeInsets.only(left: avatarMessageSpacing),
+                          child: userAvatar,
+                        ),
                     ],
                   );
                 } else {
@@ -165,8 +170,11 @@ class _ChatViewState extends State<ChatView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      userAvatar,
-                      const SizedBox(width: avatarMessageSpacing),
+                      if (!hideUserAvatar)
+                        Padding(
+                          padding: const EdgeInsets.only(right: avatarMessageSpacing),
+                          child: userAvatar,
+                        ),
                       flexibleMessageItem,
                       SizedBox(width: avatarMessageSpacing + context.layoutTheme.userAvatarSize),
                     ],

@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:tealseed_chat/controllers/chat_scroll_controller.dart';
 import 'package:tealseed_chat/controllers/view_factory.dart';
+import 'package:tealseed_chat/models/loading_indicator_message.dart';
 import 'package:tealseed_chat/tealseed_chat.dart';
 import 'package:tealseed_chat/widgets/messages/image_message_item.dart';
+import 'package:tealseed_chat/widgets/messages/loading_indicator_item.dart';
 import 'package:tealseed_chat/widgets/messages/text_message_item.dart';
+
+enum LoadingIndicatorType {
+  sendBtnLoading,
+  noBlocking,
+}
 
 class ChatConfig {
   final int imageMaxCount;
   final String? inputBoxHintText;
+  final LoadingIndicatorType loadingIndicatorType;
   ChatConfig({
     this.imageMaxCount = 9,
     this.inputBoxHintText,
+    this.loadingIndicatorType = LoadingIndicatorType.sendBtnLoading,
   });
 }
 
@@ -49,6 +58,17 @@ class ChatController {
           ImageMessageItem(
         isMessageFromCurrentUser: isMessageFromCurrentUser,
         imageMessage: message,
+      ),
+    );
+    viewFactory.register<ModelLoadingIndicatorMessage>(
+      (
+        BuildContext context, {
+        required bool isMessageFromCurrentUser,
+        required ModelLoadingIndicatorMessage message,
+      }) =>
+          LoadingIndicatorItem(
+        message: message,
+        isMessageFromCurrentUser: isMessageFromCurrentUser,
       ),
     );
   }

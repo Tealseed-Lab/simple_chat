@@ -3,7 +3,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart'; // Added import for logger
 import 'package:mobx/mobx.dart';
 import 'package:tealseed_chat/controllers/chat_scroll_controller.dart';
+import 'package:tealseed_chat/models/loading_indicator_message.dart';
 import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:uuid/uuid.dart';
 
 part 'chat_store.g.dart';
 
@@ -123,21 +125,32 @@ abstract class ChatStoreBase with Store {
     }
   }
 
+  final loadingIndicatorMessageId = const Uuid().v4();
   @action
   Future<void> sendMessage({required Function(TealseedChatMessageSendOutput output) onSend}) async {
-    _isSending = true;
     final output = TealseedChatMessageSendOutput(
       message: textEditingController.text,
       imageFiles: _imageFiles.toList(),
     );
-    try {
-      await onSend(output);
-      textEditingController.clear();
-      _imageFiles.clear();
-    } catch (e) {
-      Logger().e('Error occurred: $e');
+    if (config.loadingIndicatorType == LoadingIndicatorType.sendBtnLoading) {
+      _isSending = true;
+      try {
+        await onSend(output);
+        textEditingController.clear();
+        _imageFiles.clear();
+      } catch (e) {
+        Logger().e('Error occurred: $e');
+      }
+      _isSending = false;
+    } else {
+      try {
+        textEditingController.clear();
+        _imageFiles.clear();
+        onSend(output);
+      } catch (e) {
+        Logger().e('Error occurred: $e');
+      }
     }
-    _isSending = false;
   }
 
   // actions - images
@@ -167,6 +180,26 @@ abstract class ChatStoreBase with Store {
     final updated = _imageFiles.toList();
     updated.remove(image);
     _imageFiles = ObservableList<XFile>.of(updated);
+  }
+
+  // loading indicator
+
+  @action
+  Future<void> showReplyGeneratingIndicator() async {
+    await addMessage(
+      isInitial: false,
+      message: ModelLoadingIndicatorMessage(
+        id: loadingIndicatorMessageId,
+        userId: '',
+        sequence: (1 << 63) - 1,
+        displayDatetime: DateTime.now(),
+      ),
+    );
+  }
+
+  @action
+  Future<void> hideReplyGeneratingIndicator() async {
+    await removeMessageById(messageId: loadingIndicatorMessageId);
   }
 
   // public
