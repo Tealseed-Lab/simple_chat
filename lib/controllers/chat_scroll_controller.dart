@@ -22,8 +22,7 @@ class ChatScrollController with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    final bottomInset = WidgetsBinding
-        .instance.platformDispatcher.views.first.viewInsets.bottom;
+    final bottomInset = WidgetsBinding.instance.platformDispatcher.views.first.viewInsets.bottom;
     // Only jump to bottom when keyboard is shown (bottomInset increases)
     if (bottomInset > _previousBottomInset) {
       jumpToBottom();
@@ -36,8 +35,7 @@ class ChatScrollController with WidgetsBindingObserver {
   bool isAtTop() {
     if (!controller.hasClients) return false;
     final position = controller.position;
-    return position.pixels >= position.maxScrollExtent - 1 ||
-        position.viewportDimension >= position.maxScrollExtent;
+    return position.pixels >= position.maxScrollExtent - 1 || position.viewportDimension >= position.maxScrollExtent;
   }
 
   bool isAtBottom() {

@@ -1,6 +1,7 @@
-import 'package:easy_chat/easy_chat.dart';
-import 'package:flutter/material.dart';
 import 'dart:math'; // Added import for Random
+
+import 'package:flutter/material.dart';
+import 'package:tealseed_chat/tealseed_chat.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -13,8 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = EasyChatController(
-    actionHandler: EasyChatActionHandler(
+  final controller = ChatController(
+    actionHandler: ChatActionHandler(
       onSendMessage: (output) async {
         await Future.delayed(const Duration(seconds: 1));
       },
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final coloredThemeData = EasyChatColorThemeData();
+    final coloredThemeData = ChatColorThemeData();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
@@ -137,9 +138,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: EasyChatView(
+      body: ChatView(
         controller: controller,
-        theme: EasyChatThemeData(
+        theme: ChatThemeData(
           dark: coloredThemeData,
           light: coloredThemeData,
         ),

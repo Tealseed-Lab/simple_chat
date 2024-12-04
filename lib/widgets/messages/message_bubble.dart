@@ -1,5 +1,5 @@
-import 'package:easy_chat/theme/easy_chat_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:tealseed_chat/theme/chat_theme.dart';
 
 class MessageBubble extends StatelessWidget {
   final EdgeInsets padding;

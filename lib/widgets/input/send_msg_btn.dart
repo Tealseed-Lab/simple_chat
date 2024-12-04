@@ -1,6 +1,6 @@
-import 'package:easy_chat/theme/easy_chat_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tealseed_chat/theme/chat_theme.dart';
 
 class SendMsgBtn extends StatelessWidget {
   final bool isSending;
@@ -29,14 +29,14 @@ class SendMsgBtn extends StatelessWidget {
     } else if (isDisabled) {
       view = SvgPicture.asset(
         'assets/svg/input/send_disabled.svg',
-        package: 'easy_chat',
+        package: 'tealseed_chat',
         width: size,
         height: size,
       );
     } else {
       view = SvgPicture.asset(
         'assets/svg/input/send.svg',
-        package: 'easy_chat',
+        package: 'tealseed_chat',
         width: size,
         height: size,
       );

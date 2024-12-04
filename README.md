@@ -1,4 +1,4 @@
-# Easy Chat
+# Tealseed Chat
 
 A simple UI solution for quick integration of IM chat.
 
@@ -15,22 +15,22 @@ Supports customised Message Cell, message grouping, image preview and more.
 
 ### Initialise Controller & View
 
-`EasyChatActionHandler` is used to handle events like sending message, user avatar tapping, image preview thumbntail tapping, etc.
-`EasyChatConfig` is optional, you can customise the input box hint text, image max count, etc.
+`ChatActionHandler` is used to handle events like sending message, user avatar tapping, image preview thumbntail tapping, etc.
+`ChatConfig` is optional, you can customise the input box hint text, image max count, etc.
 
 ```dart
-final controller = EasyChatController(
-    config: EasyChatConfig(
+final controller = ChatController(
+    config: ChatConfig(
       inputBoxHintText: 'Type a message...',
     ),
-    actionHandler: EasyChatActionHandler(
+    actionHandler: ChatActionHandler(
       onSendMessage: (output) {},
     ),
 );
 
-EasyChatView(
+ChatView(
     controller: controller,
-    theme: EasyChatThemeData(
+    theme: ChatThemeData(
         dark: coloredThemeData,
         light: coloredThemeData,
     ),

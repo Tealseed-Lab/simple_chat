@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'easy_chat_store.dart';
+part of 'chat_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,17 +8,17 @@ part of 'easy_chat_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$EasyChatStore on EasyChatStoreBase, Store {
+mixin _$ChatStore on ChatStoreBase, Store {
   Computed<bool>? _$reachImageSelectionLimitComputed;
 
   @override
   bool get reachImageSelectionLimit => (_$reachImageSelectionLimitComputed ??=
           Computed<bool>(() => super.reachImageSelectionLimit,
-              name: 'EasyChatStoreBase.reachImageSelectionLimit'))
+              name: 'ChatStoreBase.reachImageSelectionLimit'))
       .value;
 
   late final _$_messagesAtom =
-      Atom(name: 'EasyChatStoreBase._messages', context: context);
+      Atom(name: 'ChatStoreBase._messages', context: context);
 
   ObservableList<ModelBaseMessage> get messages {
     _$_messagesAtom.reportRead();
@@ -36,7 +36,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$_usersAtom =
-      Atom(name: 'EasyChatStoreBase._users', context: context);
+      Atom(name: 'ChatStoreBase._users', context: context);
 
   ObservableMap<String, ModelBaseUser> get users {
     _$_usersAtom.reportRead();
@@ -54,7 +54,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$_currentUserAtom =
-      Atom(name: 'EasyChatStoreBase._currentUser', context: context);
+      Atom(name: 'ChatStoreBase._currentUser', context: context);
 
   ModelBaseUser? get currentUser {
     _$_currentUserAtom.reportRead();
@@ -72,7 +72,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$_imageFilesAtom =
-      Atom(name: 'EasyChatStoreBase._imageFiles', context: context);
+      Atom(name: 'ChatStoreBase._imageFiles', context: context);
 
   ObservableList<XFile> get imageFiles {
     _$_imageFilesAtom.reportRead();
@@ -90,7 +90,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$_isSendingAtom =
-      Atom(name: 'EasyChatStoreBase._isSending', context: context);
+      Atom(name: 'ChatStoreBase._isSending', context: context);
 
   bool get isSending {
     _$_isSendingAtom.reportRead();
@@ -108,7 +108,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$addMessageAsyncAction =
-      AsyncAction('EasyChatStoreBase.addMessage', context: context);
+      AsyncAction('ChatStoreBase.addMessage', context: context);
 
   @override
   Future<void> addMessage(
@@ -118,7 +118,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$addMessagesAsyncAction =
-      AsyncAction('EasyChatStoreBase.addMessages', context: context);
+      AsyncAction('ChatStoreBase.addMessages', context: context);
 
   @override
   Future<void> addMessages(
@@ -128,7 +128,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$removeMessageAsyncAction =
-      AsyncAction('EasyChatStoreBase.removeMessage', context: context);
+      AsyncAction('ChatStoreBase.removeMessage', context: context);
 
   @override
   Future<void> removeMessage({required ModelBaseMessage message}) {
@@ -137,7 +137,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$removeMessageByIdAsyncAction =
-      AsyncAction('EasyChatStoreBase.removeMessageById', context: context);
+      AsyncAction('ChatStoreBase.removeMessageById', context: context);
 
   @override
   Future<void> removeMessageById({required String messageId}) {
@@ -146,7 +146,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$removeMessagesAsyncAction =
-      AsyncAction('EasyChatStoreBase.removeMessages', context: context);
+      AsyncAction('ChatStoreBase.removeMessages', context: context);
 
   @override
   Future<void> removeMessages({required List<ModelBaseMessage> messages}) {
@@ -155,7 +155,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$addUserAsyncAction =
-      AsyncAction('EasyChatStoreBase.addUser', context: context);
+      AsyncAction('ChatStoreBase.addUser', context: context);
 
   @override
   Future<void> addUser({required ModelBaseUser user}) {
@@ -163,7 +163,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$addUsersAsyncAction =
-      AsyncAction('EasyChatStoreBase.addUsers', context: context);
+      AsyncAction('ChatStoreBase.addUsers', context: context);
 
   @override
   Future<void> addUsers({required List<ModelBaseUser> users}) {
@@ -171,17 +171,17 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$sendMessageAsyncAction =
-      AsyncAction('EasyChatStoreBase.sendMessage', context: context);
+      AsyncAction('ChatStoreBase.sendMessage', context: context);
 
   @override
   Future<void> sendMessage(
-      {required dynamic Function(EasyMessageSendOutput) onSend}) {
+      {required dynamic Function(TealseedChatMessageSendOutput) onSend}) {
     return _$sendMessageAsyncAction
         .run(() => super.sendMessage(onSend: onSend));
   }
 
   late final _$pickImageAsyncAction =
-      AsyncAction('EasyChatStoreBase.pickImage', context: context);
+      AsyncAction('ChatStoreBase.pickImage', context: context);
 
   @override
   Future<void> pickImage({required ImageSource source}) {
@@ -189,7 +189,7 @@ mixin _$EasyChatStore on EasyChatStoreBase, Store {
   }
 
   late final _$removeImageAsyncAction =
-      AsyncAction('EasyChatStoreBase.removeImage', context: context);
+      AsyncAction('ChatStoreBase.removeImage', context: context);
 
   @override
   Future<void> removeImage({required XFile image}) {

@@ -1,31 +1,31 @@
-import 'package:easy_chat/controllers/chat_scroll_controller.dart';
-import 'package:easy_chat/controllers/view_factory.dart';
-import 'package:easy_chat/easy_chat.dart';
-import 'package:easy_chat/widgets/messages/image_message_item.dart';
-import 'package:easy_chat/widgets/messages/text_message_item.dart';
 import 'package:flutter/material.dart';
+import 'package:tealseed_chat/controllers/chat_scroll_controller.dart';
+import 'package:tealseed_chat/controllers/view_factory.dart';
+import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:tealseed_chat/widgets/messages/image_message_item.dart';
+import 'package:tealseed_chat/widgets/messages/text_message_item.dart';
 
-class EasyChatConfig {
+class ChatConfig {
   final int imageMaxCount;
   final String? inputBoxHintText;
-  EasyChatConfig({
+  ChatConfig({
     this.imageMaxCount = 9,
     this.inputBoxHintText,
   });
 }
 
-class EasyChatController {
-  late final EasyChatStore store;
+class ChatController {
+  late final ChatStore store;
   final chatScrollController = ChatScrollController();
   final viewFactory = ViewFactory();
-  final EasyChatActionHandler? actionHandler;
-  late final EasyChatConfig config;
-  EasyChatController({
+  final ChatActionHandler? actionHandler;
+  late final ChatConfig config;
+  ChatController({
     this.actionHandler,
-    EasyChatConfig? config,
+    ChatConfig? config,
   }) {
-    this.config = config ?? EasyChatConfig();
-    store = EasyChatStore(
+    this.config = config ?? ChatConfig();
+    store = ChatStore(
       chatScrollController,
       this.config,
     );

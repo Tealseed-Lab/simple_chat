@@ -1,14 +1,15 @@
-import 'package:easy_chat/easy_chat.dart';
-import 'package:easy_chat/widgets/input/send_msg_btn.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'dart:math';
+import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:tealseed_chat/widgets/input/send_msg_btn.dart';
 
 class InputBoxTextField extends StatefulWidget {
   final double inputBoxHorizontalMargin;
 
-  final EasyChatController controller;
+  final ChatController controller;
   final TextEditingController textEditingController;
   final FocusNode focusNode;
   final Function() onSend;
@@ -65,9 +66,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
         cameraIconRightPadding +
         albumIconRightPadding +
         sendMsgBtnRightPadding;
-    final textFieldMinWidth = MediaQuery.of(context).size.width -
-        widget.inputBoxHorizontalMargin * 2 -
-        buttonBoxWidth;
+    final textFieldMinWidth = MediaQuery.of(context).size.width - widget.inputBoxHorizontalMargin * 2 - buttonBoxWidth;
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFFF5F5F5),
@@ -133,7 +132,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                       },
                       child: SvgPicture.asset(
                         'assets/svg/input/camera.svg',
-                        package: 'easy_chat',
+                        package: 'tealseed_chat',
                         width: cameraIconWidth,
                         height: cameraIconWidth,
                         colorFilter: ColorFilter.mode(
@@ -158,7 +157,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                       },
                       child: SvgPicture.asset(
                         'assets/svg/input/album.svg',
-                        package: 'easy_chat',
+                        package: 'tealseed_chat',
                         width: albumIconWidth,
                         height: albumIconWidth,
                         colorFilter: ColorFilter.mode(
@@ -177,8 +176,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     builder: (context) => SendMsgBtn(
                       size: sendMsgBtnWidth,
                       isSending: store.isSending,
-                      isDisabled: widget.textEditingController.text.isEmpty &&
-                          widget.controller.store.imageFiles.isEmpty,
+                      isDisabled:
+                          widget.textEditingController.text.isEmpty && widget.controller.store.imageFiles.isEmpty,
                       onTap: () {
                         if (store.isSending) {
                           return;
@@ -238,8 +237,6 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
       textScaler: MediaQuery.of(context).textScaler,
     )..layout(minWidth: 0, maxWidth: double.infinity);
 
-    return max(textPainter.size.width, hintTextPainter.size.width) +
-        textFieldHorizontalPadding * 2 +
-        cursorWidth;
+    return max(textPainter.size.width, hintTextPainter.size.width) + textFieldHorizontalPadding * 2 + cursorWidth;
   }
 }

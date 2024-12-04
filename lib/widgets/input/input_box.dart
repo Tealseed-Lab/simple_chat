@@ -1,12 +1,13 @@
-import 'package:easy_chat/easy_chat.dart';
-import 'package:easy_chat/widgets/input/input_box_image_item.dart';
-import 'package:easy_chat/widgets/input/input_box_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:tealseed_chat/theme/chat_theme.dart';
+import 'package:tealseed_chat/widgets/input/input_box_image_item.dart';
+import 'package:tealseed_chat/widgets/input/input_box_text_field.dart';
 
 class InputBox extends StatelessWidget {
-  final EasyChatController controller;
+  final ChatController controller;
   final TextEditingController textEditingController;
   final FocusNode focusNode;
   final Function() onSend;
@@ -15,7 +16,7 @@ class InputBox extends StatelessWidget {
   final Function(XFile) onImageTap;
   final Function(XFile) onImageRemove;
 
-  late final EasyChatStore store;
+  late final ChatStore store;
 
   InputBox({
     super.key,

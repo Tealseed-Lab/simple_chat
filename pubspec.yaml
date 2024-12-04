@@ -1,8 +1,8 @@
-name: easy_chat
+name: tealseed_chat
 description: "Simple solution for IM chat"
 version: 0.0.1
-repository: https://github.com/Tealseed-Lab/easy_chat
-issue_tracker: https://github.com/Tealseed-Lab/easy_chat/issues
+repository: https://github.com/Tealseed-Lab/tealseed_chat
+issue_tracker: https://github.com/Tealseed-Lab/tealseed_chat/issues
 
 environment:
   sdk: ">=3.4.3 <4.0.0"

@@ -1,34 +1,34 @@
-import 'package:easy_chat/controllers/easy_chat_controller.dart';
-import 'package:easy_chat/theme/easy_chat_theme.dart';
-import 'package:easy_chat/widgets/input/input_box.dart';
-import 'package:easy_chat/widgets/messages/unsupport_message_item.dart';
-import 'package:easy_chat/widgets/users/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tealseed_chat/controllers/chat_controller.dart';
+import 'package:tealseed_chat/theme/chat_theme.dart';
+import 'package:tealseed_chat/widgets/input/input_box.dart';
+import 'package:tealseed_chat/widgets/messages/unsupport_message_item.dart';
+import 'package:tealseed_chat/widgets/users/user_avatar.dart';
 
-class EasyChatView extends StatefulWidget {
-  late final EasyChatThemeData theme;
-  late final EasyChatController controller;
-  EasyChatView({
+class ChatView extends StatefulWidget {
+  late final ChatThemeData theme;
+  late final ChatController controller;
+  ChatView({
     super.key,
-    EasyChatThemeData? theme,
-    EasyChatController? controller,
+    ChatThemeData? theme,
+    ChatController? controller,
   }) {
     this.theme = theme ??
-        EasyChatThemeData(
-          light: EasyChatColorThemeData(),
-          dark: EasyChatColorThemeData(),
+        ChatThemeData(
+          light: ChatColorThemeData(),
+          dark: ChatColorThemeData(),
         );
-    this.controller = controller ?? EasyChatController();
+    this.controller = controller ?? ChatController();
   }
   @override
   State<StatefulWidget> createState() {
-    return _EasyChatViewState();
+    return _ChatViewState();
   }
 }
 
-class _EasyChatViewState extends State<EasyChatView> {
+class _ChatViewState extends State<ChatView> {
   late final store = widget.controller.store;
   @override
   void initState() {
@@ -41,8 +41,8 @@ class _EasyChatViewState extends State<EasyChatView> {
 
   @override
   Widget build(BuildContext context) {
-    final view = EasyChatTheme(
-      data: EasyChatThemeData(
+    final view = ChatTheme(
+      data: ChatThemeData(
         light: widget.theme.light,
         dark: widget.theme.dark,
       ),

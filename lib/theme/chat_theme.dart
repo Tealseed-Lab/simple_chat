@@ -1,63 +1,63 @@
 import 'package:flutter/material.dart';
 
 extension ThemedContextExtension on BuildContext {
-  EasyChatColorThemeData get coloredTheme {
+  ChatColorThemeData get coloredTheme {
     final brightness = MediaQuery.of(this).platformBrightness;
-    final chatTheme = EasyChatTheme.of(this);
+    final chatTheme = ChatTheme.of(this);
     return brightness == Brightness.light ? chatTheme.light : chatTheme.dark;
   }
 
-  EasyChatLayoutThemeData get layoutTheme {
-    final chatTheme = EasyChatTheme.of(this);
+  ChatLayoutThemeData get layoutTheme {
+    final chatTheme = ChatTheme.of(this);
     return chatTheme.layout;
   }
 }
 
-class EasyChatTheme extends InheritedWidget {
-  const EasyChatTheme({
+class ChatTheme extends InheritedWidget {
+  const ChatTheme({
     super.key,
     required this.data,
     required super.child,
   });
 
-  final EasyChatThemeData data;
+  final ChatThemeData data;
 
-  static EasyChatThemeData of(BuildContext context) {
-    final EasyChatTheme? theme = context.dependOnInheritedWidgetOfExactType<EasyChatTheme>();
+  static ChatThemeData of(BuildContext context) {
+    final ChatTheme? theme = context.dependOnInheritedWidgetOfExactType<ChatTheme>();
     return theme?.data ??
-        EasyChatThemeData(
-          light: EasyChatColorThemeData.light,
-          dark: EasyChatColorThemeData.dark,
+        ChatThemeData(
+          light: ChatColorThemeData.light,
+          dark: ChatColorThemeData.dark,
         );
   }
 
   @override
-  bool updateShouldNotify(EasyChatTheme oldWidget) {
+  bool updateShouldNotify(ChatTheme oldWidget) {
     return data != oldWidget.data;
   }
 }
 
-class EasyChatThemeData {
-  EasyChatThemeData({
+class ChatThemeData {
+  ChatThemeData({
     required this.light,
     required this.dark,
-    this.layout = const EasyChatLayoutThemeData(),
+    this.layout = const ChatLayoutThemeData(),
   });
-  EasyChatColorThemeData light;
-  EasyChatColorThemeData dark;
-  EasyChatLayoutThemeData layout;
+  ChatColorThemeData light;
+  ChatColorThemeData dark;
+  ChatLayoutThemeData layout;
 }
 
-class EasyChatColorThemeData {
-  static EasyChatColorThemeData get light => EasyChatColorThemeData();
-  static EasyChatColorThemeData get dark => EasyChatColorThemeData();
+class ChatColorThemeData {
+  static ChatColorThemeData get light => ChatColorThemeData();
+  static ChatColorThemeData get dark => ChatColorThemeData();
 
   final Color backgroundColor;
   final Color inputBoxColor;
   final Color myMessageColor;
   final Color otherMessageColor;
   final Color primary;
-  EasyChatColorThemeData({
+  ChatColorThemeData({
     this.backgroundColor = const Color(0xFFF5F5F5),
     this.inputBoxColor = Colors.white,
     this.myMessageColor = const Color(0xFFE5E5EA),
@@ -65,17 +65,17 @@ class EasyChatColorThemeData {
     this.primary = const Color(0xFFF86526),
   });
 
-  EasyChatColorThemeData copyWith({
+  ChatColorThemeData copyWith({
     Color? backgroundColor,
   }) {
-    return EasyChatColorThemeData(
+    return ChatColorThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
     );
   }
 }
 
-class EasyChatLayoutThemeData {
-  const EasyChatLayoutThemeData({
+class ChatLayoutThemeData {
+  const ChatLayoutThemeData({
     this.chatViewPadding = const EdgeInsets.all(16),
     this.userAvatarSize = 36,
     this.avatarAndMessageSpacing = 8,

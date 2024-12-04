@@ -1,4 +1,4 @@
-import 'package:easy_chat/easy_chat.dart';
+import 'package:tealseed_chat/tealseed_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

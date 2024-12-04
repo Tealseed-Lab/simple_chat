@@ -1,21 +1,21 @@
-import 'package:easy_chat/controllers/chat_scroll_controller.dart';
-import 'package:easy_chat/easy_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart'; // Added import for logger
 import 'package:mobx/mobx.dart';
+import 'package:tealseed_chat/controllers/chat_scroll_controller.dart';
+import 'package:tealseed_chat/tealseed_chat.dart';
 
-part 'easy_chat_store.g.dart';
+part 'chat_store.g.dart';
 
-class EasyChatStore = EasyChatStoreBase with _$EasyChatStore;
+class ChatStore = ChatStoreBase with _$ChatStore;
 
-abstract class EasyChatStoreBase with Store {
+abstract class ChatStoreBase with Store {
   final ChatScrollController chatScrollController;
-  final EasyChatConfig config;
+  final ChatConfig config;
   final TextEditingController textEditingController = TextEditingController();
   final FocusNode focusNode = FocusNode();
 
-  EasyChatStoreBase(
+  ChatStoreBase(
     this.chatScrollController,
     this.config,
   ) {
@@ -124,9 +124,9 @@ abstract class EasyChatStoreBase with Store {
   }
 
   @action
-  Future<void> sendMessage({required Function(EasyMessageSendOutput output) onSend}) async {
+  Future<void> sendMessage({required Function(TealseedChatMessageSendOutput output) onSend}) async {
     _isSending = true;
-    final output = EasyMessageSendOutput(
+    final output = TealseedChatMessageSendOutput(
       message: textEditingController.text,
       imageFiles: _imageFiles.toList(),
     );
