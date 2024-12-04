@@ -1,4 +1,4 @@
-![20241204145907_rec_](https://github.com/user-attachments/assets/36508bc0-9e4b-47b4-a054-8ba472e31329)# Tealseed Chat
+# Tealseed Chat
 
 A simple UI solution for quick integration of IM chat.
 
