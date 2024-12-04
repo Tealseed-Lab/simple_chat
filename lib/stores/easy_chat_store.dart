@@ -1,12 +1,9 @@
 import 'package:easy_chat/controllers/chat_scroll_controller.dart';
 import 'package:easy_chat/easy_chat.dart';
-import 'package:easy_chat/models/base_message.dart';
-import 'package:easy_chat/models/base_user.dart';
-import 'package:easy_chat/models/message_send_output.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobx/mobx.dart';
 import 'package:logger/logger.dart'; // Added import for logger
+import 'package:mobx/mobx.dart';
 
 part 'easy_chat_store.g.dart';
 
