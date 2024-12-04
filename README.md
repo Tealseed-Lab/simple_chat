@@ -1,4 +1,4 @@
-# Tealseed Chat
+![20241204145907_rec_](https://github.com/user-attachments/assets/36508bc0-9e4b-47b4-a054-8ba472e31329)# Tealseed Chat
 
 A simple UI solution for quick integration of IM chat.
 
@@ -12,6 +12,7 @@ Supports customised Message Cell, message grouping, image preview and more.
 - Android
 
 ## Basics
+![20241204145907_rec_](https://github.com/user-attachments/assets/8b581597-650f-4e01-b667-187e86d28ed4)
 
 ### Initialise Controller & View
 
