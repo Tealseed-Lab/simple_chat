@@ -106,6 +106,30 @@ await controller.store.showReplyGeneratingIndicator();
 await Future.delayed(const Duration(seconds: 3));
 await controller.store.hideReplyGeneratingIndicator();
 ```
+### Unread indicator
+
+#### Indicator with unread count
+| <img src="https://github.com/user-attachments/assets/d0c810b8-4733-4f28-aa39-8f96740bd1d1" width="300" /> |
+|-------------------------|
+```dart
+final controller = ChatController(
+    config: ChatConfig(
+        showUnreadCount: true,
+    ),
+    ...
+);
+```
+#### Indicator without unread count
+| <img src="https://github.com/user-attachments/assets/35949e4e-9efa-4a98-b21c-ac7f6133e64d" width="300" /> |
+|-------------------------|
+```dart
+final controller = ChatController(
+    config: ChatConfig(
+        showUnreadCount: false,
+    ),
+    ...
+);
+```
 
 ## Customisation
 ### Add your custom message cell UI
