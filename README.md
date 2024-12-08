@@ -1,6 +1,6 @@
 # Tealseed Chat
 
-A simple UI solution for quick integration of IM chat.
+A simple UI solution for quick integration of IM chat & AI bot chat.
 
 Supports customised Message Cell, message grouping, image preview and more.
 
