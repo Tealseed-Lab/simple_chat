@@ -94,7 +94,9 @@ abstract class ChatStoreBase with Store {
     bool isInitial = false,
   }) async {
     final isAtBottom = chatScrollController.isAtBottom();
-    _messages.insertAll(0, messages.reversed);
+    for (var message in messages) {
+      await addMessage(message: message, isInitial: true);
+    }
     if (!isInitial && isAtBottom) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         chatScrollController.scrollToBottom();
