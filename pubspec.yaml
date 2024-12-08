@@ -19,6 +19,7 @@ dependencies:
   logger: ^2.4.0
   lottie: ^3.1.2
   uuid: ^4.5.0
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   build_runner: ^2.4.10
@@ -29,4 +30,5 @@ dev_dependencies:
 flutter:
   assets:
     - assets/svg/input/
+    - assets/svg/chat/
     - assets/lottie/

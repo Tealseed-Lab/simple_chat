@@ -107,6 +107,61 @@ mixin _$ChatStore on ChatStoreBase, Store {
     });
   }
 
+  late final _$_readSequenceAtom =
+      Atom(name: 'ChatStoreBase._readSequence', context: context);
+
+  int get readSequence {
+    _$_readSequenceAtom.reportRead();
+    return super._readSequence;
+  }
+
+  @override
+  int get _readSequence => readSequence;
+
+  @override
+  set _readSequence(int value) {
+    _$_readSequenceAtom.reportWrite(value, super._readSequence, () {
+      super._readSequence = value;
+    });
+  }
+
+  late final _$_hasUnreadMessagesAtom =
+      Atom(name: 'ChatStoreBase._hasUnreadMessages', context: context);
+
+  bool get hasUnreadMessages {
+    _$_hasUnreadMessagesAtom.reportRead();
+    return super._hasUnreadMessages;
+  }
+
+  @override
+  bool get _hasUnreadMessages => hasUnreadMessages;
+
+  @override
+  set _hasUnreadMessages(bool value) {
+    _$_hasUnreadMessagesAtom.reportWrite(value, super._hasUnreadMessages, () {
+      super._hasUnreadMessages = value;
+    });
+  }
+
+  late final _$_unreadMessagesCountAtom =
+      Atom(name: 'ChatStoreBase._unreadMessagesCount', context: context);
+
+  int get unreadMessagesCount {
+    _$_unreadMessagesCountAtom.reportRead();
+    return super._unreadMessagesCount;
+  }
+
+  @override
+  int get _unreadMessagesCount => unreadMessagesCount;
+
+  @override
+  set _unreadMessagesCount(int value) {
+    _$_unreadMessagesCountAtom.reportWrite(value, super._unreadMessagesCount,
+        () {
+      super._unreadMessagesCount = value;
+    });
+  }
+
   late final _$addMessageAsyncAction =
       AsyncAction('ChatStoreBase.addMessage', context: context);
 
@@ -125,6 +180,47 @@ mixin _$ChatStore on ChatStoreBase, Store {
       {required List<ModelBaseMessage> messages, bool isInitial = false}) {
     return _$addMessagesAsyncAction
         .run(() => super.addMessages(messages: messages, isInitial: isInitial));
+  }
+
+  late final _$postMessageProcessingAsyncAction =
+      AsyncAction('ChatStoreBase.postMessageProcessing', context: context);
+
+  @override
+  Future<void> postMessageProcessing(
+      {required bool isAtBottom,
+      required bool isInitial,
+      required List<ModelBaseMessage> newMessages}) {
+    return _$postMessageProcessingAsyncAction.run(() => super
+        .postMessageProcessing(
+            isAtBottom: isAtBottom,
+            isInitial: isInitial,
+            newMessages: newMessages));
+  }
+
+  late final _$readMessageAsyncAction =
+      AsyncAction('ChatStoreBase.readMessage', context: context);
+
+  @override
+  Future<void> readMessage({required ModelBaseMessage message}) {
+    return _$readMessageAsyncAction
+        .run(() => super.readMessage(message: message));
+  }
+
+  late final _$readAllMessagesAsyncAction =
+      AsyncAction('ChatStoreBase.readAllMessages', context: context);
+
+  @override
+  Future<void> readAllMessages() {
+    return _$readAllMessagesAsyncAction.run(() => super.readAllMessages());
+  }
+
+  late final _$updateUnreadStatusAsyncAction =
+      AsyncAction('ChatStoreBase.updateUnreadStatus', context: context);
+
+  @override
+  Future<void> updateUnreadStatus() {
+    return _$updateUnreadStatusAsyncAction
+        .run(() => super.updateUnreadStatus());
   }
 
   late final _$removeMessageAsyncAction =
@@ -194,6 +290,26 @@ mixin _$ChatStore on ChatStoreBase, Store {
   @override
   Future<void> removeImage({required XFile image}) {
     return _$removeImageAsyncAction.run(() => super.removeImage(image: image));
+  }
+
+  late final _$showReplyGeneratingIndicatorAsyncAction = AsyncAction(
+      'ChatStoreBase.showReplyGeneratingIndicator',
+      context: context);
+
+  @override
+  Future<void> showReplyGeneratingIndicator() {
+    return _$showReplyGeneratingIndicatorAsyncAction
+        .run(() => super.showReplyGeneratingIndicator());
+  }
+
+  late final _$hideReplyGeneratingIndicatorAsyncAction = AsyncAction(
+      'ChatStoreBase.hideReplyGeneratingIndicator',
+      context: context);
+
+  @override
+  Future<void> hideReplyGeneratingIndicator() {
+    return _$hideReplyGeneratingIndicatorAsyncAction
+        .run(() => super.hideReplyGeneratingIndicator());
   }
 
   @override

@@ -16,10 +16,12 @@ class ChatConfig {
   final int imageMaxCount;
   final String? inputBoxHintText;
   final LoadingIndicatorType loadingIndicatorType;
+  final bool showUnreadCount;
   ChatConfig({
     this.imageMaxCount = 9,
     this.inputBoxHintText,
     this.loadingIndicatorType = LoadingIndicatorType.sendBtnLoading,
+    this.showUnreadCount = false,
   });
 }
 
@@ -75,5 +77,6 @@ class ChatController {
 
   void scrollToBottom() {
     chatScrollController.scrollToBottom();
+    store.readAllMessages();
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart'; // Added import for logger
@@ -49,6 +51,15 @@ abstract class ChatStoreBase with Store {
   @readonly
   bool _isSending = false;
 
+  @readonly
+  int _readSequence = 0;
+
+  @readonly
+  bool _hasUnreadMessages = false;
+
+  @readonly
+  int _unreadMessagesCount = 0;
+
   @computed
   bool get reachImageSelectionLimit => _imageFiles.length >= config.imageMaxCount;
 
@@ -81,11 +92,13 @@ abstract class ChatStoreBase with Store {
         }
       }
     }
-    if (!isInitial && isAtBottom) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        chatScrollController.scrollToBottom();
-      });
-    } else if (!isAtBottom) {}
+    unawaited(
+      postMessageProcessing(
+        isAtBottom: isAtBottom,
+        isInitial: isInitial,
+        newMessages: [message],
+      ),
+    );
   }
 
   @action
@@ -95,13 +108,61 @@ abstract class ChatStoreBase with Store {
   }) async {
     final isAtBottom = chatScrollController.isAtBottom();
     for (var message in messages) {
-      await addMessage(message: message, isInitial: true);
+      await addMessage(
+        message: message,
+        isInitial: isInitial,
+      );
     }
-    if (!isInitial && isAtBottom) {
+    unawaited(
+      postMessageProcessing(
+        isAtBottom: isAtBottom,
+        isInitial: isInitial,
+        newMessages: messages,
+      ),
+    );
+  }
+
+  @action
+  Future<void> postMessageProcessing({
+    required bool isAtBottom,
+    required bool isInitial,
+    required List<ModelBaseMessage> newMessages,
+  }) async {
+    if (isAtBottom) {
+      _readSequence = _messages.firstOrNull?.sequence ?? 0;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        chatScrollController.scrollToBottom();
+        if (isInitial) {
+          chatScrollController.jumpToBottom();
+        } else {
+          chatScrollController.scrollToBottom();
+        }
       });
-    } else if (!isAtBottom) {}
+    } else if (isInitial) {
+      _readSequence = _messages.firstOrNull?.sequence ?? 0;
+    }
+    updateUnreadStatus();
+  }
+
+  @action
+  Future<void> readMessage({
+    required ModelBaseMessage message,
+  }) async {
+    if (message.sequence > _readSequence) {
+      _readSequence = message.sequence;
+      await updateUnreadStatus();
+    }
+  }
+
+  @action
+  Future<void> readAllMessages() async {
+    _readSequence = _messages.firstOrNull?.sequence ?? 0;
+    await updateUnreadStatus();
+  }
+
+  @action
+  Future<void> updateUnreadStatus() async {
+    _hasUnreadMessages = _readSequence < (_messages.firstOrNull?.sequence ?? 0);
+    _unreadMessagesCount = _messages.where((message) => message.sequence > _readSequence).length;
   }
 
   @action

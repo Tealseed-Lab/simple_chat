@@ -57,12 +57,14 @@ class ChatColorThemeData {
   final Color myMessageColor;
   final Color otherMessageColor;
   final Color primary;
+  final Color unreadIndicatorBackgroundColor;
   ChatColorThemeData({
     this.backgroundColor = const Color(0xFFF5F5F5),
     this.inputBoxColor = Colors.white,
     this.myMessageColor = const Color(0xFFE5E5EA),
     this.otherMessageColor = Colors.white,
     this.primary = const Color(0xFFF86526),
+    this.unreadIndicatorBackgroundColor = Colors.white,
   });
 
   ChatColorThemeData copyWith({

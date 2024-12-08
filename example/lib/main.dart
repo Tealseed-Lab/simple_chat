@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     controller = ChatController(
       config: ChatConfig(
         loadingIndicatorType: LoadingIndicatorType.noBlocking,
+        showUnreadCount: true,
       ),
       actionHandler: ChatActionHandler(
         onSendMessage: _handleSendingMessage,
@@ -113,7 +114,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> injectMessages({required bool withDelay}) async {
     final random = Random();
-    for (var i = 0; i < 100; i++) {
+    final totalCount = withDelay ? 1 : 100;
+    for (var i = 0; i < totalCount; i++) {
       if (withDelay) {
         await Future.delayed(const Duration(milliseconds: 1000));
       }

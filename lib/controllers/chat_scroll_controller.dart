@@ -35,16 +35,28 @@ class ChatScrollController with WidgetsBindingObserver {
   bool isAtTop() {
     if (!controller.hasClients) return false;
     final position = controller.position;
-    return position.pixels >= position.maxScrollExtent - 1 || position.viewportDimension >= position.maxScrollExtent;
+    return position.pixels <= 1;
   }
 
   bool isAtBottom() {
     if (!controller.hasClients) return false;
     final position = controller.position;
-    return position.pixels <= 1;
+    return position.pixels >= position.maxScrollExtent - 1 || position.viewportDimension >= position.maxScrollExtent;
   }
 
   Future<void> scrollToTop() async {
+    if (controller.hasClients) {
+      if (controller.offset > 0) {
+        await controller.animateTo(
+          0,
+          duration: Duration(milliseconds: animationDurationInMilliseconds),
+          curve: Curves.easeOut,
+        );
+      }
+    }
+  }
+
+  Future<void> scrollToBottom() async {
     if (controller.hasClients) {
       Logger().i(
           '[easy-chat-scroll-controller] scrollToBottom check offset: ${controller.offset}, maxScrollExtent: ${controller.position.maxScrollExtent}');
@@ -63,19 +75,15 @@ class ChatScrollController with WidgetsBindingObserver {
     }
   }
 
-  Future<void> scrollToBottom() async {
+  Future<void> jumpToTop() async {
     if (controller.hasClients) {
       if (controller.offset > 0) {
-        await controller.animateTo(
-          0,
-          duration: Duration(milliseconds: animationDurationInMilliseconds),
-          curve: Curves.easeOut,
-        );
+        controller.jumpTo(0);
       }
     }
   }
 
-  Future<void> jumpToTop() async {
+  Future<void> jumpToBottom() async {
     if (controller.hasClients) {
       while (controller.offset + 1 < controller.position.maxScrollExtent) {
         Logger().i(
@@ -90,12 +98,12 @@ class ChatScrollController with WidgetsBindingObserver {
     }
   }
 
-  Future<void> jumpToBottom() async {
-    if (controller.hasClients) {
-      if (controller.offset > 0) {
-        controller.jumpTo(0);
-      }
-    }
+  double getOffset() {
+    return controller.offset;
+  }
+
+  void setOffset(double offset) {
+    controller.jumpTo(offset);
   }
 
   // private
