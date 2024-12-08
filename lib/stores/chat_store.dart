@@ -60,7 +60,27 @@ abstract class ChatStoreBase with Store {
     bool isInitial = false,
   }) async {
     final isAtBottom = chatScrollController.isAtBottom();
-    _messages.insert(0, message);
+    if (_messages.isEmpty) {
+      _messages.add(message);
+    } else {
+      final highestSequence = _messages.last.sequence;
+      if (message.sequence >= highestSequence) {
+        _messages.insert(0, message);
+      } else {
+        var hasInserted = false;
+        for (int i = 0; i < _messages.length; i++) {
+          final existingMessage = _messages[i];
+          if (message.sequence >= existingMessage.sequence) {
+            _messages.insert(i, message);
+            hasInserted = true;
+            break;
+          }
+        }
+        if (!hasInserted) {
+          _messages.add(message);
+        }
+      }
+    }
     if (!isInitial && isAtBottom) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         chatScrollController.scrollToBottom();
