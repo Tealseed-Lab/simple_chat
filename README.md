@@ -131,6 +131,22 @@ final controller = ChatController(
 );
 ```
 
+### Message status
+For each message we can also set status, like `sending`, `failed to send`.
+| <img src="https://github.com/user-attachments/assets/166091f7-e2c4-4968-af94-c88bdf07b0e2" width="300" /> |
+|-------------------------|
+```dart
+await controller.store.updateSendStatus(
+    messageId: messageId,
+    status: ModelBaseMessageStatus.sending,
+);
+await controller.store.updateSendStatus(
+    messageId: messageId,
+    status: ModelBaseMessageStatus.failedToSend,
+);
+```
+
+
 ## Customisation
 ### Add your custom message cell UI
 
