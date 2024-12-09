@@ -74,7 +74,7 @@ abstract class ChatStoreBase with Store {
     if (_messages.isEmpty) {
       _messages.add(message);
     } else {
-      final highestSequence = _messages.last.sequence;
+      final highestSequence = _messages.first.sequence;
       if (message.sequence >= highestSequence) {
         _messages.insert(0, message);
       } else {
