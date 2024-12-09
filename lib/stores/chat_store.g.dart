@@ -17,24 +17,6 @@ mixin _$ChatStore on ChatStoreBase, Store {
               name: 'ChatStoreBase.reachImageSelectionLimit'))
       .value;
 
-  late final _$_messagesAtom =
-      Atom(name: 'ChatStoreBase._messages', context: context);
-
-  ObservableList<ModelBaseMessage> get messages {
-    _$_messagesAtom.reportRead();
-    return super._messages;
-  }
-
-  @override
-  ObservableList<ModelBaseMessage> get _messages => messages;
-
-  @override
-  set _messages(ObservableList<ModelBaseMessage> value) {
-    _$_messagesAtom.reportWrite(value, super._messages, () {
-      super._messages = value;
-    });
-  }
-
   late final _$_usersAtom =
       Atom(name: 'ChatStoreBase._users', context: context);
 
@@ -248,6 +230,16 @@ mixin _$ChatStore on ChatStoreBase, Store {
   Future<void> removeMessages({required List<ModelBaseMessage> messages}) {
     return _$removeMessagesAsyncAction
         .run(() => super.removeMessages(messages: messages));
+  }
+
+  late final _$updateSendStatusAsyncAction =
+      AsyncAction('ChatStoreBase.updateSendStatus', context: context);
+
+  @override
+  Future<void> updateSendStatus(
+      {required String messageId, required ModelBaseMessageStatus status}) {
+    return _$updateSendStatusAsyncAction.run(
+        () => super.updateSendStatus(messageId: messageId, status: status));
   }
 
   late final _$addUserAsyncAction =

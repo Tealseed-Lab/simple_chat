@@ -42,7 +42,8 @@ class _HomePageState extends State<HomePage> {
         showUnreadCount: true,
       ),
       actionHandler: ChatActionHandler(
-        onSendMessage: _handleSendingMessage,
+        // onSendMessage: _handleSendingMessage,
+        onSendMessage: _handleSendingMessageWithStatus,
       ),
     );
     setupTests();
@@ -89,6 +90,31 @@ class _HomePageState extends State<HomePage> {
         text: 'Example reply~',
       ),
     );
+  }
+
+  Future<void> _handleSendingMessageWithStatus(TealseedChatMessageSendOutput output) async {
+    if (output.message.isNotEmpty) {
+      final messageId = const Uuid().v4();
+      await controller.store.addMessage(
+        message: ModelTextMessage(
+          id: messageId,
+          text: output.message,
+          userId: userId1,
+          sequence: sequence++,
+          displayDatetime: DateTime.now(),
+        ),
+      );
+      await Future.delayed(const Duration(seconds: 1));
+      await controller.store.updateSendStatus(
+        messageId: messageId,
+        status: ModelBaseMessageStatus.sending,
+      );
+      await Future.delayed(const Duration(seconds: 1));
+      await controller.store.updateSendStatus(
+        messageId: messageId,
+        status: ModelBaseMessageStatus.failedToSend,
+      );
+    }
   }
 
   Future<void> setupTests() async {

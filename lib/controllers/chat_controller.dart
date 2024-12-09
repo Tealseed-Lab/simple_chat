@@ -15,11 +15,13 @@ enum LoadingIndicatorType {
 class ChatConfig {
   final int imageMaxCount;
   final String? inputBoxHintText;
+  final String? failedToSendText;
   final LoadingIndicatorType loadingIndicatorType;
   final bool showUnreadCount;
   ChatConfig({
     this.imageMaxCount = 9,
     this.inputBoxHintText,
+    this.failedToSendText,
     this.loadingIndicatorType = LoadingIndicatorType.sendBtnLoading,
     this.showUnreadCount = false,
   });

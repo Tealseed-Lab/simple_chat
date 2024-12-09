@@ -111,7 +111,8 @@ class _ChatViewState extends State<ChatView> {
   Widget _buildMessageList(BuildContext context) {
     return Observer(
       builder: (context) {
-        final messages = store.messages.reversed.toList();
+        final sequentialMessageMap = store.sequentialMessageMap;
+        final messages = sequentialMessageMap.sequentialValuesReversed;
         return Align(
           alignment: Alignment.topCenter,
           child: ListView.separated(
@@ -137,6 +138,7 @@ class _ChatViewState extends State<ChatView> {
                   final previousMessage = index + 1 < messages.length ? messages[index + 1] : null;
                   final isMessageFromCurrentUser = store.isMessageFromCurrentUser(message);
                   final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
+                  final updatedStatus = store.sequentialMessageMap.messageStatusMap[message.id];
 
                   final builder = widget.controller.viewFactory.buildFor(
                     context,
@@ -159,35 +161,77 @@ class _ChatViewState extends State<ChatView> {
                   final flexibleMessageItem = Flexible(
                     child: GestureDetector(
                       onTap: () => widget.controller.actionHandler?.onMessageTap?.call(message),
-                      child: messageItem,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          messageItem,
+                          if (updatedStatus == ModelBaseMessageStatus.sending)
+                            Positioned(
+                              width: 12,
+                              height: 12,
+                              bottom: 0,
+                              right: isMessageFromCurrentUser ? -14 : null,
+                              left: isMessageFromCurrentUser ? null : -14,
+                              child: CircularProgressIndicator(
+                                color: context.coloredTheme.sendingIndicatorColor,
+                                strokeWidth: 2,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   );
 
                   Widget contentView;
+                  final children = [
+                    flexibleMessageItem,
+                    if (!hideUserAvatar) const SizedBox(width: avatarMessageSpacing),
+                    if (!hideUserAvatar) userAvatar,
+                  ];
                   if (isMessageFromCurrentUser) {
                     contentView = Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        flexibleMessageItem,
-                        if (!hideUserAvatar)
-                          Padding(
-                            padding: const EdgeInsets.only(left: avatarMessageSpacing),
-                            child: userAvatar,
-                          ),
-                      ],
+                      children: children,
                     );
                   } else {
                     contentView = Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      children: children.reversed.toList(),
+                    );
+                  }
+                  Widget contentViewWithStatus = contentView;
+
+                  final avatarPadding = avatarMessageSpacing + context.layoutTheme.userAvatarSize;
+                  Widget? statusWidget;
+                  switch (updatedStatus) {
+                    case ModelBaseMessageStatus.failedToSend:
+                      statusWidget = GestureDetector(
+                        onTap: () => widget.controller.actionHandler?.onMessageTap?.call(message),
+                        child: Text(
+                          widget.controller.config.failedToSendText ?? 'Failed to send',
+                          style: context.layoutTheme.failedToSendTextStyle,
+                        ),
+                      );
+                      break;
+                    default:
+                      break;
+                  }
+
+                  if (statusWidget != null) {
+                    contentViewWithStatus = Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: isMessageFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                       children: [
-                        if (!hideUserAvatar)
-                          Padding(
-                            padding: const EdgeInsets.only(right: avatarMessageSpacing),
-                            child: userAvatar,
-                          ),
-                        flexibleMessageItem,
+                        contentView,
+                        const SizedBox(height: 2),
+                        Padding(
+                          padding: isMessageFromCurrentUser
+                              ? EdgeInsets.only(right: avatarPadding)
+                              : EdgeInsets.only(left: avatarPadding),
+                          child: statusWidget,
+                        ),
                       ],
                     );
                   }
@@ -198,7 +242,7 @@ class _ChatViewState extends State<ChatView> {
                         store.readMessage(message: message);
                       }
                     },
-                    child: contentView,
+                    child: contentViewWithStatus,
                   );
                 },
               );

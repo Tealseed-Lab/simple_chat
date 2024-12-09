@@ -6,6 +6,7 @@ import 'package:logger/logger.dart'; // Added import for logger
 import 'package:mobx/mobx.dart';
 import 'package:tealseed_chat/controllers/chat_scroll_controller.dart';
 import 'package:tealseed_chat/models/loading_indicator_message.dart';
+import 'package:tealseed_chat/stores/sequential_map.dart';
 import 'package:tealseed_chat/tealseed_chat.dart';
 import 'package:uuid/uuid.dart';
 
@@ -32,8 +33,7 @@ abstract class ChatStoreBase with Store {
 
   // observables
 
-  @readonly
-  ObservableList<ModelBaseMessage> _messages = ObservableList<ModelBaseMessage>.of([]);
+  final sequentialMessageMap = SequentialMessageMap();
 
   @readonly
   ObservableMap<String, ModelBaseUser> _users = ObservableMap<String, ModelBaseUser>.of({});
@@ -71,27 +71,7 @@ abstract class ChatStoreBase with Store {
     bool isInitial = false,
   }) async {
     final isAtBottom = chatScrollController.isAtBottom();
-    if (_messages.isEmpty) {
-      _messages.add(message);
-    } else {
-      final highestSequence = _messages.first.sequence;
-      if (message.sequence >= highestSequence) {
-        _messages.insert(0, message);
-      } else {
-        var hasInserted = false;
-        for (int i = 0; i < _messages.length; i++) {
-          final existingMessage = _messages[i];
-          if (message.sequence >= existingMessage.sequence) {
-            _messages.insert(i, message);
-            hasInserted = true;
-            break;
-          }
-        }
-        if (!hasInserted) {
-          _messages.add(message);
-        }
-      }
-    }
+    sequentialMessageMap.upsert(message);
     unawaited(
       postMessageProcessing(
         isAtBottom: isAtBottom,
@@ -107,12 +87,7 @@ abstract class ChatStoreBase with Store {
     bool isInitial = false,
   }) async {
     final isAtBottom = chatScrollController.isAtBottom();
-    for (var message in messages) {
-      await addMessage(
-        message: message,
-        isInitial: isInitial,
-      );
-    }
+    sequentialMessageMap.upsertAll(messages);
     unawaited(
       postMessageProcessing(
         isAtBottom: isAtBottom,
@@ -129,7 +104,7 @@ abstract class ChatStoreBase with Store {
     required List<ModelBaseMessage> newMessages,
   }) async {
     if (isAtBottom) {
-      _readSequence = _messages.firstOrNull?.sequence ?? 0;
+      _readSequence = sequentialMessageMap.getHighestSequence();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (isInitial) {
           chatScrollController.jumpToBottom();
@@ -138,7 +113,7 @@ abstract class ChatStoreBase with Store {
         }
       });
     } else if (isInitial) {
-      _readSequence = _messages.firstOrNull?.sequence ?? 0;
+      _readSequence = sequentialMessageMap.getHighestSequence();
     }
     updateUnreadStatus();
   }
@@ -155,36 +130,56 @@ abstract class ChatStoreBase with Store {
 
   @action
   Future<void> readAllMessages() async {
-    _readSequence = _messages.firstOrNull?.sequence ?? 0;
+    _readSequence = sequentialMessageMap.getHighestSequence();
     await updateUnreadStatus();
   }
 
   @action
   Future<void> updateUnreadStatus() async {
-    _hasUnreadMessages = _readSequence < (_messages.firstOrNull?.sequence ?? 0);
-    _unreadMessagesCount = _messages.where((message) => message.sequence > _readSequence).length;
+    final highestSequence = sequentialMessageMap.getHighestSequence();
+    _hasUnreadMessages = _readSequence < highestSequence;
+    _unreadMessagesCount =
+        sequentialMessageMap.sequentialValues.where((message) => message.sequence > _readSequence).length;
   }
 
   @action
   Future<void> removeMessage({
     required ModelBaseMessage message,
   }) async {
-    _messages.remove(message);
+    sequentialMessageMap.remove(message.id);
   }
 
   @action
   Future<void> removeMessageById({
     required String messageId,
   }) async {
-    _messages.removeWhere((message) => message.id == messageId);
+    sequentialMessageMap.remove(messageId);
   }
 
   @action
   Future<void> removeMessages({
     required List<ModelBaseMessage> messages,
   }) async {
-    _messages.removeWhere((message) => messages.contains(message));
+    for (var message in messages) {
+      sequentialMessageMap.remove(message.id);
+    }
   }
+
+  // send status
+
+  @action
+  Future<void> updateSendStatus({
+    required String messageId,
+    required ModelBaseMessageStatus status,
+  }) async {
+    final message = sequentialMessageMap.getById(messageId);
+    if (message != null) {
+      message.status = status;
+      sequentialMessageMap.upsert(message);
+    }
+  }
+
+  // users
 
   @action
   Future<void> addUser({

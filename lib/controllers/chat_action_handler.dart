@@ -8,10 +8,12 @@ class ChatActionHandler {
   final Future<void> Function(ModelBaseMessage)? onMessageTap;
   final Future<void> Function(XFile)? onImageThumbnailTap;
   final Future<void> Function(ModelBaseUser?)? onUserAvatarTap;
+  final Future<void> Function(ModelBaseMessage)? onMessageFailedStatusTap;
   ChatActionHandler({
     this.onSendMessage,
     this.onMessageTap,
     this.onImageThumbnailTap,
     this.onUserAvatarTap,
+    this.onMessageFailedStatusTap,
   });
 }
