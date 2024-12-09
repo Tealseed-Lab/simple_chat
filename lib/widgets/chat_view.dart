@@ -169,7 +169,6 @@ class _ChatViewState extends State<ChatView> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(width: avatarMessageSpacing),
                         flexibleMessageItem,
                         if (!hideUserAvatar)
                           Padding(
@@ -189,7 +188,6 @@ class _ChatViewState extends State<ChatView> {
                             child: userAvatar,
                           ),
                         flexibleMessageItem,
-                        const SizedBox(width: avatarMessageSpacing),
                       ],
                     );
                   }
