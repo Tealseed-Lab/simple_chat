@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:tealseed_chat/tealseed_chat.dart';
-import 'package:tealseed_chat/widgets/messages/message_bubble.dart';
+import 'package:simple_chat/simple_chat.dart';
+import 'package:simple_chat/widgets/messages/message_bubble.dart';
 import 'package:flutter/material.dart';
 
 class ImageMessageItem extends StatelessWidget {

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tealseed_chat/models/loading_indicator_message.dart';
-import 'package:tealseed_chat/tealseed_chat.dart';
-import 'package:tealseed_chat/widgets/input/input_box.dart';
-import 'package:tealseed_chat/widgets/messages/unsupport_message_item.dart';
-import 'package:tealseed_chat/widgets/users/user_avatar.dart';
+import 'package:simple_chat/models/loading_indicator_message.dart';
+import 'package:simple_chat/simple_chat.dart';
+import 'package:simple_chat/widgets/input/input_box.dart';
+import 'package:simple_chat/widgets/messages/unsupport_message_item.dart';
+import 'package:simple_chat/widgets/users/user_avatar.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class ChatView extends StatefulWidget {
@@ -292,7 +292,7 @@ class _ChatViewState extends State<ChatView> {
                             'assets/svg/chat/arrow_down.svg',
                             width: 16,
                             height: 16,
-                            package: kTealseedChatPackage,
+                            package: kChatPackage,
                           ),
                         ],
                       ),
@@ -318,7 +318,7 @@ class _ChatViewState extends State<ChatView> {
                       'assets/svg/chat/arrow_down.svg',
                       width: 24,
                       height: 24,
-                      package: kTealseedChatPackage,
+                      package: kChatPackage,
                     ),
                   ),
           );

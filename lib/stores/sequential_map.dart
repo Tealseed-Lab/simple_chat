@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:tealseed_chat/models/base_message.dart';
+import 'package:simple_chat/models/base_message.dart';
 
 part 'sequential_map.g.dart';
 

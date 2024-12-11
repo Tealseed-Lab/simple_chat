@@ -1,4 +1,4 @@
-library tealseed_chat;
+library simple_chat;
 
 export 'controllers/chat_action_handler.dart';
 export 'controllers/chat_controller.dart';
@@ -12,4 +12,4 @@ export 'stores/chat_store.dart';
 export 'theme/chat_theme.dart';
 export 'widgets/chat_view.dart';
 
-const kTealseedChatPackage = 'tealseed_chat';
+const kChatPackage = 'simple_chat';

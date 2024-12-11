@@ -1,4 +1,4 @@
-import 'package:tealseed_chat/models/base_message.dart';
+import 'package:simple_chat/models/base_message.dart';
 import 'package:flutter/material.dart';
 
 typedef MessageViewBuilder<T extends ModelBaseMessage> = Widget Function(

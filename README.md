@@ -1,4 +1,4 @@
-# Tealseed Chat
+# Simple Chat
 
 A simple UI solution for quick integration of IM chat & AI bot chat.
 

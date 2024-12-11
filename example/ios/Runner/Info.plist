@@ -27,11 +27,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Tealseed Chat needs to access your camera to take photo and send with message</string>
+	<string>Simple Chat needs to access your camera to take photo and send with message</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Tealseed Chat needs to access your microphone to take video and send with message</string>
+	<string>Simple Chat needs to access your microphone to take video and send with message</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Tealseed Chat needs to access your photo library to send message with photos</string>
+	<string>Simple Chat needs to access your photo library to send message with photos</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

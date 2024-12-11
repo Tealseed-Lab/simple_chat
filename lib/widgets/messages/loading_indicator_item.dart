@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tealseed_chat/models/loading_indicator_message.dart';
-import 'package:tealseed_chat/tealseed_chat.dart';
-import 'package:tealseed_chat/widgets/messages/message_bubble.dart';
+import 'package:simple_chat/models/loading_indicator_message.dart';
+import 'package:simple_chat/simple_chat.dart';
+import 'package:simple_chat/widgets/messages/message_bubble.dart';
 
 class LoadingIndicatorItem extends StatelessWidget {
   final ModelLoadingIndicatorMessage message;
@@ -24,7 +24,7 @@ class LoadingIndicatorItem extends StatelessWidget {
         child: Lottie.asset(
           'assets/lottie/speech_loading.json',
           repeat: true,
-          package: kTealseedChatPackage,
+          package: kChatPackage,
         ),
       ),
     );

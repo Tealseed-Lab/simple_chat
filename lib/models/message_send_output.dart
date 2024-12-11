@@ -1,10 +1,10 @@
 import 'package:image_picker/image_picker.dart';
 
-class TealseedChatMessageSendOutput {
+class ChatMessageSendOutput {
   final String message;
   final List<XFile> imageFiles;
 
-  TealseedChatMessageSendOutput({
+  ChatMessageSendOutput({
     required this.message,
     required this.imageFiles,
   });

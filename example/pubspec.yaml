@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   
   uuid: ^4.5.0
-  tealseed_chat:
+  simple_chat:
     path: ../
 
 dev_dependencies:

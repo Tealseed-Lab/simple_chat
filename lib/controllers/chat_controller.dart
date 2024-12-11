@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tealseed_chat/controllers/chat_scroll_controller.dart';
-import 'package:tealseed_chat/controllers/view_factory.dart';
-import 'package:tealseed_chat/models/loading_indicator_message.dart';
-import 'package:tealseed_chat/tealseed_chat.dart';
-import 'package:tealseed_chat/widgets/messages/image_message_item.dart';
-import 'package:tealseed_chat/widgets/messages/loading_indicator_item.dart';
-import 'package:tealseed_chat/widgets/messages/text_message_item.dart';
+import 'package:simple_chat/controllers/chat_scroll_controller.dart';
+import 'package:simple_chat/controllers/view_factory.dart';
+import 'package:simple_chat/models/loading_indicator_message.dart';
+import 'package:simple_chat/simple_chat.dart';
+import 'package:simple_chat/widgets/messages/image_message_item.dart';
+import 'package:simple_chat/widgets/messages/loading_indicator_item.dart';
+import 'package:simple_chat/widgets/messages/text_message_item.dart';
 
 enum LoadingIndicatorType {
   sendBtnLoading,

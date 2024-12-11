@@ -1,7 +1,7 @@
 import 'dart:math'; // Added import for Random
 
 import 'package:flutter/material.dart';
-import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:simple_chat/simple_chat.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  Future<void> _handleSendingMessage(TealseedChatMessageSendOutput output) async {
+  Future<void> _handleSendingMessage(ChatMessageSendOutput output) async {
     if (output.message.isNotEmpty) {
       await controller.store.addMessage(
         message: ModelTextMessage(
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _handleSendingMessageWithStatus(TealseedChatMessageSendOutput output) async {
+  Future<void> _handleSendingMessageWithStatus(ChatMessageSendOutput output) async {
     if (output.message.isNotEmpty) {
       final messageId = const Uuid().v4();
       await controller.store.addMessage(

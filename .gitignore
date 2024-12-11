@@ -50,9 +50,6 @@ android/local.properties
 macos/fastlane/report.xml
 macos/fastlane/README.md
 
-macos/tealseed_cal.app.dSYM.zip
-macos/tealseed_cal.app
-
 # env variable
 .env
 **env.g.dart

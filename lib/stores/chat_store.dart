@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart'; // Added import for logger
 import 'package:mobx/mobx.dart';
-import 'package:tealseed_chat/controllers/chat_scroll_controller.dart';
-import 'package:tealseed_chat/models/loading_indicator_message.dart';
-import 'package:tealseed_chat/stores/sequential_map.dart';
-import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:simple_chat/controllers/chat_scroll_controller.dart';
+import 'package:simple_chat/models/loading_indicator_message.dart';
+import 'package:simple_chat/simple_chat.dart';
+import 'package:simple_chat/stores/sequential_map.dart';
 import 'package:uuid/uuid.dart';
 
 part 'chat_store.g.dart';
@@ -205,8 +205,8 @@ abstract class ChatStoreBase with Store {
 
   final loadingIndicatorMessageId = const Uuid().v4();
   @action
-  Future<void> sendMessage({required Function(TealseedChatMessageSendOutput output) onSend}) async {
-    final output = TealseedChatMessageSendOutput(
+  Future<void> sendMessage({required Function(ChatMessageSendOutput output) onSend}) async {
+    final output = ChatMessageSendOutput(
       message: textEditingController.text,
       imageFiles: _imageFiles.toList(),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:simple_chat/simple_chat.dart';
 
 class SendMsgBtn extends StatelessWidget {
   final bool isSending;
@@ -29,14 +29,14 @@ class SendMsgBtn extends StatelessWidget {
     } else if (isDisabled) {
       view = SvgPicture.asset(
         'assets/svg/input/send_disabled.svg',
-        package: kTealseedChatPackage,
+        package: kChatPackage,
         width: size,
         height: size,
       );
     } else {
       view = SvgPicture.asset(
         'assets/svg/input/send.svg',
-        package: kTealseedChatPackage,
+        package: kChatPackage,
         width: size,
         height: size,
       );

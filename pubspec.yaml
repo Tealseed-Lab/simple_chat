@@ -1,8 +1,8 @@
-name: tealseed_chat
+name: simple_chat
 description: "Simple solution for IM chat & AI bot chat"
 version: 0.0.5
-repository: https://github.com/Tealseed-Lab/tealseed_chat
-issue_tracker: https://github.com/Tealseed-Lab/tealseed_chat/issues
+repository: https://github.com/Tealseed-Lab/simple_chat
+issue_tracker: https://github.com/Tealseed-Lab/simple_chat/issues
 
 environment:
   sdk: ">=3.4.3 <4.0.0"

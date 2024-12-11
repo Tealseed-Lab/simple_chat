@@ -1,4 +1,4 @@
-import 'package:tealseed_chat/models/base_message.dart';
+import 'package:simple_chat/models/base_message.dart';
 
 class ModelLoadingIndicatorMessage extends ModelBaseMessage {
   @override

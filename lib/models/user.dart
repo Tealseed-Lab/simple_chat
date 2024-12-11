@@ -1,4 +1,4 @@
-import 'package:tealseed_chat/tealseed_chat.dart';
+import 'package:simple_chat/simple_chat.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';

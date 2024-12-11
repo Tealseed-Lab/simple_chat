@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tealseed_chat/tealseed_chat.dart';
-import 'package:tealseed_chat/widgets/input/send_msg_btn.dart';
+import 'package:simple_chat/simple_chat.dart';
+import 'package:simple_chat/widgets/input/send_msg_btn.dart';
 
 class InputBoxTextField extends StatefulWidget {
   final double inputBoxHorizontalMargin;
@@ -132,7 +132,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                       },
                       child: SvgPicture.asset(
                         'assets/svg/input/camera.svg',
-                        package: kTealseedChatPackage,
+                        package: kChatPackage,
                         width: cameraIconWidth,
                         height: cameraIconWidth,
                         colorFilter: ColorFilter.mode(
@@ -157,7 +157,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                       },
                       child: SvgPicture.asset(
                         'assets/svg/input/album.svg',
-                        package: kTealseedChatPackage,
+                        package: kChatPackage,
                         width: albumIconWidth,
                         height: albumIconWidth,
                         colorFilter: ColorFilter.mode(
