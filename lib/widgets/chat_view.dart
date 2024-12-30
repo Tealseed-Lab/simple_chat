@@ -184,6 +184,8 @@ class _ChatViewState extends State<ChatView> {
 
                   Widget contentView;
                   final children = [
+                    if (widget.controller.config.messageAlignment == MessageAlignment.center)
+                      SizedBox(width: avatarMessageSpacing + context.layoutTheme.userAvatarSize),
                     flexibleMessageItem,
                     if (!hideUserAvatar) const SizedBox(width: avatarMessageSpacing),
                     if (!hideUserAvatar) userAvatar,

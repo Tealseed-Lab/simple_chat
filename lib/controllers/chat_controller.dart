@@ -12,18 +12,25 @@ enum LoadingIndicatorType {
   noBlocking,
 }
 
+enum MessageAlignment {
+  center,
+  justified,
+}
+
 class ChatConfig {
   final int imageMaxCount;
   final String? inputBoxHintText;
   final String? failedToSendText;
   final LoadingIndicatorType loadingIndicatorType;
   final bool showUnreadCount;
+  final MessageAlignment messageAlignment;
   ChatConfig({
     this.imageMaxCount = 9,
     this.inputBoxHintText,
     this.failedToSendText,
     this.loadingIndicatorType = LoadingIndicatorType.sendBtnLoading,
     this.showUnreadCount = false,
+    this.messageAlignment = MessageAlignment.center,
   });
 }
 
