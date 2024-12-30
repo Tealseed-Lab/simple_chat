@@ -1,5 +1,5 @@
-import 'package:simple_chat/models/base_message.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:simple_chat/models/base_message.dart';
 
 part 'text_message.g.dart';
 
@@ -18,6 +18,9 @@ class ModelTextMessage extends ModelBaseMessage {
   @override
   final DateTime displayDatetime;
 
+  @override
+  final bool forceNewBlock;
+
   // text message
   final String text;
 
@@ -27,6 +30,7 @@ class ModelTextMessage extends ModelBaseMessage {
     required this.sequence,
     required this.displayDatetime,
     required this.text,
+    this.forceNewBlock = false,
   });
 
   // parsing

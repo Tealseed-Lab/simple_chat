@@ -125,9 +125,9 @@ class _ChatViewState extends State<ChatView> {
             cacheExtent: 1000,
             separatorBuilder: (context, index) {
               final currentMessage = messages[index];
-              final previousMessage = index + 1 < messages.length ? messages[index + 1] : null;
-              final isSameUser = previousMessage != null && currentMessage.userId == previousMessage.userId;
-              return SizedBox(height: isSameUser && !currentMessage.forceNewBlock ? 4 : 16);
+              final nextMessage = index + 1 < messages.length ? messages[index + 1] : null;
+              final isSameUser = nextMessage != null && currentMessage.userId == nextMessage.userId;
+              return SizedBox(height: isSameUser && !nextMessage.forceNewBlock ? 4 : 16);
             },
             itemCount: messages.length,
             itemBuilder: (context, index) {

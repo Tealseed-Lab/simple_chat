@@ -107,6 +107,17 @@ mixin _$SequentialMessageMap on SequentialMessageMapBase, Store {
   }
 
   @override
+  void clearAll() {
+    final _$actionInfo = _$SequentialMessageMapBaseActionController.startAction(
+        name: 'SequentialMessageMapBase.clearAll');
+    try {
+      return super.clearAll();
+    } finally {
+      _$SequentialMessageMapBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 sequentialValues: ${sequentialValues},

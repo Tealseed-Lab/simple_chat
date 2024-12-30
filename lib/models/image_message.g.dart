@@ -15,6 +15,7 @@ ModelImageMessage _$ModelImageMessageFromJson(Map<String, dynamic> json) =>
       imageUrls: (json['image_urls'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      forceNewBlock: json['force_new_block'] as bool? ?? false,
     )..status = $enumDecode(_$ModelBaseMessageStatusEnumMap, json['status']);
 
 Map<String, dynamic> _$ModelImageMessageToJson(ModelImageMessage instance) =>
@@ -24,6 +25,7 @@ Map<String, dynamic> _$ModelImageMessageToJson(ModelImageMessage instance) =>
       'user_id': instance.userId,
       'sequence': instance.sequence,
       'display_datetime': instance.displayDatetime.toIso8601String(),
+      'force_new_block': instance.forceNewBlock,
       'image_urls': instance.imageUrls,
     };
 

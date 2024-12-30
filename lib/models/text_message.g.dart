@@ -13,6 +13,7 @@ ModelTextMessage _$ModelTextMessageFromJson(Map<String, dynamic> json) =>
       sequence: (json['sequence'] as num).toInt(),
       displayDatetime: DateTime.parse(json['display_datetime'] as String),
       text: json['text'] as String,
+      forceNewBlock: json['force_new_block'] as bool? ?? false,
     )..status = $enumDecode(_$ModelBaseMessageStatusEnumMap, json['status']);
 
 Map<String, dynamic> _$ModelTextMessageToJson(ModelTextMessage instance) =>
@@ -22,6 +23,7 @@ Map<String, dynamic> _$ModelTextMessageToJson(ModelTextMessage instance) =>
       'user_id': instance.userId,
       'sequence': instance.sequence,
       'display_datetime': instance.displayDatetime.toIso8601String(),
+      'force_new_block': instance.forceNewBlock,
       'text': instance.text,
     };
 
