@@ -76,4 +76,11 @@ abstract class SequentialMessageMapBase with Store {
       _messageStatusMap.remove(id);
     }
   }
+
+  @action
+  void clearAll() {
+    _map.clear();
+    _order.clear();
+    _messageStatusMap.clear();
+  }
 }

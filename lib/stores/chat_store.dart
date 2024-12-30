@@ -165,6 +165,11 @@ abstract class ChatStoreBase with Store {
     }
   }
 
+  @action
+  Future<void> clearAll() async {
+    sequentialMessageMap.clearAll();
+  }
+
   // send status
 
   @action

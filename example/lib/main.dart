@@ -189,6 +189,9 @@ class _HomePageState extends State<HomePage> {
                 case 'inject_messages_delay':
                   injectMessages(withDelay: true);
                   break;
+                case 'clear_all':
+                  controller.store.clearAll();
+                  break;
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -218,6 +221,13 @@ class _HomePageState extends State<HomePage> {
                 child: ListTile(
                   leading: Icon(Icons.auto_awesome),
                   title: Text('Inject Messages with Delay'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'clear_all',
+                child: ListTile(
+                  leading: Icon(Icons.clear),
+                  title: Text('Clear All'),
                 ),
               ),
             ],
