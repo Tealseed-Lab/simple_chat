@@ -1,14 +1,14 @@
 import 'dart:io';
 
+import 'package:easy_asset_picker/picker/models/asset_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class InputBoxImageItem extends StatelessWidget {
-  final XFile imageFile;
+  final AssetImageInfo imageFile;
   final double size;
   final bool disabled;
-  final void Function(XFile) onTap;
-  final void Function(XFile) onRemove;
+  final void Function(AssetImageInfo) onTap;
+  final void Function(AssetImageInfo) onRemove;
   const InputBoxImageItem({
     super.key,
     required this.imageFile,

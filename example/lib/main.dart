@@ -42,8 +42,8 @@ class _HomePageState extends State<HomePage> {
         showUnreadCount: true,
       ),
       actionHandler: ChatActionHandler(
-        // onSendMessage: _handleSendingMessage,
-        onSendMessage: _handleSendingMessageWithStatus,
+        onSendMessage: _handleSendingMessage,
+        // onSendMessage: _handleSendingMessageWithStatus,
       ),
     );
     setupTests();

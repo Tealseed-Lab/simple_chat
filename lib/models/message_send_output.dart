@@ -1,8 +1,8 @@
-import 'package:image_picker/image_picker.dart';
+import 'package:easy_asset_picker/picker/models/asset_image.dart';
 
 class ChatMessageSendOutput {
   final String message;
-  final List<XFile> imageFiles;
+  final List<AssetImageInfo> imageFiles;
 
   ChatMessageSendOutput({
     required this.message,

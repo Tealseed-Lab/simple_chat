@@ -56,16 +56,16 @@ mixin _$ChatStore on ChatStoreBase, Store {
   late final _$_imageFilesAtom =
       Atom(name: 'ChatStoreBase._imageFiles', context: context);
 
-  ObservableList<XFile> get imageFiles {
+  ObservableList<AssetImageInfo> get imageFiles {
     _$_imageFilesAtom.reportRead();
     return super._imageFiles;
   }
 
   @override
-  ObservableList<XFile> get _imageFiles => imageFiles;
+  ObservableList<AssetImageInfo> get _imageFiles => imageFiles;
 
   @override
-  set _imageFiles(ObservableList<XFile> value) {
+  set _imageFiles(ObservableList<AssetImageInfo> value) {
     _$_imageFilesAtom.reportWrite(value, super._imageFiles, () {
       super._imageFiles = value;
     });
@@ -280,15 +280,15 @@ mixin _$ChatStore on ChatStoreBase, Store {
       AsyncAction('ChatStoreBase.pickImage', context: context);
 
   @override
-  Future<void> pickImage({required ImageSource source}) {
-    return _$pickImageAsyncAction.run(() => super.pickImage(source: source));
+  Future<void> pickImage(BuildContext context) {
+    return _$pickImageAsyncAction.run(() => super.pickImage(context));
   }
 
   late final _$removeImageAsyncAction =
       AsyncAction('ChatStoreBase.removeImage', context: context);
 
   @override
-  Future<void> removeImage({required XFile image}) {
+  Future<void> removeImage({required AssetImageInfo image}) {
     return _$removeImageAsyncAction.run(() => super.removeImage(image: image));
   }
 

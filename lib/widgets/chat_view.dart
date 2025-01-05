@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:simple_chat/models/loading_indicator_message.dart';
 import 'package:simple_chat/simple_chat.dart';
 import 'package:simple_chat/widgets/input/input_box.dart';
@@ -82,7 +81,7 @@ class _ChatViewState extends State<ChatView> {
                   if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
                     return;
                   }
-                  await store.pickImage(source: ImageSource.camera);
+                  await store.pickImage(context);
                   store.focusNode.requestFocus();
                 },
                 onAlbumTap: () async {
@@ -90,7 +89,7 @@ class _ChatViewState extends State<ChatView> {
                     return;
                   }
                   _dismissKeyboard();
-                  await store.pickImage(source: ImageSource.gallery);
+                  await store.pickImage(context);
                   store.focusNode.requestFocus();
                 },
                 onImageTap: (imageFile) {

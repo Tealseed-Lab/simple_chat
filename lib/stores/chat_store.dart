@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:easy_asset_picker/easy_asset_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart'; // Added import for logger
 import 'package:mobx/mobx.dart';
 import 'package:simple_chat/controllers/chat_scroll_controller.dart';
@@ -44,7 +44,7 @@ abstract class ChatStoreBase with Store {
   // observables - images
 
   @readonly
-  ObservableList<XFile> _imageFiles = ObservableList<XFile>.of([]);
+  ObservableList<AssetImageInfo> _imageFiles = ObservableList<AssetImageInfo>.of([]);
 
   // observables - send message
 
@@ -239,30 +239,37 @@ abstract class ChatStoreBase with Store {
   // actions - images
 
   @action
-  Future<void> pickImage({
-    required ImageSource source,
-  }) async {
+  Future<void> pickImage(BuildContext context) async {
     if (_isSending) {
       return;
     }
-    final image = await ImagePicker().pickImage(source: source);
-    if (image != null) {
-      final updated = _imageFiles.toList();
-      updated.add(image);
-      _imageFiles = ObservableList<XFile>.of(updated);
+    final isAtBottom = chatScrollController.isAtBottom();
+    final results = await showAssetPicker(
+      context,
+      config: AssetPickerConfig(
+        maxSelection: config.imageMaxCount,
+        selectIndicatorColor: context.coloredTheme.primary,
+        loadingIndicatorColor: context.coloredTheme.primary,
+      ),
+    );
+    _imageFiles = ObservableList<AssetImageInfo>.of(results ?? []);
+    if (isAtBottom) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        chatScrollController.scrollToBottom();
+      });
     }
   }
 
   @action
   Future<void> removeImage({
-    required XFile image,
+    required AssetImageInfo image,
   }) async {
     if (_isSending) {
       return;
     }
     final updated = _imageFiles.toList();
     updated.remove(image);
-    _imageFiles = ObservableList<XFile>.of(updated);
+    _imageFiles = ObservableList<AssetImageInfo>.of(updated);
   }
 
   // loading indicator

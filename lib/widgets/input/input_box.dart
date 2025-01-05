@@ -1,6 +1,6 @@
+import 'package:easy_asset_picker/picker/models/asset_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:simple_chat/simple_chat.dart';
 import 'package:simple_chat/widgets/input/input_box_image_item.dart';
 import 'package:simple_chat/widgets/input/input_box_text_field.dart';
@@ -12,8 +12,8 @@ class InputBox extends StatelessWidget {
   final Function() onSend;
   final Function() onCameraTap;
   final Function() onAlbumTap;
-  final Function(XFile) onImageTap;
-  final Function(XFile) onImageRemove;
+  final Function(AssetImageInfo) onImageTap;
+  final Function(AssetImageInfo) onImageRemove;
 
   late final ChatStore store;
 

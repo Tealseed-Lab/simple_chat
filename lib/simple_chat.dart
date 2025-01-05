@@ -1,5 +1,7 @@
 library simple_chat;
 
+export 'package:easy_asset_picker/picker/models/asset_image.dart';
+
 export 'controllers/chat_action_handler.dart';
 export 'controllers/chat_controller.dart';
 export 'models/base_message.dart';
