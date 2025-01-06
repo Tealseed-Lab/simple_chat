@@ -54,13 +54,13 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
   @override
   Widget build(BuildContext context) {
     const inputBoxHeight = 40.0;
-    const cameraIconWidth = 24.0;
-    const cameraIconRightPadding = 16.0;
-    const albumIconWidth = 24.0;
-    const albumIconRightPadding = 16.0;
-    const sendMsgBtnWidth = 32.0;
-    const sendMsgBtnRightPadding = 4.0;
-    const buttonBoxWidth = cameraIconWidth +
+    final double cameraIconWidth = widget.controller.config.imageMaxCount > 0 ? 24.0 : 0;
+    final double cameraIconRightPadding = widget.controller.config.imageMaxCount > 0 ? 16.0 : 0;
+    final double albumIconWidth = widget.controller.config.imageMaxCount > 1 ? 24.0 : 0;
+    final double albumIconRightPadding = widget.controller.config.imageMaxCount > 1 ? 16.0 : 0;
+    const double sendMsgBtnWidth = 32.0;
+    const double sendMsgBtnRightPadding = 4.0;
+    final double buttonBoxWidth = cameraIconWidth +
         albumIconWidth +
         sendMsgBtnWidth +
         cameraIconRightPadding +
@@ -120,56 +120,58 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: cameraIconRightPadding),
-                  child: Observer(
-                    builder: (context) => GestureDetector(
-                      onTap: () {
-                        if (store.isSending || store.reachImageSelectionLimit) {
-                          return;
-                        }
-                        widget.onCameraTap.call();
-                      },
-                      child: SvgPicture.asset(
-                        'assets/svg/input/camera.svg',
-                        package: kChatPackage,
-                        width: cameraIconWidth,
-                        height: cameraIconWidth,
-                        colorFilter: ColorFilter.mode(
-                          store.isSending || store.reachImageSelectionLimit
-                              ? Colors.black.withOpacity(0.3)
-                              : Colors.black,
-                          BlendMode.srcIn,
+                if (widget.controller.config.imageMaxCount > 0)
+                  Padding(
+                    padding: EdgeInsets.only(right: cameraIconRightPadding),
+                    child: Observer(
+                      builder: (context) => GestureDetector(
+                        onTap: () {
+                          if (store.isSending || store.reachImageSelectionLimit) {
+                            return;
+                          }
+                          widget.onCameraTap.call();
+                        },
+                        child: SvgPicture.asset(
+                          'assets/svg/input/camera.svg',
+                          package: kChatPackage,
+                          width: cameraIconWidth,
+                          height: cameraIconWidth,
+                          colorFilter: ColorFilter.mode(
+                            store.isSending || store.reachImageSelectionLimit
+                                ? Colors.black.withAlpha((0.3 * 255).round())
+                                : Colors.black,
+                            BlendMode.srcIn,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: albumIconRightPadding),
-                  child: Observer(
-                    builder: (context) => GestureDetector(
-                      onTap: () {
-                        if (store.isSending || store.reachImageSelectionLimit) {
-                          return;
-                        }
-                        widget.onAlbumTap.call();
-                      },
-                      child: SvgPicture.asset(
-                        'assets/svg/input/album.svg',
-                        package: kChatPackage,
-                        width: albumIconWidth,
-                        height: albumIconWidth,
-                        colorFilter: ColorFilter.mode(
-                          store.isSending || store.reachImageSelectionLimit
-                              ? Colors.black.withOpacity(0.3)
-                              : Colors.black,
-                          BlendMode.srcIn,
+                if (widget.controller.config.imageMaxCount > 0)
+                  Padding(
+                    padding: EdgeInsets.only(right: albumIconRightPadding),
+                    child: Observer(
+                      builder: (context) => GestureDetector(
+                        onTap: () {
+                          if (store.isSending || store.reachImageSelectionLimit) {
+                            return;
+                          }
+                          widget.onAlbumTap.call();
+                        },
+                        child: SvgPicture.asset(
+                          'assets/svg/input/album.svg',
+                          package: kChatPackage,
+                          width: albumIconWidth,
+                          height: albumIconWidth,
+                          colorFilter: ColorFilter.mode(
+                            store.isSending || store.reachImageSelectionLimit
+                                ? Colors.black.withAlpha((0.3 * 255).round())
+                                : Colors.black,
+                            BlendMode.srcIn,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(right: sendMsgBtnRightPadding),
                   child: Observer(
