@@ -21,6 +21,8 @@ class ChatConfig {
   final int imageMaxCount;
   final String? inputBoxHintText;
   final String? failedToSendText;
+  final String? photoPermissionDeniedText;
+  final String? photoPermissionDeniedButtonText;
   final LoadingIndicatorType loadingIndicatorType;
   final bool showUnreadCount;
   final MessageAlignment messageAlignment;
@@ -28,6 +30,8 @@ class ChatConfig {
     this.imageMaxCount = 9,
     this.inputBoxHintText,
     this.failedToSendText,
+    this.photoPermissionDeniedText,
+    this.photoPermissionDeniedButtonText,
     this.loadingIndicatorType = LoadingIndicatorType.sendBtnLoading,
     this.showUnreadCount = false,
     this.messageAlignment = MessageAlignment.center,

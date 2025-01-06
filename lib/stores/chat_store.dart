@@ -250,6 +250,9 @@ abstract class ChatStoreBase with Store {
         maxSelection: config.imageMaxCount,
         selectIndicatorColor: context.coloredTheme.primary,
         loadingIndicatorColor: context.coloredTheme.primary,
+        permissionDeniedText:
+            config.photoPermissionDeniedText ?? 'Please grant permission to access your photo library',
+        permissionDeniedButtonText: config.photoPermissionDeniedButtonText ?? 'Open Settings',
       ),
     );
     _imageFiles = ObservableList<AssetImageInfo>.of(results ?? []);
