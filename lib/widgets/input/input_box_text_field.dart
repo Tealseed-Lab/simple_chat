@@ -56,8 +56,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
     const inputBoxHeight = 40.0;
     final double cameraIconWidth = widget.controller.config.imageMaxCount > 0 ? 24.0 : 0;
     final double cameraIconRightPadding = widget.controller.config.imageMaxCount > 0 ? 16.0 : 0;
-    final double albumIconWidth = widget.controller.config.imageMaxCount > 1 ? 24.0 : 0;
-    final double albumIconRightPadding = widget.controller.config.imageMaxCount > 1 ? 16.0 : 0;
+    final double albumIconWidth = widget.controller.config.imageMaxCount > 0 ? 24.0 : 0;
+    final double albumIconRightPadding = widget.controller.config.imageMaxCount > 0 ? 16.0 : 0;
     const double sendMsgBtnWidth = 32.0;
     const double sendMsgBtnRightPadding = 4.0;
     final double buttonBoxWidth = cameraIconWidth +
