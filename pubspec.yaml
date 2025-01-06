@@ -1,6 +1,6 @@
 name: simple_chat
 description: "Simple solution for IM chat & AI bot chat"
-version: 0.0.9
+version: 0.0.10
 repository: https://github.com/Tealseed-Lab/simple_chat
 issue_tracker: https://github.com/Tealseed-Lab/simple_chat/issues
 
