@@ -126,7 +126,8 @@ class _ChatViewState extends State<ChatView> {
               final currentMessage = messages[index];
               final nextMessage = index + 1 < messages.length ? messages[index + 1] : null;
               final isSameUser = nextMessage != null && currentMessage.userId == nextMessage.userId;
-              return SizedBox(height: isSameUser && !nextMessage.forceNewBlock ? 4 : 16);
+              final forceNewBlock = nextMessage?.forceNewBlock ?? false;
+              return SizedBox(height: isSameUser && !forceNewBlock ? 4 : 16);
             },
             itemCount: messages.length,
             itemBuilder: (context, index) {
@@ -134,7 +135,7 @@ class _ChatViewState extends State<ChatView> {
                 builder: (context) {
                   final message = messages[index];
                   final hideUserAvatar = message is ModelLoadingIndicatorMessage;
-                  final previousMessage = index + 1 < messages.length ? messages[index + 1] : null;
+                  final previousMessage = index - 1 >= 0 ? messages[index - 1] : null;
                   final isMessageFromCurrentUser = store.isMessageFromCurrentUser(message);
                   final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
                   final updatedStatus = store.sequentialMessageMap.messageStatusMap[message.id];
