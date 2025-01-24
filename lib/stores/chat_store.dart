@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:easy_asset_picker/easy_asset_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart'; // Added import for logger
 import 'package:mobx/mobx.dart';
 import 'package:simple_chat/controllers/chat_scroll_controller.dart';
@@ -237,12 +238,39 @@ abstract class ChatStoreBase with Store {
   }
 
   // actions - images
-
+  bool _isTakingPhoto = false;
   @action
-  Future<void> pickImage(BuildContext context) async {
-    if (_isSending) {
+  Future<void> takePhoto(BuildContext context) async {
+    if (_isSending || _isTakingPhoto) {
       return;
     }
+    _isTakingPhoto = true;
+    final isAtBottom = chatScrollController.isAtBottom();
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      final updated = _imageFiles.toList();
+      updated.add(
+        AssetImageInfo(
+          path: image.path,
+        ),
+      );
+      _imageFiles = ObservableList<AssetImageInfo>.of(updated);
+    }
+    if (isAtBottom) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        chatScrollController.scrollToBottom();
+      });
+    }
+    _isTakingPhoto = false;
+  }
+
+  bool _isPickingImage = false;
+  @action
+  Future<void> pickImage(BuildContext context) async {
+    if (_isSending || _isPickingImage) {
+      return;
+    }
+    _isPickingImage = true;
     final isAtBottom = chatScrollController.isAtBottom();
     final results = await showAssetPicker(
       context,
@@ -261,6 +289,7 @@ abstract class ChatStoreBase with Store {
         chatScrollController.scrollToBottom();
       });
     }
+    _isPickingImage = false;
   }
 
   @action

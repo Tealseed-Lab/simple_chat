@@ -276,6 +276,14 @@ mixin _$ChatStore on ChatStoreBase, Store {
         .run(() => super.sendMessage(onSend: onSend));
   }
 
+  late final _$takePhotoAsyncAction =
+      AsyncAction('ChatStoreBase.takePhoto', context: context);
+
+  @override
+  Future<void> takePhoto(BuildContext context) {
+    return _$takePhotoAsyncAction.run(() => super.takePhoto(context));
+  }
+
   late final _$pickImageAsyncAction =
       AsyncAction('ChatStoreBase.pickImage', context: context);
 

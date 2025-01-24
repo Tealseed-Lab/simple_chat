@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
       config: ChatConfig(
         loadingIndicatorType: LoadingIndicatorType.noBlocking,
         showUnreadCount: true,
+        imageMaxCount: 1,
       ),
       actionHandler: ChatActionHandler(
         onSendMessage: _handleSendingMessage,

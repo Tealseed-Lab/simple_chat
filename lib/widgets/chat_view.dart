@@ -81,7 +81,7 @@ class _ChatViewState extends State<ChatView> {
                   if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
                     return;
                   }
-                  await store.pickImage(context);
+                  await store.takePhoto(context);
                   store.focusNode.requestFocus();
                 },
                 onAlbumTap: () async {
