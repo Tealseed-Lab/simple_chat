@@ -229,3 +229,8 @@ controller.viewFactory.register<CustomMessage>(
     ),
 );
 ```
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Tealseed-Lab/simple_chat&type=Date)](https://star-history.com/#Tealseed-Lab/simple_chat&Date)
+
