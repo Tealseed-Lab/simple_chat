@@ -30,6 +30,13 @@ abstract class ChatStoreBase with Store {
 
   Future<void> setup() async {
     // setup
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        _isInputBoxFocused = true;
+      } else {
+        _isInputBoxFocused = false;
+      }
+    });
   }
 
   // observables
@@ -41,6 +48,9 @@ abstract class ChatStoreBase with Store {
 
   @readonly
   ModelBaseUser? _currentUser;
+
+  @readonly
+  bool _isInputBoxFocused = false;
 
   // observables - images
 

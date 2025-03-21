@@ -53,6 +53,24 @@ mixin _$ChatStore on ChatStoreBase, Store {
     });
   }
 
+  late final _$_isInputBoxFocusedAtom =
+      Atom(name: 'ChatStoreBase._isInputBoxFocused', context: context);
+
+  bool get isInputBoxFocused {
+    _$_isInputBoxFocusedAtom.reportRead();
+    return super._isInputBoxFocused;
+  }
+
+  @override
+  bool get _isInputBoxFocused => isInputBoxFocused;
+
+  @override
+  set _isInputBoxFocused(bool value) {
+    _$_isInputBoxFocusedAtom.reportWrite(value, super._isInputBoxFocused, () {
+      super._isInputBoxFocused = value;
+    });
+  }
+
   late final _$_imageFilesAtom =
       Atom(name: 'ChatStoreBase._imageFiles', context: context);
 
