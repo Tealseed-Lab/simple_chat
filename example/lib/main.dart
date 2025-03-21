@@ -241,7 +241,84 @@ class _HomePageState extends State<HomePage> {
           dark: coloredThemeData,
           light: coloredThemeData,
         ),
+        toolbar: Container(
+          color: Colors.white,
+          height: 50,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CompositedTransformTarget(
+                link: layerLink,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _showOverlay(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), // Rounded corners
+                    ),
+                  ),
+                  child: const Text("Filter"),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  final layerLink = LayerLink();
+  OverlayEntry? overlayEntry;
+
+  void _showOverlay(BuildContext context) {
+    if (overlayEntry == null) {
+      const overlayHeight = 100.0;
+      const overlayWidth = 120.0;
+      final overlay = Overlay.of(context);
+
+      overlayEntry = OverlayEntry(builder: (context) {
+        return Positioned(
+          left: 0,
+          top: 0,
+          child: CompositedTransformFollower(
+            showWhenUnlinked: false,
+            link: layerLink,
+            offset: const Offset(0, -overlayHeight - 4),
+            child: Material(
+              color: Colors.transparent,
+              child: SizedBox(
+                width: overlayWidth,
+                height: overlayHeight,
+                child: TapRegion(
+                  consumeOutsideTaps: true,
+                  onTapOutside: (event) => _hideOverlay(),
+                  child: Container(
+                    height: overlayHeight,
+                    width: overlayWidth,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      });
+      overlay.insert(overlayEntry!);
+    } else {
+      _hideOverlay();
+    }
+  }
+
+  void _hideOverlay() {
+    overlayEntry?.remove();
+    overlayEntry = null;
   }
 }
