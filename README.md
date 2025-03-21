@@ -148,6 +148,20 @@ await controller.store.updateSendStatus(
 
 
 ## Customisation
+### Add your custom tool bar
+Add a tool bar sticked on the top of the input box and move together while keyboard shown/dismissed.
+
+| <img src="https://github.com/user-attachments/assets/83063bc8-9428-4986-92fe-34cf6017534d" width="300" /> |
+|-------------------------|
+
+```dart
+ChatView(
+    toolbar: Container(
+    // custom toolbar
+    ),
+),
+```
+
 ### Add your custom message cell UI
 
 #### Define your custom message model
