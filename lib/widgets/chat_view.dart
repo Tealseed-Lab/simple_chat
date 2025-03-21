@@ -11,10 +11,12 @@ import 'package:visibility_detector/visibility_detector.dart';
 class ChatView extends StatefulWidget {
   late final ChatThemeData theme;
   late final ChatController controller;
+  final Widget? toolbar;
   ChatView({
     super.key,
     ChatThemeData? theme,
     ChatController? controller,
+    this.toolbar,
   }) {
     this.theme = theme ??
         ChatThemeData(
@@ -66,6 +68,7 @@ class _ChatViewState extends State<ChatView> {
                   ],
                 ),
               ),
+              if (widget.toolbar != null) widget.toolbar!,
               InputBox(
                 controller: widget.controller,
                 textEditingController: store.textEditingController,
