@@ -178,7 +178,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     builder: (context) => SendMsgBtn(
                       size: sendMsgBtnWidth,
                       isSending: store.isSending,
-                      isDisabled: !store.isInputBoxFocused &&
+                      isDisabled: store.isInputBoxFocused &&
                           widget.textEditingController.text.isEmpty &&
                           widget.controller.store.imageFiles.isEmpty,
                       onTap: () {
