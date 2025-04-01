@@ -23,7 +23,8 @@ class ChatTheme extends InheritedWidget {
   final ChatThemeData data;
 
   static ChatThemeData of(BuildContext context) {
-    final ChatTheme? theme = context.dependOnInheritedWidgetOfExactType<ChatTheme>();
+    final ChatTheme? theme =
+        context.dependOnInheritedWidgetOfExactType<ChatTheme>();
     return theme?.data ??
         ChatThemeData(
           light: ChatColorThemeData.light,

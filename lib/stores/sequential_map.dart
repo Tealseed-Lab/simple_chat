@@ -3,10 +3,12 @@ import 'package:simple_chat/models/base_message.dart';
 
 part 'sequential_map.g.dart';
 
-class SequentialMessageMap = SequentialMessageMapBase with _$SequentialMessageMap;
+class SequentialMessageMap = SequentialMessageMapBase
+    with _$SequentialMessageMap;
 
 abstract class SequentialMessageMapBase with Store {
-  final ObservableMap<String, ModelBaseMessage> _map = ObservableMap<String, ModelBaseMessage>.of({});
+  final ObservableMap<String, ModelBaseMessage> _map =
+      ObservableMap<String, ModelBaseMessage>.of({});
   final ObservableList<String> _order = ObservableList<String>.of([]);
 
   @readonly
@@ -14,7 +16,8 @@ abstract class SequentialMessageMapBase with Store {
       ObservableMap<String, ModelBaseMessageStatus>.of({});
 
   @computed
-  ObservableList<ModelBaseMessage> get sequentialValues => ObservableList.of(_order.map((id) => _map[id]!));
+  ObservableList<ModelBaseMessage> get sequentialValues =>
+      ObservableList.of(_order.map((id) => _map[id]!));
 
   @computed
   ObservableList<ModelBaseMessage> get sequentialValuesReversed =>

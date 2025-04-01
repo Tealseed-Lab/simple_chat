@@ -18,7 +18,9 @@ class MessageBubble extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Container(
         padding: padding,
-        color: isCurrentUser ? context.coloredTheme.myMessageColor : context.coloredTheme.otherMessageColor,
+        color: isCurrentUser
+            ? context.coloredTheme.myMessageColor
+            : context.coloredTheme.otherMessageColor,
         child: child,
       ),
     );

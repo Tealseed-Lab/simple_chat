@@ -76,19 +76,22 @@ class _ChatViewState extends State<ChatView> {
                 onSend: () {
                   store.sendMessage(
                     onSend: (output) async {
-                      await widget.controller.actionHandler?.onSendMessage?.call(output);
+                      await widget.controller.actionHandler?.onSendMessage
+                          ?.call(output);
                     },
                   );
                 },
                 onCameraTap: () async {
-                  if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                  if (store.imageFiles.length >=
+                      widget.controller.config.imageMaxCount) {
                     return;
                   }
                   await store.takePhoto(context);
                   store.focusNode.requestFocus();
                 },
                 onAlbumTap: () async {
-                  if (store.imageFiles.length >= widget.controller.config.imageMaxCount) {
+                  if (store.imageFiles.length >=
+                      widget.controller.config.imageMaxCount) {
                     return;
                   }
                   _dismissKeyboard();
@@ -96,7 +99,8 @@ class _ChatViewState extends State<ChatView> {
                   store.focusNode.requestFocus();
                 },
                 onImageTap: (imageFile) {
-                  widget.controller.actionHandler?.onImageThumbnailTap?.call(imageFile);
+                  widget.controller.actionHandler?.onImageThumbnailTap
+                      ?.call(imageFile);
                 },
                 onImageRemove: (imageFile) {
                   store.removeImage(image: imageFile);
@@ -127,8 +131,10 @@ class _ChatViewState extends State<ChatView> {
             cacheExtent: 1000,
             separatorBuilder: (context, index) {
               final currentMessage = messages[index];
-              final nextMessage = index + 1 < messages.length ? messages[index + 1] : null;
-              final isSameUser = nextMessage != null && currentMessage.userId == nextMessage.userId;
+              final nextMessage =
+                  index + 1 < messages.length ? messages[index + 1] : null;
+              final isSameUser = nextMessage != null &&
+                  currentMessage.userId == nextMessage.userId;
               final forceNewBlock = nextMessage?.forceNewBlock ?? false;
               return SizedBox(height: isSameUser && !forceNewBlock ? 4 : 16);
             },
@@ -137,25 +143,33 @@ class _ChatViewState extends State<ChatView> {
               return Observer(
                 builder: (context) {
                   final message = messages[index];
-                  final hideUserAvatar = message is ModelLoadingIndicatorMessage;
-                  final previousMessage = index - 1 >= 0 ? messages[index - 1] : null;
-                  final isMessageFromCurrentUser = store.isMessageFromCurrentUser(message);
-                  final isSameUser = previousMessage != null && message.userId == previousMessage.userId;
-                  final updatedStatus = store.sequentialMessageMap.messageStatusMap[message.id];
+                  final hideUserAvatar =
+                      message is ModelLoadingIndicatorMessage;
+                  final previousMessage =
+                      index - 1 >= 0 ? messages[index - 1] : null;
+                  final isMessageFromCurrentUser =
+                      store.isMessageFromCurrentUser(message);
+                  final isSameUser = previousMessage != null &&
+                      message.userId == previousMessage.userId;
+                  final updatedStatus =
+                      store.sequentialMessageMap.messageStatusMap[message.id];
 
                   final builder = widget.controller.viewFactory.buildFor(
                     context,
                     message: message,
                     isMessageFromCurrentUser: isMessageFromCurrentUser,
                   );
-                  final messageItem = builder ?? UnsupportMessageItem(isCurrentUser: isMessageFromCurrentUser);
+                  final messageItem = builder ??
+                      UnsupportMessageItem(
+                          isCurrentUser: isMessageFromCurrentUser);
                   final user = store.users[message.userId];
                   final userAvatar = isSameUser && !message.forceNewBlock
                       ? SizedBox(width: context.layoutTheme.userAvatarSize)
                       : UserAvatar(
                           user: user,
                           onTap: () {
-                            widget.controller.actionHandler?.onUserAvatarTap?.call(user);
+                            widget.controller.actionHandler?.onUserAvatarTap
+                                ?.call(user);
                           },
                         );
                   const avatarMessageSpacing = 8.0;
@@ -163,7 +177,8 @@ class _ChatViewState extends State<ChatView> {
                   // Wrap messageItem with Flexible widget
                   final flexibleMessageItem = Flexible(
                     child: GestureDetector(
-                      onTap: () => widget.controller.actionHandler?.onMessageTap?.call(message),
+                      onTap: () => widget.controller.actionHandler?.onMessageTap
+                          ?.call(message),
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
@@ -176,7 +191,8 @@ class _ChatViewState extends State<ChatView> {
                               right: isMessageFromCurrentUser ? -14 : null,
                               left: isMessageFromCurrentUser ? null : -14,
                               child: CircularProgressIndicator(
-                                color: context.coloredTheme.sendingIndicatorColor,
+                                color:
+                                    context.coloredTheme.sendingIndicatorColor,
                                 strokeWidth: 2,
                               ),
                             ),
@@ -187,10 +203,14 @@ class _ChatViewState extends State<ChatView> {
 
                   Widget contentView;
                   final children = [
-                    if (widget.controller.config.messageAlignment == MessageAlignment.center)
-                      SizedBox(width: avatarMessageSpacing + context.layoutTheme.userAvatarSize),
+                    if (widget.controller.config.messageAlignment ==
+                        MessageAlignment.center)
+                      SizedBox(
+                          width: avatarMessageSpacing +
+                              context.layoutTheme.userAvatarSize),
                     flexibleMessageItem,
-                    if (!hideUserAvatar) const SizedBox(width: avatarMessageSpacing),
+                    if (!hideUserAvatar)
+                      const SizedBox(width: avatarMessageSpacing),
                     if (!hideUserAvatar) userAvatar,
                   ];
                   if (isMessageFromCurrentUser) {
@@ -208,14 +228,18 @@ class _ChatViewState extends State<ChatView> {
                   }
                   Widget contentViewWithStatus = contentView;
 
-                  final avatarPadding = avatarMessageSpacing + context.layoutTheme.userAvatarSize;
+                  final avatarPadding =
+                      avatarMessageSpacing + context.layoutTheme.userAvatarSize;
                   Widget? statusWidget;
                   switch (updatedStatus) {
                     case ModelBaseMessageStatus.failedToSend:
                       statusWidget = GestureDetector(
-                        onTap: () => widget.controller.actionHandler?.onMessageTap?.call(message),
+                        onTap: () => widget
+                            .controller.actionHandler?.onMessageTap
+                            ?.call(message),
                         child: Text(
-                          widget.controller.config.failedToSendText ?? 'Failed to send',
+                          widget.controller.config.failedToSendText ??
+                              'Failed to send',
                           style: context.layoutTheme.failedToSendTextStyle,
                         ),
                       );
@@ -227,7 +251,9 @@ class _ChatViewState extends State<ChatView> {
                   if (statusWidget != null) {
                     contentViewWithStatus = Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: isMessageFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                      crossAxisAlignment: isMessageFromCurrentUser
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
                       children: [
                         contentView,
                         const SizedBox(height: 2),
@@ -273,7 +299,8 @@ class _ChatViewState extends State<ChatView> {
                       margin: const EdgeInsets.only(bottom: 8),
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: context.coloredTheme.unreadIndicatorBackgroundColor,
+                        color:
+                            context.coloredTheme.unreadIndicatorBackgroundColor,
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
@@ -288,7 +315,10 @@ class _ChatViewState extends State<ChatView> {
                         children: [
                           Text(
                             '${store.unreadMessagesCount > 99 ? '99+' : store.unreadMessagesCount}',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -308,7 +338,8 @@ class _ChatViewState extends State<ChatView> {
                     height: 32,
                     margin: const EdgeInsets.only(bottom: 8),
                     decoration: BoxDecoration(
-                      color: context.coloredTheme.unreadIndicatorBackgroundColor,
+                      color:
+                          context.coloredTheme.unreadIndicatorBackgroundColor,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(

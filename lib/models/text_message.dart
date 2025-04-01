@@ -35,6 +35,7 @@ class ModelTextMessage extends ModelBaseMessage {
 
   // parsing
 
-  factory ModelTextMessage.fromJson(Map<String, dynamic> json) => _$ModelTextMessageFromJson(json);
+  factory ModelTextMessage.fromJson(Map<String, dynamic> json) =>
+      _$ModelTextMessageFromJson(json);
   Map<String, dynamic> toJson() => _$ModelTextMessageToJson(this);
 }

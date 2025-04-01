@@ -24,6 +24,7 @@ class ModelUser extends ModelBaseUser {
   });
   // parsing
 
-  factory ModelUser.fromJson(Map<String, dynamic> json) => _$ModelUserFromJson(json);
+  factory ModelUser.fromJson(Map<String, dynamic> json) =>
+      _$ModelUserFromJson(json);
   Map<String, dynamic> toJson() => _$ModelUserToJson(this);
 }

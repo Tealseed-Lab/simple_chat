@@ -23,7 +23,8 @@ class ViewFactory {
           message: message,
         );
       } else {
-        throw ArgumentError('Message type mismatch: expected ${T.toString()}, but got ${message.runtimeType}');
+        throw ArgumentError(
+            'Message type mismatch: expected ${T.toString()}, but got ${message.runtimeType}');
       }
     };
   }

@@ -17,7 +17,8 @@ class UserAvatar extends StatelessWidget {
     final avatarUrl = user?.avatarUrl;
     Widget child;
     if (avatarUrl == null) {
-      child = _EmptyProfileAvatar(size: context.layoutTheme.userAvatarSize, name: user?.name);
+      child = _EmptyProfileAvatar(
+          size: context.layoutTheme.userAvatarSize, name: user?.name);
     } else if (avatarUrl.contains('http')) {
       child = Image.network(
         avatarUrl,
@@ -44,7 +45,8 @@ class UserAvatar extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(context.layoutTheme.userAvatarSize / 2),
+        borderRadius:
+            BorderRadius.circular(context.layoutTheme.userAvatarSize / 2),
         child: child,
       ),
     );

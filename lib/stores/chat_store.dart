@@ -44,7 +44,8 @@ abstract class ChatStoreBase with Store {
   final sequentialMessageMap = SequentialMessageMap();
 
   @readonly
-  ObservableMap<String, ModelBaseUser> _users = ObservableMap<String, ModelBaseUser>.of({});
+  ObservableMap<String, ModelBaseUser> _users =
+      ObservableMap<String, ModelBaseUser>.of({});
 
   @readonly
   ModelBaseUser? _currentUser;
@@ -55,7 +56,8 @@ abstract class ChatStoreBase with Store {
   // observables - images
 
   @readonly
-  ObservableList<AssetImageInfo> _imageFiles = ObservableList<AssetImageInfo>.of([]);
+  ObservableList<AssetImageInfo> _imageFiles =
+      ObservableList<AssetImageInfo>.of([]);
 
   // observables - send message
 
@@ -72,7 +74,8 @@ abstract class ChatStoreBase with Store {
   int _unreadMessagesCount = 0;
 
   @computed
-  bool get reachImageSelectionLimit => _imageFiles.length >= config.imageMaxCount;
+  bool get reachImageSelectionLimit =>
+      _imageFiles.length >= config.imageMaxCount;
 
   // actions
 
@@ -149,8 +152,9 @@ abstract class ChatStoreBase with Store {
   Future<void> updateUnreadStatus() async {
     final highestSequence = sequentialMessageMap.getHighestSequence();
     _hasUnreadMessages = _readSequence < highestSequence;
-    _unreadMessagesCount =
-        sequentialMessageMap.sequentialValues.where((message) => message.sequence > _readSequence).length;
+    _unreadMessagesCount = sequentialMessageMap.sequentialValues
+        .where((message) => message.sequence > _readSequence)
+        .length;
   }
 
   @action
@@ -221,7 +225,8 @@ abstract class ChatStoreBase with Store {
 
   final loadingIndicatorMessageId = const Uuid().v4();
   @action
-  Future<void> sendMessage({required Function(ChatMessageSendOutput output) onSend}) async {
+  Future<void> sendMessage(
+      {required Function(ChatMessageSendOutput output) onSend}) async {
     final output = ChatMessageSendOutput(
       message: textEditingController.text,
       imageFiles: _imageFiles.toList(),
@@ -288,9 +293,10 @@ abstract class ChatStoreBase with Store {
         maxSelection: config.imageMaxCount,
         selectIndicatorColor: context.coloredTheme.primary,
         loadingIndicatorColor: context.coloredTheme.primary,
-        permissionDeniedText:
-            config.photoPermissionDeniedText ?? 'Please grant permission to access your photo library',
-        permissionDeniedButtonText: config.photoPermissionDeniedButtonText ?? 'Open Settings',
+        permissionDeniedText: config.photoPermissionDeniedText ??
+            'Please grant permission to access your photo library',
+        permissionDeniedButtonText:
+            config.photoPermissionDeniedButtonText ?? 'Open Settings',
       ),
     );
     _imageFiles = ObservableList<AssetImageInfo>.of(results ?? []);

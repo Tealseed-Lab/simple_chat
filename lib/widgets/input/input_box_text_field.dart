@@ -54,10 +54,14 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
   @override
   Widget build(BuildContext context) {
     const inputBoxHeight = 40.0;
-    final double cameraIconWidth = widget.controller.config.imageMaxCount > 0 ? 24.0 : 0;
-    final double cameraIconRightPadding = widget.controller.config.imageMaxCount > 0 ? 16.0 : 0;
-    final double albumIconWidth = widget.controller.config.imageMaxCount > 0 ? 24.0 : 0;
-    final double albumIconRightPadding = widget.controller.config.imageMaxCount > 0 ? 16.0 : 0;
+    final double cameraIconWidth =
+        widget.controller.config.imageMaxCount > 0 ? 24.0 : 0;
+    final double cameraIconRightPadding =
+        widget.controller.config.imageMaxCount > 0 ? 16.0 : 0;
+    final double albumIconWidth =
+        widget.controller.config.imageMaxCount > 0 ? 24.0 : 0;
+    final double albumIconRightPadding =
+        widget.controller.config.imageMaxCount > 0 ? 16.0 : 0;
     const double sendMsgBtnWidth = 32.0;
     const double sendMsgBtnRightPadding = 4.0;
     final double buttonBoxWidth = cameraIconWidth +
@@ -66,7 +70,9 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
         cameraIconRightPadding +
         albumIconRightPadding +
         sendMsgBtnRightPadding;
-    final textFieldMinWidth = MediaQuery.of(context).size.width - widget.inputBoxHorizontalMargin * 2 - buttonBoxWidth;
+    final textFieldMinWidth = MediaQuery.of(context).size.width -
+        widget.inputBoxHorizontalMargin * 2 -
+        buttonBoxWidth;
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFFF5F5F5),
@@ -126,7 +132,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     child: Observer(
                       builder: (context) => GestureDetector(
                         onTap: () {
-                          if (store.isSending || store.reachImageSelectionLimit) {
+                          if (store.isSending ||
+                              store.reachImageSelectionLimit) {
                             return;
                           }
                           widget.onCameraTap.call();
@@ -152,7 +159,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     child: Observer(
                       builder: (context) => GestureDetector(
                         onTap: () {
-                          if (store.isSending || store.reachImageSelectionLimit) {
+                          if (store.isSending ||
+                              store.reachImageSelectionLimit) {
                             return;
                           }
                           widget.onAlbumTap.call();
@@ -185,7 +193,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                         if (store.isSending) {
                           return;
                         }
-                        if (widget.textEditingController.text.isEmpty && widget.controller.store.imageFiles.isEmpty) {
+                        if (widget.textEditingController.text.isEmpty &&
+                            widget.controller.store.imageFiles.isEmpty) {
                           return;
                         }
                         widget.onSend.call();
@@ -243,6 +252,8 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
       textScaler: MediaQuery.of(context).textScaler,
     )..layout(minWidth: 0, maxWidth: double.infinity);
 
-    return max(textPainter.size.width, hintTextPainter.size.width) + textFieldHorizontalPadding * 2 + cursorWidth;
+    return max(textPainter.size.width, hintTextPainter.size.width) +
+        textFieldHorizontalPadding * 2 +
+        cursorWidth;
   }
 }

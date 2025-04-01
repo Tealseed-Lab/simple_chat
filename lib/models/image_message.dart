@@ -35,6 +35,7 @@ class ModelImageMessage extends ModelBaseMessage {
 
   // parsing
 
-  factory ModelImageMessage.fromJson(Map<String, dynamic> json) => _$ModelImageMessageFromJson(json);
+  factory ModelImageMessage.fromJson(Map<String, dynamic> json) =>
+      _$ModelImageMessageFromJson(json);
   Map<String, dynamic> toJson() => _$ModelImageMessageToJson(this);
 }
