@@ -85,10 +85,10 @@ packages:
     dependency: transitive
     description:
       name: easy_asset_picker
-      sha256: "496eedb583c5ee6f8e7232952fc059c2fde30556047c89433589055c611b4d8d"
+      sha256: "6ffa5cb8c4ac6669d06cad4e7f65f72eac666da7909d68835daa8741d8e60d4d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -550,7 +550,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.11"
+    version: "0.2.3"
   sky_engine:
     dependency: transitive
     description: flutter

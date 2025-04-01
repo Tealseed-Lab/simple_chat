@@ -1,4 +1,3 @@
-import 'package:easy_asset_picker/picker/models/asset_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:simple_chat/simple_chat.dart';
@@ -46,7 +45,7 @@ class InputBox extends StatelessWidget {
         color: context.coloredTheme.inputBoxColor,
         border: Border(
           top: BorderSide(
-            color: const Color(0xFF3C3C43).withOpacity(0.1),
+            color: const Color(0xFF3C3C43).withValues(alpha: 0.1),
             width: 0.5,
           ),
         ),

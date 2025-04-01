@@ -1,6 +1,8 @@
 name: simple_chat
-description: "Simple solution for IM chat & AI bot chat"
-version: 0.2.2
+description: 
+  "A simple UI solution for quick integration of IM chat & AI bot chat.
+  Supports customised Message Cell, message grouping, image preview and more."
+version: 0.2.3
 repository: https://github.com/Tealseed-Lab/simple_chat
 issue_tracker: https://github.com/Tealseed-Lab/simple_chat/issues
 
@@ -19,7 +21,7 @@ dependencies:
   lottie: ^3.1.2
   uuid: ^4.5.0
   visibility_detector: ^0.4.0+2
-  easy_asset_picker: ^0.0.3
+  easy_asset_picker: ^0.0.5
   image_picker: ^1.1.2
 
 dev_dependencies:

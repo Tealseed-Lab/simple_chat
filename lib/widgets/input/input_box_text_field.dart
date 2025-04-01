@@ -96,7 +96,7 @@ class _InputBoxTextFieldState extends State<InputBoxTextField> {
                     border: InputBorder.none,
                     hintText: widget.controller.config.inputBoxHintText,
                     hintStyle: textFieldStyle.copyWith(
-                      color: const Color(0xFF3C3C3C).withOpacity(0.3),
+                      color: const Color(0xFF3C3C3C).withValues(alpha: 0.3),
                     ),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: textFieldHorizontalPadding,
