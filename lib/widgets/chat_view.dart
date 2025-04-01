@@ -8,10 +8,18 @@ import 'package:simple_chat/widgets/messages/unsupport_message_item.dart';
 import 'package:simple_chat/widgets/users/user_avatar.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+/// The chat view.
 class ChatView extends StatefulWidget {
+  /// The theme for the chat.
   late final ChatThemeData theme;
+
+  /// The controller for the chat.
   late final ChatController controller;
+
+  /// The constructor for the chat view.
   final Widget? toolbar;
+
+  /// The constructor for the chat view.
   ChatView({
     super.key,
     ChatThemeData? theme,
@@ -25,6 +33,8 @@ class ChatView extends StatefulWidget {
         );
     this.controller = controller ?? ChatController();
   }
+
+  /// The method for the create state.
   @override
   State<StatefulWidget> createState() {
     return _ChatViewState();

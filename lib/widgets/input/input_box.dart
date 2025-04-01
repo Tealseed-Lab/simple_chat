@@ -4,18 +4,36 @@ import 'package:simple_chat/simple_chat.dart';
 import 'package:simple_chat/widgets/input/input_box_image_item.dart';
 import 'package:simple_chat/widgets/input/input_box_text_field.dart';
 
+/// The input box for the chat.
 class InputBox extends StatelessWidget {
+  /// The controller for the chat.
   final ChatController controller;
+
+  /// The text editing controller.
   final TextEditingController textEditingController;
+
+  /// The focus node.
   final FocusNode focusNode;
+
+  /// The on send callback.
   final Function() onSend;
+
+  /// The on camera tap callback.
   final Function() onCameraTap;
+
+  /// The on album tap callback.
   final Function() onAlbumTap;
+
+  /// The on image tap callback.
   final Function(AssetImageInfo) onImageTap;
+
+  /// The on image remove callback.
   final Function(AssetImageInfo) onImageRemove;
 
+  /// The store for the chat.
   late final ChatStore store;
 
+  /// The constructor for the input box.
   InputBox({
     super.key,
     required this.controller,
@@ -30,6 +48,7 @@ class InputBox extends StatelessWidget {
     store = controller.store;
   }
 
+  /// The input box horizontal margin.
   final inputBoxHorizontalMargin = 16.0;
 
   @override

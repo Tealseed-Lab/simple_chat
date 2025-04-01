@@ -2,7 +2,7 @@ name: simple_chat
 description: 
   "A simple UI solution for quick integration of IM chat & AI bot chat.
   Supports customised Message Cell, message grouping, image preview and more."
-version: 0.2.4
+version: 0.2.5
 repository: https://github.com/Tealseed-Lab/simple_chat
 issue_tracker: https://github.com/Tealseed-Lab/simple_chat/issues
 
@@ -26,7 +26,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.10
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
   mobx_codegen: ^2.6.1
   json_serializable: ^6.8.0
 

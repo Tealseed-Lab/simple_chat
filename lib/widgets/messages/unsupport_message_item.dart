@@ -1,8 +1,12 @@
-import 'package:simple_chat/widgets/messages/message_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_chat/widgets/messages/message_bubble.dart';
 
+/// The unsupport message item for the chat.
 class UnsupportMessageItem extends StatelessWidget {
+  /// The flag for the message from the current user.
   final bool isCurrentUser;
+
+  /// The constructor for the unsupport message item.
   const UnsupportMessageItem({super.key, required this.isCurrentUser});
 
   @override

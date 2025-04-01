@@ -3,12 +3,24 @@ import 'dart:io';
 import 'package:easy_asset_picker/picker/models/asset_image.dart';
 import 'package:flutter/material.dart';
 
+/// The input box image item.
 class InputBoxImageItem extends StatelessWidget {
+  /// The image file.
   final AssetImageInfo imageFile;
+
+  /// The size of the image.
   final double size;
+
+  /// The disabled flag.
   final bool disabled;
+
+  /// The on tap callback.
   final void Function(AssetImageInfo) onTap;
+
+  /// The on remove callback.
   final void Function(AssetImageInfo) onRemove;
+
+  /// The constructor for the input box image item.
   const InputBoxImageItem({
     super.key,
     required this.imageFile,

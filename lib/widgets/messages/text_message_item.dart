@@ -1,11 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:simple_chat/simple_chat.dart';
 import 'package:simple_chat/widgets/messages/message_bubble.dart';
-import 'package:flutter/material.dart';
 
+/// The text message item for the chat.
 class TextMessageItem extends StatelessWidget {
+  /// The text message.
   final ModelTextMessage textMessage;
+
+  /// The flag for the message from the current user.
   final bool isMessageFromCurrentUser;
 
+  /// The constructor for the text message item.
   const TextMessageItem({
     super.key,
     required this.textMessage,

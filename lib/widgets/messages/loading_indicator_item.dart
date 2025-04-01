@@ -4,9 +4,15 @@ import 'package:simple_chat/models/loading_indicator_message.dart';
 import 'package:simple_chat/simple_chat.dart';
 import 'package:simple_chat/widgets/messages/message_bubble.dart';
 
+/// The loading indicator item for the chat.
 class LoadingIndicatorItem extends StatelessWidget {
+  /// The message.
   final ModelLoadingIndicatorMessage message;
+
+  /// The flag for the message from the current user.
   final bool isMessageFromCurrentUser;
+
+  /// The constructor for the loading indicator item.
   const LoadingIndicatorItem({
     super.key,
     required this.message,

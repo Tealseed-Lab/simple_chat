@@ -1,15 +1,20 @@
-import 'package:simple_chat/simple_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:simple_chat/simple_chat.dart';
 
+/// The user avatar for the chat.
 class UserAvatar extends StatelessWidget {
+  /// The constructor for the user avatar.
   const UserAvatar({
     super.key,
     required this.user,
     this.onTap,
   });
 
+  /// The user.
   final ModelBaseUser? user;
+
+  /// The on tap callback.
   final void Function()? onTap;
 
   @override

@@ -6,16 +6,30 @@ import 'package:flutter_svg/svg.dart';
 import 'package:simple_chat/simple_chat.dart';
 import 'package:simple_chat/widgets/input/send_msg_btn.dart';
 
+/// The input box text field.
 class InputBoxTextField extends StatefulWidget {
+  /// The input box horizontal margin.
   final double inputBoxHorizontalMargin;
 
+  /// The controller for the chat.
   final ChatController controller;
+
+  /// The text editing controller.
   final TextEditingController textEditingController;
+
+  /// The focus node.
   final FocusNode focusNode;
+
+  /// The on send callback.
   final Function() onSend;
+
+  /// The on camera tap callback.
   final Function() onCameraTap;
+
+  /// The on album tap callback.
   final Function() onAlbumTap;
 
+  /// The constructor for the input box text field.
   const InputBoxTextField({
     super.key,
     this.inputBoxHorizontalMargin = 16.0,

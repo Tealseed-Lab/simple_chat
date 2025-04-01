@@ -93,6 +93,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // ignore: unused_element
   Future<void> _handleSendingMessageWithStatus(
       ChatMessageSendOutput output) async {
     if (output.message.isNotEmpty) {

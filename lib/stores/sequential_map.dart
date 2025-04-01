@@ -3,35 +3,46 @@ import 'package:simple_chat/models/base_message.dart';
 
 part 'sequential_map.g.dart';
 
+/// The sequential message map.
 class SequentialMessageMap = SequentialMessageMapBase
     with _$SequentialMessageMap;
 
+/// The base class for the sequential message map.
 abstract class SequentialMessageMapBase with Store {
+  /// The map for the messages.
   final ObservableMap<String, ModelBaseMessage> _map =
       ObservableMap<String, ModelBaseMessage>.of({});
+
+  /// The order for the messages.
   final ObservableList<String> _order = ObservableList<String>.of([]);
 
+  /// The message status map for the messages.
   @readonly
   ObservableMap<String, ModelBaseMessageStatus> _messageStatusMap =
       ObservableMap<String, ModelBaseMessageStatus>.of({});
 
+  /// The computed for the sequential values.
   @computed
   ObservableList<ModelBaseMessage> get sequentialValues =>
       ObservableList.of(_order.map((id) => _map[id]!));
 
+  /// The computed for the sequential values reversed.
   @computed
   ObservableList<ModelBaseMessage> get sequentialValuesReversed =>
       ObservableList.of(_order.reversed.map((id) => _map[id]!));
 
+  /// The action for the get by id.
   @action
   ModelBaseMessage? getById(String id) => _map[id]; // Access by ID
 
+  /// The action for the get highest sequence.
   @action
   int getHighestSequence() {
     if (_order.isEmpty) return 0;
     return _map[_order.first]?.sequence ?? 0;
   }
 
+  /// The action for the upsert.
   @action
   void upsert(ModelBaseMessage msg) {
     if (!_map.containsKey(msg.id)) {
@@ -49,6 +60,7 @@ abstract class SequentialMessageMapBase with Store {
     });
   }
 
+  /// The action for the upsert all.
   @action
   void upsertAll(List<ModelBaseMessage> msgs) {
     // Skip if empty list
@@ -71,6 +83,7 @@ abstract class SequentialMessageMapBase with Store {
     });
   }
 
+  /// The action for the remove.
   @action
   void remove(String id) {
     if (_map.containsKey(id)) {
@@ -80,6 +93,7 @@ abstract class SequentialMessageMapBase with Store {
     }
   }
 
+  /// The action for the clear all.
   @action
   void clearAll() {
     _map.clear();

@@ -13,22 +13,32 @@ import 'package:uuid/uuid.dart';
 
 part 'chat_store.g.dart';
 
+/// The store for the chat.
 class ChatStore = ChatStoreBase with _$ChatStore;
 
+/// The base class for the chat store.
 abstract class ChatStoreBase with Store {
+  /// The scroll controller for the chat.
   final ChatScrollController chatScrollController;
+
+  /// The config for the chat.
   final ChatConfig config;
+
+  /// The text editing controller for the chat.
   final TextEditingController textEditingController = TextEditingController();
+
+  /// The focus node for the chat.
   final FocusNode focusNode = FocusNode();
 
+  /// The constructor of the chat store.
   ChatStoreBase(
     this.chatScrollController,
     this.config,
   ) {
-    setup();
+    _setup();
   }
 
-  Future<void> setup() async {
+  Future<void> _setup() async {
     // setup
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
@@ -41,20 +51,24 @@ abstract class ChatStoreBase with Store {
 
   // observables
 
+  /// The sequential message map for the chat.
   final sequentialMessageMap = SequentialMessageMap();
 
+  /// The users for the chat.
   @readonly
   ObservableMap<String, ModelBaseUser> _users =
       ObservableMap<String, ModelBaseUser>.of({});
 
+  /// The current user for the chat.
   @readonly
   ModelBaseUser? _currentUser;
 
-  @readonly
+  /// The flag for the input box focused.
   bool _isInputBoxFocused = false;
 
   // observables - images
 
+  /// The image files for the chat.
   @readonly
   ObservableList<AssetImageInfo> _imageFiles =
       ObservableList<AssetImageInfo>.of([]);
@@ -73,12 +87,14 @@ abstract class ChatStoreBase with Store {
   @readonly
   int _unreadMessagesCount = 0;
 
+  /// The flag for the reach image selection limit.
   @computed
   bool get reachImageSelectionLimit =>
       _imageFiles.length >= config.imageMaxCount;
 
   // actions
 
+  /// The action for the add message.
   @action
   Future<void> addMessage({
     required ModelBaseMessage message,
@@ -95,6 +111,7 @@ abstract class ChatStoreBase with Store {
     );
   }
 
+  /// The action for the add messages.
   @action
   Future<void> addMessages({
     required List<ModelBaseMessage> messages,
@@ -111,6 +128,7 @@ abstract class ChatStoreBase with Store {
     );
   }
 
+  /// The action for the post message processing.
   @action
   Future<void> postMessageProcessing({
     required bool isAtBottom,
@@ -132,6 +150,7 @@ abstract class ChatStoreBase with Store {
     updateUnreadStatus();
   }
 
+  /// The action for the read message.
   @action
   Future<void> readMessage({
     required ModelBaseMessage message,
@@ -142,12 +161,14 @@ abstract class ChatStoreBase with Store {
     }
   }
 
+  /// The action for the read all messages.
   @action
   Future<void> readAllMessages() async {
     _readSequence = sequentialMessageMap.getHighestSequence();
     await updateUnreadStatus();
   }
 
+  /// The action for the update unread status.
   @action
   Future<void> updateUnreadStatus() async {
     final highestSequence = sequentialMessageMap.getHighestSequence();
@@ -157,6 +178,7 @@ abstract class ChatStoreBase with Store {
         .length;
   }
 
+  /// The action for the remove message.
   @action
   Future<void> removeMessage({
     required ModelBaseMessage message,
@@ -164,6 +186,7 @@ abstract class ChatStoreBase with Store {
     sequentialMessageMap.remove(message.id);
   }
 
+  /// The action for the remove message by id.
   @action
   Future<void> removeMessageById({
     required String messageId,
@@ -171,6 +194,7 @@ abstract class ChatStoreBase with Store {
     sequentialMessageMap.remove(messageId);
   }
 
+  /// The action for the remove messages.
   @action
   Future<void> removeMessages({
     required List<ModelBaseMessage> messages,
@@ -180,6 +204,7 @@ abstract class ChatStoreBase with Store {
     }
   }
 
+  /// The action for the clear all.
   @action
   Future<void> clearAll() async {
     sequentialMessageMap.clearAll();
@@ -187,6 +212,7 @@ abstract class ChatStoreBase with Store {
 
   // send status
 
+  /// The action for the update send status.
   @action
   Future<void> updateSendStatus({
     required String messageId,
@@ -201,6 +227,7 @@ abstract class ChatStoreBase with Store {
 
   // users
 
+  /// The action for the add user.
   @action
   Future<void> addUser({
     required ModelBaseUser user,
@@ -211,6 +238,7 @@ abstract class ChatStoreBase with Store {
     }
   }
 
+  /// The action for the add users.
   @action
   Future<void> addUsers({
     required List<ModelBaseUser> users,
@@ -223,7 +251,10 @@ abstract class ChatStoreBase with Store {
     }
   }
 
+  /// The loading indicator message id.
   final loadingIndicatorMessageId = const Uuid().v4();
+
+  /// The action for the send message.
   @action
   Future<void> sendMessage(
       {required Function(ChatMessageSendOutput output) onSend}) async {
@@ -254,6 +285,8 @@ abstract class ChatStoreBase with Store {
 
   // actions - images
   bool _isTakingPhoto = false;
+
+  /// The action for the take photo.
   @action
   Future<void> takePhoto(BuildContext context) async {
     if (_isSending || _isTakingPhoto) {
@@ -280,6 +313,8 @@ abstract class ChatStoreBase with Store {
   }
 
   bool _isPickingImage = false;
+
+  /// The action for the pick image.
   @action
   Future<void> pickImage(BuildContext context) async {
     if (_isSending || _isPickingImage) {
@@ -308,6 +343,7 @@ abstract class ChatStoreBase with Store {
     _isPickingImage = false;
   }
 
+  /// The action for the remove image.
   @action
   Future<void> removeImage({
     required AssetImageInfo image,
@@ -322,6 +358,7 @@ abstract class ChatStoreBase with Store {
 
   // loading indicator
 
+  /// The action for the show reply generating indicator.
   @action
   Future<void> showReplyGeneratingIndicator() async {
     await addMessage(
@@ -335,6 +372,7 @@ abstract class ChatStoreBase with Store {
     );
   }
 
+  /// The action for the hide reply generating indicator.
   @action
   Future<void> hideReplyGeneratingIndicator() async {
     await removeMessageById(messageId: loadingIndicatorMessageId);
@@ -342,6 +380,7 @@ abstract class ChatStoreBase with Store {
 
   // public
 
+  /// The method for the is message from current user.
   bool isMessageFromCurrentUser(ModelBaseMessage message) {
     return message.userId == _currentUser?.id;
   }

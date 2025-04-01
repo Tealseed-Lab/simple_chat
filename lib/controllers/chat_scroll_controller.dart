@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
+/// The scroll controller for the chat.
 class ChatScrollController with WidgetsBindingObserver {
+  /// The scroll controller for the chat.
   final controller = ScrollController();
+
+  /// The animation duration in milliseconds.
   final int animationDurationInMilliseconds;
 
+  /// The constructor of the chat scroll controller.
   ChatScrollController({
     this.animationDurationInMilliseconds = 150,
   }) {
     WidgetsBinding.instance.addObserver(this);
   }
 
+  /// The method for the dispose.
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
   }
@@ -33,12 +39,14 @@ class ChatScrollController with WidgetsBindingObserver {
 
   // public
 
+  /// The method for the is at top.
   bool isAtTop() {
     if (!controller.hasClients) return false;
     final position = controller.position;
     return position.pixels <= 1;
   }
 
+  /// The method for the is at bottom.
   bool isAtBottom() {
     if (!controller.hasClients) return false;
     final position = controller.position;
@@ -46,6 +54,7 @@ class ChatScrollController with WidgetsBindingObserver {
         position.viewportDimension >= position.maxScrollExtent;
   }
 
+  /// The method for the scroll to top.
   Future<void> scrollToTop() async {
     if (controller.hasClients) {
       if (controller.offset > 0) {
@@ -58,6 +67,7 @@ class ChatScrollController with WidgetsBindingObserver {
     }
   }
 
+  /// The method for the scroll to bottom.
   Future<void> scrollToBottom() async {
     if (controller.hasClients) {
       Logger().i(
@@ -77,6 +87,7 @@ class ChatScrollController with WidgetsBindingObserver {
     }
   }
 
+  /// The method for the jump to top.
   Future<void> jumpToTop() async {
     if (controller.hasClients) {
       if (controller.offset > 0) {
@@ -85,6 +96,7 @@ class ChatScrollController with WidgetsBindingObserver {
     }
   }
 
+  /// The method for the jump to bottom.
   Future<void> jumpToBottom() async {
     if (controller.hasClients) {
       while (controller.offset + 1 < controller.position.maxScrollExtent) {
@@ -100,10 +112,12 @@ class ChatScrollController with WidgetsBindingObserver {
     }
   }
 
+  /// The method for the get offset.
   double getOffset() {
     return controller.offset;
   }
 
+  /// The method for the set offset.
   void setOffset(double offset) {
     controller.jumpTo(offset);
   }

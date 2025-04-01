@@ -7,25 +7,51 @@ import 'package:simple_chat/widgets/messages/image_message_item.dart';
 import 'package:simple_chat/widgets/messages/loading_indicator_item.dart';
 import 'package:simple_chat/widgets/messages/text_message_item.dart';
 
+/// The type of the loading indicator.
 enum LoadingIndicatorType {
+  /// The loading indicator type for the send button.
   sendBtnLoading,
+
+  /// The loading indicator type for the no blocking.
   noBlocking,
 }
 
+/// The alignment of the message.
 enum MessageAlignment {
+  /// The alignment of the message for the center.
   center,
+
+  /// The alignment of the message for the justified.
   justified,
 }
 
+/// The config for the chat.
 class ChatConfig {
+  /// The max count of the image.
   final int imageMaxCount;
+
+  /// The hint text for the input box.
   final String? inputBoxHintText;
+
+  /// The text for the failed to send.
   final String? failedToSendText;
+
+  /// The text for the photo permission denied.
   final String? photoPermissionDeniedText;
+
+  /// The text for the photo permission denied button.
   final String? photoPermissionDeniedButtonText;
+
+  /// The type of the loading indicator.
   final LoadingIndicatorType loadingIndicatorType;
+
+  /// The flag for the show unread count.
   final bool showUnreadCount;
+
+  /// The alignment of the message.
   final MessageAlignment messageAlignment;
+
+  /// The constructor of the chat config.
   ChatConfig({
     this.imageMaxCount = 9,
     this.inputBoxHintText,
@@ -38,12 +64,24 @@ class ChatConfig {
   });
 }
 
+/// The controller for the chat.
 class ChatController {
+  /// The store for the chat.
   late final ChatStore store;
+
+  /// The scroll controller for the chat.
   final chatScrollController = ChatScrollController();
+
+  /// The view factory for the chat.
   final viewFactory = ViewFactory();
+
+  /// The action handler for the chat.
   final ChatActionHandler? actionHandler;
+
+  /// The config for the chat.
   late final ChatConfig config;
+
+  /// The constructor of the chat controller.
   ChatController({
     this.actionHandler,
     ChatConfig? config,
@@ -88,6 +126,7 @@ class ChatController {
     );
   }
 
+  /// The method for the scroll to bottom.
   void scrollToBottom() {
     chatScrollController.scrollToBottom();
     store.readAllMessages();

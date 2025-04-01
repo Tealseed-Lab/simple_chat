@@ -1,13 +1,18 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:simple_chat/simple_chat.dart';
 import 'package:simple_chat/widgets/messages/message_bubble.dart';
-import 'package:flutter/material.dart';
 
+/// The image message item for the chat.
 class ImageMessageItem extends StatelessWidget {
+  /// The image message.
   final ModelImageMessage imageMessage;
+
+  /// The flag for the message from the current user.
   final bool isMessageFromCurrentUser;
 
+  /// The constructor for the image message item.
   const ImageMessageItem({
     super.key,
     required this.imageMessage,

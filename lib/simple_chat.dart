@@ -1,5 +1,3 @@
-library simple_chat;
-
 export 'package:easy_asset_picker/picker/models/asset_image.dart';
 
 export 'controllers/chat_action_handler.dart';
@@ -14,4 +12,5 @@ export 'stores/chat_store.dart';
 export 'theme/chat_theme.dart';
 export 'widgets/chat_view.dart';
 
+/// The package name of the chat package.
 const kChatPackage = 'simple_chat';
