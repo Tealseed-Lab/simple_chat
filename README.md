@@ -188,7 +188,7 @@ class CustomMessage extends ModelBaseMessage {
 
   final String data;
 
-  ModelOptionMessage({
+  CustomMessage({
     required this.id,
     required this.userId,
     required this.sequence,

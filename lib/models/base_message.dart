@@ -45,4 +45,10 @@ abstract class ModelBaseMessage {
 
   /// The status of the message.
   ModelBaseMessageStatus status = ModelBaseMessageStatus.normal;
+
+  /// to indicate whether to show avatar & paddings
+  bool get showAvatarAndPaddings => true;
+
+  /// custom padding for the message
+  EdgeInsets? get customContainerPadding => null;
 }

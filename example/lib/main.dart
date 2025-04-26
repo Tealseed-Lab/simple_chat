@@ -1,5 +1,7 @@
 import 'dart:math'; // Added import for Random
 
+import 'package:example/custom_message.dart';
+import 'package:example/custom_message_view.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_chat/simple_chat.dart';
 import 'package:uuid/uuid.dart';
@@ -45,6 +47,17 @@ class _HomePageState extends State<HomePage> {
       actionHandler: ChatActionHandler(
         onSendMessage: _handleSendingMessage,
         // onSendMessage: _handleSendingMessageWithStatus,
+      ),
+    );
+    controller.viewFactory.register<CustomMessage>(
+      (
+        BuildContext context, {
+        required CustomMessage message,
+        required bool isMessageFromCurrentUser,
+      }) =>
+          CustomMessageView(
+        message: message,
+        isMessageFromCurrentUser: isMessageFromCurrentUser,
       ),
     );
     setupTests();
@@ -94,8 +107,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   // ignore: unused_element
-  Future<void> _handleSendingMessageWithStatus(
-      ChatMessageSendOutput output) async {
+  Future<void> _handleSendingMessageWithStatus(ChatMessageSendOutput output) async {
     if (output.message.isNotEmpty) {
       final messageId = const Uuid().v4();
       await controller.store.addMessage(
@@ -129,15 +141,13 @@ class _HomePageState extends State<HomePage> {
       ModelUser(
         id: userId1,
         name: 'Lawrence',
-        avatarUrl:
-            'https://lh3.googleusercontent.com/ogw/AF2bZyj1OQs6QwRQMGfY0H5g_VOdijzbC7Ea3XE3Z8eDYTrOZQ=s64-c-mo',
+        avatarUrl: 'https://lh3.googleusercontent.com/ogw/AF2bZyj1OQs6QwRQMGfY0H5g_VOdijzbC7Ea3XE3Z8eDYTrOZQ=s64-c-mo',
         isCurrentUser: true,
       ),
       ModelUser(
         id: userId2,
         name: 'Ciel',
-        avatarUrl:
-            'https://media.karousell.com/media/photos/profiles/2018/01/09/imwithye_1515485479.jpg',
+        avatarUrl: 'https://media.karousell.com/media/photos/profiles/2018/01/09/imwithye_1515485479.jpg',
         isCurrentUser: false,
       ),
     ]);
@@ -151,8 +161,7 @@ class _HomePageState extends State<HomePage> {
         await Future.delayed(const Duration(milliseconds: 1000));
       }
       final userId = random.nextBool() ? userId1 : userId2;
-      final textLength =
-          random.nextInt(50) + 10; // Random length between 10 and 59
+      final textLength = random.nextInt(50) + 10; // Random length between 10 and 59
       await controller.store.addMessage(
         isInitial: !withDelay,
         message: ModelTextMessage(
@@ -166,11 +175,23 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> injectCustomMessage() async {
+    await controller.store.addMessage(
+      message: CustomMessage(
+        id: const Uuid().v4(),
+        userId: userId1,
+        sequence: sequence++,
+        displayDatetime: DateTime.now(),
+        forceNewBlock: true,
+        data: 'this is a custom message',
+      ),
+    );
+  }
+
   String generateRandomText(int length) {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789 ';
     final random = Random();
-    return String.fromCharCodes(Iterable.generate(
-        length, (_) => chars.codeUnitAt(random.nextInt(chars.length))));
+    return String.fromCharCodes(Iterable.generate(length, (_) => chars.codeUnitAt(random.nextInt(chars.length))));
   }
 
   @override
@@ -198,6 +219,9 @@ class _HomePageState extends State<HomePage> {
                   break;
                 case 'clear_all':
                   controller.store.clearAll();
+                  break;
+                case 'inject_custom_message':
+                  injectCustomMessage();
                   break;
               }
             },
@@ -237,6 +261,13 @@ class _HomePageState extends State<HomePage> {
                   title: Text('Clear All'),
                 ),
               ),
+              const PopupMenuItem<String>(
+                value: 'inject_custom_message',
+                child: ListTile(
+                  leading: Icon(Icons.message),
+                  title: Text('Inject Custom Message'),
+                ),
+              ),
             ],
           ),
         ],
@@ -265,8 +296,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(12), // Rounded corners
+                      borderRadius: BorderRadius.circular(12), // Rounded corners
                     ),
                   ),
                   child: const Text("Filter"),
