@@ -243,6 +243,26 @@ controller.viewFactory.register<CustomMessage>(
     ),
 );
 ```
+#### message cell with customised padding, show/hide avatar
+
+```dart
+class CustomMessage extends ModelBaseMessage {
+    ...
+    @override
+    // this is to indicate whether to show/hide avatar & avatar placehoding spacing
+    bool get showAvatarAndPaddings => false;
+
+    @override
+    // this is to customise message view padding
+    EdgeInsets? get customContainerPadding => EdgeInsets.zero;
+}
+
+The above example will give message view zero padding and hide user avatar for message cell rendering
+
+| <img src="https://github.com/user-attachments/assets/c2164b29-36ab-4bda-9210-102f040c61ee" width="300" /> |
+|-------------------------|
+
+```
 
 ## 🌟 Star History
 
