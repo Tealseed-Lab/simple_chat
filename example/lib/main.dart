@@ -107,7 +107,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   // ignore: unused_element
-  Future<void> _handleSendingMessageWithStatus(ChatMessageSendOutput output) async {
+  Future<void> _handleSendingMessageWithStatus(
+      ChatMessageSendOutput output) async {
     if (output.message.isNotEmpty) {
       final messageId = const Uuid().v4();
       await controller.store.addMessage(
@@ -141,13 +142,15 @@ class _HomePageState extends State<HomePage> {
       ModelUser(
         id: userId1,
         name: 'Lawrence',
-        avatarUrl: 'https://lh3.googleusercontent.com/ogw/AF2bZyj1OQs6QwRQMGfY0H5g_VOdijzbC7Ea3XE3Z8eDYTrOZQ=s64-c-mo',
+        avatarUrl:
+            'https://lh3.googleusercontent.com/ogw/AF2bZyj1OQs6QwRQMGfY0H5g_VOdijzbC7Ea3XE3Z8eDYTrOZQ=s64-c-mo',
         isCurrentUser: true,
       ),
       ModelUser(
         id: userId2,
         name: 'Ciel',
-        avatarUrl: 'https://media.karousell.com/media/photos/profiles/2018/01/09/imwithye_1515485479.jpg',
+        avatarUrl:
+            'https://media.karousell.com/media/photos/profiles/2018/01/09/imwithye_1515485479.jpg',
         isCurrentUser: false,
       ),
     ]);
@@ -161,7 +164,8 @@ class _HomePageState extends State<HomePage> {
         await Future.delayed(const Duration(milliseconds: 1000));
       }
       final userId = random.nextBool() ? userId1 : userId2;
-      final textLength = random.nextInt(50) + 10; // Random length between 10 and 59
+      final textLength =
+          random.nextInt(50) + 10; // Random length between 10 and 59
       await controller.store.addMessage(
         isInitial: !withDelay,
         message: ModelTextMessage(
@@ -191,7 +195,8 @@ class _HomePageState extends State<HomePage> {
   String generateRandomText(int length) {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789 ';
     final random = Random();
-    return String.fromCharCodes(Iterable.generate(length, (_) => chars.codeUnitAt(random.nextInt(chars.length))));
+    return String.fromCharCodes(Iterable.generate(
+        length, (_) => chars.codeUnitAt(random.nextInt(chars.length))));
   }
 
   @override
@@ -296,7 +301,8 @@ class _HomePageState extends State<HomePage> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // Rounded corners
+                      borderRadius:
+                          BorderRadius.circular(12), // Rounded corners
                     ),
                   ),
                   child: const Text("Filter"),
